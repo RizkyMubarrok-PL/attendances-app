@@ -1,0 +1,424 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body{
+    background-color: #f8f9fa;
+}
+
+header{
+    position: sticky;
+    top: 0;
+}
+
+.navbar-brand{
+    position: relative;
+    left: 10px;
+}
+
+.navbar-brand img{
+    width: 140px;
+}
+
+.navbar-toggler{
+    border: none;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus, .btn-close:focus{
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link{
+    color: #2A8579;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active{
+    color: #115a50;
+}
+
+.profile-user img {
+    cursor: pointer;
+    border: 2px solid #2A8579; /* Warna border */
+}
+
+.login-button{
+    background-color: #2A8579;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 14px;
+    padding: 10px;
+    transition: 0.3s background-color;
+}
+
+.login-button:hover{
+    background-color: #115a50;
+}
+
+.sub-menu-wrap{
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    width: 320px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+    z-index: 10;
+}
+
+.sub-menu-wrap.open-menu{
+    max-height: 400px;
+}
+
+.sub-menu{
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+}
+
+.user-info{
+    display: flex;
+    align-items: center;
+}
+
+.user-info h2{
+    font-size: 24px;
+    color: #2A8579;
+}
+
+.user-info img{
+    width: 60px;
+    border-radius: 50%;
+    border: 3px solid #2A8579;
+    margin-right: 15px;
+}
+
+.sub-menu hr{
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+}
+
+.sub-menu-link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+}
+
+.sub-menu-link p{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.sub-menu-link span{
+    font-size: 14px;
+    color: #ccc;
+    transition: transform 0.5s;
+}
+
+.sub-menu-link:hover p{
+    font-weight: 600;
+}
+
+.sub-menu-link:hover span{
+    transform: translateX(5px);
+}
+
+.sub-menu-link i{
+    width: 35px;
+    background: #e5e5e5;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 15px;
+}
+
+@media (min-width: 991px){
+    .nav-link::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0%;
+        height: 2px;
+        background-color: #666777;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+    }
+    
+    .nav-link:hover::before, .active::before{
+        width: 80%;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 768px){
+    .pembungkus-home-siswa{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img-siswa{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px;
+    }
+}
+
+.img-siswa img{
+    width: 100px;
+}
+
+.tulisan-siswa{
+    color: #2A8579;
+}
+
+.tulisan-siswa-dua{
+    width: 80%;
+}
+
+.tulisan-siswa-dua a{
+    margin-left: 15px;
+    text-decoration: none;
+    color: #2A8579;
+    font-size: 16px;
+    width: 100%;
+}
+
+.tulisan-siswa-dua span{
+    font-size: 14px;
+    color: #ccc;
+    transition: transform 0.5s;
+}
+
+.tulisan-siswa-dua:hover span{
+    transform: translateX(23px);
+}
+
+.siswa-konten-header{
+    background-color: #2A8579;
+}
+
+.siswa-konten-header h3{
+    font-size: 18px;
+    color: white;
+    margin: 0 auto;
+}
+
+.siswa-konten-body{
+
+}
+
+.img-siswa-bawah img{
+    width: 60px;
+}
+
+.h5{
+    color: #2A8579;
+}
+
+.tulisan-atas h2,p{
+    color: #2A8579;
+}
+
+.tombol-content-atas a{
+    background-color: #2A8579;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.5s;
+}
+
+.haloges1:hover{
+    background-color: #115a50;
+}
+
+.tombol-content-atas .spans{
+    font-size: 14px;
+    color: #ccc;
+    margin-left: 10px;
+    transition: transform 0.5s;
+}
+
+.haloges1:hover .spans{
+    transform: translateX(5px);
+}
+
+.footer-bawah p{
+    color: #2A8579;
+}
+
+.nav-link-custom{
+    display:block;
+    padding:.5rem 1rem;
+    color:#2A8579;
+    text-decoration:none;
+    transition: 300ms;
+}
+
+.nav-link-custom:hover{
+    color: #115a50;
+    font-weight: 600;
+    transform: translateX(15px);
+}
+
+iframe{
+    width: 270px;
+    height: 150px;
+}
+
+@media (max-width: 768px){
+    iframe{
+
+    }
+}
+
+.search{
+  
+    top:6px;
+    left:10px;
+  }
+  
+  .form-control{
+      
+      border:none;
+      padding-left:32px;
+  }
+  
+  .form-control:focus{
+      
+      border:none;
+      box-shadow:none;
+  }
+  
+  .green{
+      
+      color:green;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Bisa disesuaikan */
+    background-color: #F6F6F6; /* Warna latar sesuai gambar */
+    border-radius: 10px;
+
+  }
+  
+  .search-container input[type="search"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+  }
+  
+  .search-container i {
+    color: #2A8579; /* Warna ikon */
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 7.5px;
+  }
+
+.filter-container{
+    margin-left: auto;
+}
+
+.table thead tr th{
+    color: #2A8579;
+}
+
+.table tbody tr td{
+    color: #2A8579;
+}
+
+
+table td{
+    white-space: nowrap; /* Mencegah teks pecah ke baris berikutnya */
+}
+
+.table thead tr th{
+  border-bottom: 2px solid #2A8579 ;
+  border-top: none;
+}
+
+select.form-select {
+    color: #2A8579; /* Ganti dengan warna yang Anda inginkan */
+}
+  
+  /* Mengubah warna teks saat dropdown terbuka (tidak semua browser mendukung ini) */
+select.form-select option {
+    color: #2A8579; /* Ganti sesuai keinginan */
+}
+
+.btn-info{
+    background-color: #2A8579;
+    margin-left: 15px;
+    border: none;
+}
+
+.btn-info:hover{
+    background-color: #196d62;
+}
+
+.btn-info i{
+    color: white;
+}
+
+.modal-title{
+    color: #2A8579;
+}
+
+.header-konten-siswa{
+    background-color: #2A8579;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.header-konten-siswa h3{
+    font-size: 20px;
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.download-siswa{
+    height: 185px;
+}
+
+.unduh-apk{
+    margin: auto 0;
+}
+
+.unduh-apk h4{
+    max-width: 100px;
+    color: #2A8579;
+    margin-bottom: 35px;
+}
+
+.unduh-aplikasi{
+    background-color: #2A8579;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.5s;
+}
+
+.unduh-aplikasi:hover{
+    background-color: #115a50;
+}
+

@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+input:focus-within~label {
+    @apply transform scale-75 -translate-y-6 text-green-500;
+}
+
+input:focus-within ~ label,
+input:not(:placeholder-shown) ~ label {
+  @apply transform scale-75 -translate-y-6;
+}
+
+input:focus-within ~ label {
+  @apply text-green-500;
+}
+
+input:-webkit-autofill {  
+  transition: background-color 5000s ease-in-out 0s;
+}

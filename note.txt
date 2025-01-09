@@ -1,0 +1,22 @@
+Website
+
+dashboard
+CRUD User
+CRUD Kelas
+CRUD Absensi
+
+- Cetak Absensi to excell
+- input data user dengan excell
+
+Siswa
+- melihat list Absensi
+
+sama dengan di mobile
+
+Guru
+- melakukan update Absensi
+- melihat Absensi
+
+sama dengan mobile
+
+optimize seeder
