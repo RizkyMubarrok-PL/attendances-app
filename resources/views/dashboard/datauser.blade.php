@@ -42,9 +42,13 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#updateModal">Update</button> |
-                      <a href="" class="btn btn-danger text-light rounded">Delete</a>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
+                          Update
+                      </button> 
+                          |
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                          Delete
+                      </button>
                     </td>
 
                     <!-- Update Modal -->
@@ -171,6 +175,23 @@
     </div>
   </div>
 
-
+  <!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Warning!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure want to delete?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-danger">No</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   @include('template/admin/adminfooter')
