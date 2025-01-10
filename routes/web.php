@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\ClassController;
@@ -30,5 +31,12 @@ Route::group(['prefix' => 'dashboard'], function () {
     // ini rute buat data absensi
     Route::controller(AttendancesController::class)->group(function () {
         Route::get('/attendances', 'index');
+    });
+});
+
+
+Route::group(['prefix' => 'guru'], function () {
+    Route::controller(GuruController::class)->group(function (){
+        Route::get('/', 'index');        
     });
 });
