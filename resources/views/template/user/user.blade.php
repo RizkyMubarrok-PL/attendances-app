@@ -106,19 +106,19 @@
               <div class="brand-text" style="opacity: 50%; font-family: 'Comfortaa', sans-serif;">
                 <h4 style="margin-left: 1rem;">Menu Utama</h4>
               </div>
-              <li class="nav-item" style="">
+              <li class="nav-item">
                 <a href="absensi" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">Absensi</p>
                 </a>
               </li>
-              <li class="nav-item" style="">
+              <li class="nav-item">
                 <a href="daftarabsensi" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">DaftarAbsensi</p>
                 </a>
               </li>
-              <li class="nav-item" style="">
+              <li class="nav-item">
                 <a href="rekap" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">Rekap</p>
