@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\UserController;
@@ -43,5 +44,13 @@ Route::group(['prefix' => 'guru'], function () {
         Route::get('/daftar', 'daftarAbsenPage');
 
         Route::get('/rekap', 'rekapPage');
+    });
+});
+
+Route::group(['prefix' => 'siswa'], function () {
+    Route::controller(SiswaController::class)->group(function () {
+        Route::get('/', 'index');
+
+        Route::get('/absensi', 'absensiPage');
     });
 });
