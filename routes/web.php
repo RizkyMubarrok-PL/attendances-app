@@ -37,6 +37,11 @@ Route::group(['prefix' => 'dashboard'], function () {
 
 Route::group(['prefix' => 'guru'], function () {
     Route::controller(GuruController::class)->group(function (){
-        Route::get('/', 'index');        
+        Route::get('/', 'index');
+        Route::get('/absen', 'absenPage');
+
+        Route::get('/daftar', 'daftarAbsenPage');
+
+        Route::get('/rekap', 'rekapPage');
     });
 });
