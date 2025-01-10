@@ -38,16 +38,10 @@ Route::group(['prefix' => 'dashboard'], function () {
 Route::group(['prefix' => 'guru'], function () {
     Route::controller(GuruController::class)->group(function (){
         Route::get('/', 'index');
-        Route::get('/absen', function() {
-            return view('guru.guruabsensi');
-        });
+        Route::get('/absen', 'absenPage');
 
-        Route::get('/daftar', function() {
-            return view('guru.gurudaftar');
-        });
+        Route::get('/daftar', 'daftarAbsenPage');
 
-        Route::get('/gururekap', function() {
-            return view('guru.gururekap');
-        });
+        Route::get('/rekap', 'rekapPage');
     });
 });
