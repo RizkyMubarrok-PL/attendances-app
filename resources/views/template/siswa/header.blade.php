@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Siswa</title>
   <!-- <link rel="shortcut icon" href="Aset/logoemsremove.png" type="image/jpg"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="style/siswa.css">
-  <link rel="stylesheet" href="style/home.css">
+  <link rel="stylesheet" href="{{ asset('style/siswa.css') }}">
+  <link rel="stylesheet" href="{{ asset('style/siswa.css') }}">
 </head>
 <body>
   
@@ -28,13 +28,13 @@
                   <a class="nav-link max-lg-2" aria-current="page" href="/siswa">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link max-lg-2" href="/absensisiswa">Absensi</a>
+                  <a class="nav-link max-lg-2" href="{{ route('siswaAbsen') }}">Absensi</a>
                 </li>
               </ul>
             </div>
           </div>
           <div class="profile-user">
-            <img src="img/anime.png" alt="Profile Picture" class="rounded-circle" width="50" height="50" onclick="toggleMenu()">
+            <img src="{{ asset('img/anime.png') }}" alt="Profile Picture" class="rounded-circle" width="50" height="50" onclick="toggleMenu()">
           </div>
 
           <div class="sub-menu-wrap" id="subMenu">
