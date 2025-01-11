@@ -39,7 +39,7 @@ Route::group(['prefix' => 'dashboard'], function () {
 Route::group(['prefix' => 'guru'], function () {
     Route::controller(GuruController::class)->group(function (){
         Route::get('/', 'index');
-        Route::get('/absen', 'absenPage')->name('absen');
+        Route::get('/absen', 'absenPage')->name('guruAbsen');
 
         Route::get('/daftar', 'daftarAbsenPage')->name('daftar');
 
@@ -51,6 +51,6 @@ Route::group(['prefix' => 'siswa'], function () {
     Route::controller(SiswaController::class)->group(function () {
         Route::get('/', 'index');
 
-        Route::get('/absensi', 'absensiPage');
+        Route::get('/absensi', 'absensiPage')->name('siswaAbsen');
     });
 });

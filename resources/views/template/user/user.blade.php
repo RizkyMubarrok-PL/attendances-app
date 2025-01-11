@@ -107,7 +107,7 @@
                 <h4 style="margin-left: 1rem;">Menu Utama</h4>
               </div>
               <li class="nav-item">
-                <a href="{{ route('absen') }}" class="nav-link">
+                <a href="{{ route('guruAbsen') }}" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">Absensi</p>
                 </a>
