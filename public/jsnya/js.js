@@ -33,6 +33,43 @@ function togglePassword() {
     }
 }
 
+document.getElementById('rekapSelector').addEventListener('change', function () {
+    const dynamicDropdown = document.getElementById('dynamicDropdown');
+    const dynamicSelector = document.getElementById('dynamicSelector');
+    const dynamicLabel = document.getElementById('dynamicLabel');
+
+    // Clear existing options
+    dynamicSelector.innerHTML = '';
+
+    if (this.value === 'perBulan') {
+      dynamicLabel.textContent = 'Pilih Bulan';
+      const months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      months.forEach((month, index) => {
+        const option = document.createElement('option');
+        option.value = index + 1;
+        option.textContent = month;
+        dynamicSelector.appendChild(option);
+      });
+      dynamicDropdown.style.display = 'block';
+    } else if (this.value === 'perSemester') {
+      dynamicLabel.textContent = 'Pilih Semester';
+      const semesters = ['Semester 1', 'Semester 2'];
+      semesters.forEach((semester, index) => {
+        const option = document.createElement('option');
+        option.value = index + 1;
+        option.textContent = semester;
+        dynamicSelector.appendChild(option);
+      });
+      dynamicDropdown.style.display = 'block';
+    } else {
+      dynamicDropdown.style.display = 'none';
+    }
+  });
+
+
 
 
 

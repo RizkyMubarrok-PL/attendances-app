@@ -1,7 +1,7 @@
 @include('template/user/user')
 
   <!-- Content Wrapper -->
-  <div class="content-wrapper mt-5">
+  <div class="content-wrapper">
 
     <div class="content-header">
       <div class="container-fluid">
