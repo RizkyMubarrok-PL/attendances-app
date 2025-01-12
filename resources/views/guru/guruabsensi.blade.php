@@ -1,7 +1,7 @@
 @include('template/user/user')
 
   <!-- Content Wrapper -->
-  <div class="content-wrapper mt-5">
+  <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
         <div class="font bungkus-judul-utama"><h1 class="m-0" style="color: #2A8579;">Absensi Siswa</h1></div>
@@ -19,8 +19,46 @@
                 <!-- <i class="fa fa-times"></i> -->
             </div>
 
-            <div class="col-lg-12 mt-3">
-              
+            <div class="col-lg-12 mt-5">
+              <div class="filter d-flex justify-content-between align-items-center">
+
+                <div class="filter-left">
+                  <select class="form-select" id="filterType">
+                    <option value="perhari">Per Hari</option>
+                    <option value="perbulan">Per Bulan</option>
+                    <option value="persemester">Per Semester</option>
+                  </select>
+                </div>
+
+                <div class="filter-right">
+                  <div id="input-perhari" class="d-none">
+                    <input type="date" class="form-control" id="filterDate">
+                  </div>
+                  <div id="input-perbulan" class="d-none">
+                    <select class="form-select" id="filterMonth">
+                      <option value="1">Januari</option>
+                      <option value="2">Februari</option>
+                      <option value="3">Maret</option>
+                      <option value="4">April</option>
+                      <option value="5">Mei</option>
+                      <option value="6">Juni</option>
+                      <option value="7">Juli</option>
+                      <option value="8">Agustus</option>
+                      <option value="9">September</option>
+                      <option value="10">Oktober</option>
+                      <option value="11">November</option>
+                      <option value="12">Desember</option>
+                    </select>
+                  </div>
+                  <div id="input-persemester" class="d-none">
+                    <select class="form-select" id="filterSemester">
+                      <option value="1">Semester 1</option>
+                      <option value="2">Semester 2</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
                 <div class="table-responsive mt-3">
                     <table class="table table-hover">
                         <thead>

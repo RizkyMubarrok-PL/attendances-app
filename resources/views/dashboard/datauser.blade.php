@@ -1,7 +1,7 @@
 @include('template/admin/admin')
 
 <!-- Content Wrapper -->
-<div class="content-wrapper mt-5">
+<div class="content-wrapper">
   <div class="content-header">
     <div class="container-fluid">
       <div class="font bungkus-judul-utama">

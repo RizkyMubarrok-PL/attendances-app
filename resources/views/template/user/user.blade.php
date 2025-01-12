@@ -24,44 +24,68 @@
     margin-top: 5px;
   }
 
-
-  .main-sidebar {
-    background-color: white;
+  .main-sidebar{
+      background-color: white;
   }
 
-  .brand-link {
-    background-color: #2A8579;
+  .sidebar {
+      background-color: white;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
   }
 
-  .guru {
-    font-size: 10px;
+  .halo{
+    max-height: 100vh;
+  }
+
+  .brand-link{
+      background-color: #2A8579;
+  }
+
+  .guru{
+      font-size: 10px;
   }
 
   .tombol-dashboard {
-    background-color: #2A8579;
-    /* Warna latar belakang */
-    color: white;
-    /* Warna teks */
-    border-radius: 10px;
-    /* Membuat sudut melengkung */
-    text-decoration: none;
-    /* Hilangkan garis bawah pada teks */
-    transition: 500ms;
+      background-color: #2A8579; /* Warna latar belakang */
+      color: white; /* Warna teks */
+      border-radius: 10px; /* Membuat sudut melengkung */
+      text-decoration: none; /* Hilangkan garis bawah pada teks */
+      transition: 500ms;
   }
 
   .tombol-dashboard:hover {
-    background-color: #256F66;
-    /* Warna latar saat hover */
+      background-color: #256F66; /* Warna latar saat hover */
   }
 
   .tombol-dashboard i {
-    font-size: 18px;
-    /* Ukuran ikon */
+      font-size: 18px; /* Ukuran ikon */
   }
 
-  .tombol-logout {
-    margin-top: 12rem;
-  }
+  .logout-section {
+
+          margin-top: auto;
+          border-top: 1px solid #eee;
+          margin-bottom: 4rem ;
+      }
+
+      .btn-logout {
+          background-color: #2A8579;
+          color: white;
+          width: 100%;
+          border-radius: 10px;
+          padding: 0.75rem;
+          transition: all 0.3s;
+      }
+
+      .btn-logout:hover {
+          background-color: #256F66;
+          color: white;
+      }
 </style>
 
 <body class="hold-transition sidebar-mini">
@@ -79,30 +103,35 @@
     <!-- /.navbar -->
 
     <!-- Sidebar -->
+
     <aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
+
       <a href="#" class="brand-link">
         <img class="brand-image img-circle elevation-2" src="{{ asset('img/logohaloges1.png') }}" alt="">
         <span class="font brand-text" style="color: white;">SiHadir</span>
       </a>
+
       <div class="sidebar">
+        <!-- User Panel -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
             <img src="{{ asset('img/anime.png') }}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Guru BK</a>
-            <a href="#" class="guru">Guru</a>
+            <a href="#" class="d-block">Administrator</a>
+            <a href="#" class="guru">Admin</a>
           </div>
         </div>
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
-            <li class="nav-item ">
-              <a href="homeguru" class="tombol-dashboard nav-link" style="border-radius: 10px;">
-                <i class="nav-icon fas fa-home" style="position: relative; right: 1.5px;"></i>
+
+        <div class="menu-section">
+          <ul class="halo nav nav-pills nav-sidebar flex-column" role="menu">
+            <li class="nav-item">
+              <a href="{{ route('dashboard') }}" class="tombol-dashboard nav-link" style="border-radius: 10px;">
+                <i class="nav-icon fas fa-home"></i>
                 <p style="position: relative; left: 10px;">Dashboard</p>
               </a>
             </li>
-            <div class="konten mt-4 ">
+            <div class="konten mt-4">
               <div class="brand-text" style="opacity: 50%; font-family: 'Comfortaa', sans-serif;">
                 <h4 style="margin-left: 1rem;">Menu Utama</h4>
               </div>
@@ -125,14 +154,21 @@
                 </a>
               </li>
             </div>
-            <li class="nav-item tombol-logout">
-              <a href="#" class="tombol-dashboard nav-link" style="border-radius: 10px;">
-                <i class="nav-icon fas fa-sign-out-alt" style="position: relative; right: 1.5px;"></i>
-                <p style="position: relative; left: 10px;">Logout</p>
-              </a>
-            </li>
           </ul>
-        </nav>
+        </div>
+
+        <div class="logout-section">
+          <ul class="nav nav-pills nav-sidebar flex-column">
+          <li class="nav-item tombol-logout">
+            <a href="#" class="tombol-dashboard nav-link" style="border-radius: 10px;">
+              <i class="nav-icon fas fa-sign-out-alt" style="position: relative; right: 1.5px;"></i>
+              <p style="position: relative; left: 10px;">Logout</p>
+            </a>
+          </li>
+          </ul>
+        </div>
+
       </div>
+
     </aside>
     <!-- /.sidebar -->

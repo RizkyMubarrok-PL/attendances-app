@@ -1,7 +1,7 @@
 @include('template/user/user')
 
   <!-- Content Wrapper -->
-  <div class="content-wrapper mt-5">
+  <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
         <div class="font bungkus-judul-utama"><h1 class="m-0" style="color: #2A8579;">Daftar Absensi</h1></div>
