@@ -97,7 +97,8 @@
                         data-class="{{ $user->role == 'siswa' ? ($user->class?->class_id ?? '') : '' }}">
                         Update
                       </button>
-                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                        data-id="{{ $user->id }}" data-name="{{ $user->name }}">
                         Delete
                       </button>
                     </td>
@@ -235,19 +236,22 @@
   <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <form action="{{ route('deleteUser') }}" method="POST" id="deleteForm" class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Warning!</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Peringatan!</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Are you sure want to delete?
+          @csrf
+          @method('DELETE')
+          <input type="hidden" name="user_id" value="" id="deleteUserId">
+          <p>Anda yakin ingin menghapus <b id="deleteUserName"></b>?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
-          <button type="button" class="btn btn-danger">No</button>
+          <button type="submit" class="btn btn-primary">Ya</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 
@@ -263,8 +267,7 @@
             secondaryDropdown.style.display = "none"; // Hide the second dropdown
         }
     }
-  </script>
-  <script>
+
     // Add this to your existing script section
     document.addEventListener('DOMContentLoaded', function() {
         const updateModal = document.getElementById('updateModal');
@@ -293,6 +296,23 @@
             } else {
                 modal.querySelector('#updateKelasDropDown').style.display = 'none';
             }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const updateModal = document.getElementById('deleteModal');
+        updateModal.addEventListener('show.bs.modal', function(event) {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            
+            // Extract info from data-* attributes
+            const userId = button.getAttribute('data-id');
+            const userName = button.getAttribute('data-name');
+            
+            // Update the modal's content
+            const modal = this;
+            modal.querySelector('#deleteUserId').value = userId;
+            modal.querySelector('#deleteUserName').innerHTML = userName;
         });
     });
   </script>

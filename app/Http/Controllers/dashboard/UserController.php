@@ -129,14 +129,26 @@ class UserController extends Controller
         ]);
     }
 
-    public function delete(int $user_id, User $users, ClassStudents $classStudent)
+    public function delete(Request $request, User $users, ClassStudents $classStudent)
     {
+        $validate = $request->validate([
+            "user_id" => "required|exists:users,id",
+        ], [
+            "user.required" => "The user id is required.",
+            "user.exist" => "The user id is not exists in users table.",
+        ]);
+
+        $user_id = $validate['user_id'];
+
         $user = $users->find($user_id);
 
         $user->delete();
 
         // success delete a users
-        // return view();
+        return redirect()->back()->with([
+            'status' => true,
+            'msg' => 'Berhasil menghapus data users.'
+        ]);
     }
 
     public function UserByName(Request $request, User $users)

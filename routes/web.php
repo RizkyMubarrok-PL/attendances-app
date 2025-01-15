@@ -24,6 +24,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/user', 'index')->name('user');
         Route::post('/user/new', 'insert')->name('createUser');
         Route::patch('/user/update', 'update')->name('updateUser');
+        Route::delete('/user/delete', 'delete')->name('deleteUser');
     });
 
     // ini rute buat halaman data class
