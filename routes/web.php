@@ -10,7 +10,7 @@ use App\Http\Controllers\dashboard\ClassController;
 use App\Http\Controllers\dashboard\AttendancesController;
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('login/login');
 });
 
 // ini rutenya admin
@@ -22,6 +22,8 @@ Route::group(['prefix' => 'dashboard'], function () {
     // ini rute buat halaman data user
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'index')->name('user');
+        Route::post('/user/new', 'insert')->name('createUser');
+        Route::patch('/user/update', 'update')->name('updateUser');
     });
 
     // ini rute buat halaman data class
