@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function insert(Request $request, User $users, ClassStudents $classStudent)
     {
-        // try {
+        // validasi input
         $validate = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -32,7 +32,6 @@ class UserController extends Controller
             'role' => ['required', 'string', Rule::enum(EnumRole::class)],
             'class' => ['required_if:role,Siswa', 'exists:classes,id'],
         ], [
-            // Custom messages for specific fields
             'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a valid string.',
             'email.required' => 'The email field is required.',
@@ -45,7 +44,7 @@ class UserController extends Controller
             'class.required_if' => 'The class field is required when the role is Siswa.',
             'class.exists' => 'The selected class does not exist.',
         ]);
-
+        // buat data user baru
         $user = $users->create([
             'name' => $validate['name'],
             'email' => $validate['email'],
@@ -53,6 +52,7 @@ class UserController extends Controller
             'role' => $validate['role']
         ]);
 
+        // jika user merupaka siswa maka menetapkan data kelas untuk user
         if ($validate['role'] == EnumRole::Siswa) {
             $classStudent->create([
                 'student_id' => $user->id,
@@ -60,21 +60,11 @@ class UserController extends Controller
             ]);
         }
 
+        // kembali ke halaman user
         return redirect()->back()->with([
             'status' => true,
             'msg' => 'Berhasil menambahkan user baru.'
         ]);
-        // } catch (ValidationException $e) {
-        //     return redirect()->back()->withErrors([
-        //         'status' => false,
-        //         'msg' => 'Validation failed. Please check your input.',
-        //     ])->withInput();
-        // } catch (\Exception $e) {
-        //     return redirect()->back()->withErrors([
-        //         'status' => false,
-        //         'msg' => 'Failed to create user.',
-        //     ])->withInput();
-        // }
     }
 
     public function update(Request $request, User $users, Classes $classes, ClassStudents $classStudent)
