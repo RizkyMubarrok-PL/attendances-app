@@ -8,47 +8,77 @@ use App\Models\Classes;
 
 class ClassController extends Controller
 {
-    public function index(Classes $classes) {
+    public function index(Classes $classes)
+    {
         $classes = $classes->paginate(20);
-        
+
         return view('dashboard.datakelas', ['classes' => $classes]);
     }
 
-    public function insert(Classes $classes, Request $request) {
-        $validate = $request([
-            'class_name' => 'required|string|unique,class_name',
+    public function insert(Classes $classes, Request $request)
+    {
+        $validate = $request->validate([
+            'kelas' => 'required|string|unique:classes,class_name',
+        ], [
+            'kelas.required' => 'Bidang nama wajib diisi.',
+            'kelas.string' => 'Bidang nama harus berupa teks.',
+            'kelas.unique' => 'Bidang nama sudah ada.'
         ]);
 
-        $classes->insert([
-            'class_name'
+        $class = $classes->create([
+            'class_name' => $validate['kelas'],
         ]);
 
-        // return view() 
+        return redirect()->back()->with([
+            'status' => true,
+            'msg' => 'Berhasil menambahkan kelas baru.'
+        ]);
     }
 
-    public function update(Classes $classes, int $class_id, Request $request) {
+    public function update(Classes $classes, Request $request)
+    {
+        $validate = $request->validate([
+            'class_id' => 'required|exists:classes,id',
+            'kelas' => 'required|string|unique:classes,class_name,class_id',
+        ]);        
+
+        $class_id = $validate['class_id'];
+
         $class = $classes->find($class_id);
-
-        $validate = $request([
-            'class_name' => 'requires|string|unique,class_name',
-        ]);
-
+        
         $class->update([
-            'class_name' => $validate['class_name']
+            'class_name' => $validate['kelas']
         ]);
 
-        // return view()
+        return redirect()->back()->with([
+            'status' => true,
+            'msg' => 'Berhasil mengubah data kelas.'
+        ]);
     }
 
-    public function delete(Classes $classes, int $class_id) {
+    public function delete(Classes $classes, Request $request)
+    {
+        $validate = $request->validate([
+            'class_id' => 'required|exists:classes,id'
+        ], [
+            'class_id.required' => 'Bidang id wajib diisi.',
+            'class_id.exists' => 'Class id tidak ada dalam table classes.'
+        ]);
+
+        $class_id = $validate['class_id'];
+
         $class = $classes->find($class_id);
 
         $class->delete();
 
-        // return view()
+        return redirect()->back()->with([
+            'status' => true,
+            'msg' => 'Berhasil menghapus data kelas.'
+        ]);
     }
 
-    public function classByName(Classes $classes, Request $request) {
+    public function classByName(Classes $classes, Request $request)
+    {
         $validate = $request->validate([
             'class_name' => 'string'
         ]);

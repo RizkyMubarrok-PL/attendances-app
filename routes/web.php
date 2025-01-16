@@ -30,6 +30,9 @@ Route::group(['prefix' => 'dashboard'], function () {
     // ini rute buat halaman data class
     Route::controller(ClassController::class)->group(function () {
         Route::get('/class', 'index')->name('class');
+        Route::post('/class/new', 'insert')->name('createClass');
+        Route::patch('/class/update', 'update')->name('updateClass');
+        Route::delete('/class/delete', 'delete')->name('deleteClass');
     });
 
     // ini rute buat data absensi

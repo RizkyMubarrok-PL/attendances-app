@@ -151,7 +151,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function UserByName(Request $request, User $users)
+    public function UserByAll(Request $request, User $users)
     {
         $validate = $request->validate([
             'search' => 'string'
