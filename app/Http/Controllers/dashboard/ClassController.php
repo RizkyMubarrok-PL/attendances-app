@@ -40,6 +40,12 @@ class ClassController extends Controller
         $validate = $request->validate([
             'class_id' => 'required|exists:classes,id',
             'kelas' => 'required|string|unique:classes,class_name,class_id',
+        ], [
+            'class_id.required' => 'Bidang id wajib diisi.',
+            'class_id.exists' => 'Class id tidak ada dalam table classes.',
+            'kelas.required' => 'Bidang nama wajib diisi.',
+            'kelas.string' => 'Bidang nama harus berupa teks.',
+            'kelas.unique' => 'Bidang nama sudah ada.'
         ]);        
 
         $class_id = $validate['class_id'];
@@ -62,7 +68,7 @@ class ClassController extends Controller
             'class_id' => 'required|exists:classes,id'
         ], [
             'class_id.required' => 'Bidang id wajib diisi.',
-            'class_id.exists' => 'Class id tidak ada dalam table classes.'
+            'class_id.exists' => 'Class id tidak ada dalam table classes.',
         ]);
 
         $class_id = $validate['class_id'];
