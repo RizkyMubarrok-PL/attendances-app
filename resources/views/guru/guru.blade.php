@@ -16,7 +16,7 @@
 
             <div class="col-lg-8 col-12">
               <div class="box-konten small-box">
-                <div class="inner d-flex">
+                <div class="inner d-flex flex-column flex-lg-row">
                   <div class="img-home m-4">
                       <img src="img/smkn10.png" alt="">
                   </div>
@@ -31,9 +31,9 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner">  
-                  <div class="icon-konten"><i class="fas fa-school" style="font-size: 4.5rem; color: #2A8579;"></i></div>
+                  <div class="icon-konten mt-4"><i class="fas fa-school" style="font-size: 4.5rem; color: #2A8579;"></i></div>
                     <div class="tulisan-konten-guru-dua text-center">
-                      <h2 class="font m-4">Total Kelas</h2>
+                      <h2 class="font">Total Kelas</h2>
                       <p class="jumlah-konten">22</p>
                   </div>
                 </div>
@@ -42,19 +42,19 @@
             
             <div class="col-lg-12 col-12">
               <div class="box-konten small-box">
-                <div class="inner d-flex">
-                    <div class="col-lg-8 penjelasan-aplikasi  ">
+                <div class="inner d-flex flex-column flex-lg-row">
+                  <div class="col-lg-8 penjelasan-aplikasi">
                       <h2>Download Aplikasi Absensi Siswa Kami!</h2>
                       <p class="mt-4">SiHadir adalah aplikasi absensi siswa yang khusus dibuat untuk mempermudah absensi siswa di SMKN 10 Surabaya. Kami membuat aplikasi berbasis website untuk mengabsen siswa, dan juga untuk merekap kehadiran siswa. Kami juga menyediakan aplikasi Mobile untuk pengguna aplikasi absensi siswa kami.</p>
-                    </div>
-                    <div class="col-lg-4 download-aplikasi-bungkus">
-                    <div class="pengunduhan">
-                      <h4>Unduh sekarang!</h4>
-                      <a href="" class="button-download"><img src="" alt="">Download</a>
-                    </div>
-                    <div class="download-aplikasi"><img src="img/foto aset.png" alt=""></div>
                   </div>
-                </div>
+                  <div class="col-lg-4 download-aplikasi-bungkus">
+                      <div class="pengunduhan">
+                          <h4>Unduh sekarang!</h4>
+                          <a href="#" class="button-download"><img src="" alt="">Download</a>
+                      </div>
+                      <div class="download-aplikasi"><img src="img/foto aset.png" alt=""></div>
+                  </div>
+                </div>              
               </div>
             </div>
           </div>

@@ -228,7 +228,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-ijo">Update</button>
         </div>
-      </form>
+      </form> 
     </div>
   </div>
 
