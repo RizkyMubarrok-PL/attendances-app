@@ -159,7 +159,6 @@ table td{
 
 .img-home img{
   position: relative;
-  
   width: 125px;
 }
 
@@ -176,6 +175,20 @@ table td{
     letter-spacing: 5px;
 }
 
+@media (max-width: 768px){
+
+  .img-home img{
+    width: 95px;
+  }
+
+  .tulisan-konten-guru{
+    top: 0;
+    height: 190px;
+    right: 0;
+  }
+
+}
+
 .tulisan-konten-guru p{
   /* max-width: 400px; */
 }
@@ -190,7 +203,7 @@ table td{
     margin-top: 1rem;
     top: 1rem;
     color: #2A8579;
-    height: 122px;
+    height: 107px;
 }
 
 .download-aplikasi-bungkus{
