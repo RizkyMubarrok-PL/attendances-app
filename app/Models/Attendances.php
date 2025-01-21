@@ -12,7 +12,8 @@ class Attendances extends Model
 
     protected $fillable = ['student_id', 'teacher_id', 'status', 'description'];
 
-    public function updateAttendance(string $attendance_id, string $teacher_id, $status, string $description) {
+    public function updateAttendance(string $attendance_id, string $teacher_id, $status, string $description)
+    {
         $attendance = $this->find($attendance_id);
 
         $attendance->update([
@@ -58,8 +59,17 @@ class Attendances extends Model
         }
     }
 
-    public function getAttendances() {
+    public function getAttendances()
+    {
         return $this->studentAttendances()->paginate(20);
+    }
+
+    public function attendancesByClassNameToday(string $className)
+    {
+        return $this->studentAttendances()
+            ->where('Class_Name', $className)
+            ->where('attendances.created_at', now()->toDateString())
+            ->get();
     }
 
     public function studentAttendances()

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('student_id', User::class);
             $table->foreignId('teacher_id', User::class)->nullable();
             $table->enum('status', ['Hadir', 'Izin', 'Alpha']);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
