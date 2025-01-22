@@ -116,7 +116,7 @@ table td{
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 90%; /* Modal tidak memenuhi seluruh layar */
+    width: 100%; /* Modal tidak memenuhi seluruh layar */
     max-width: 500px; /* Maksimum lebar modal */
     max-height: 80vh; /* Maksimum tinggi modal */
     overflow-y: auto; /* Aktifkan scroll vertikal jika konten lebih tinggi dari modal */
@@ -126,6 +126,19 @@ table td{
     overflow-y: auto;  /* Scroll ketika konten melebihi tinggi maksimum */
   }
   
+  input[type="date"] {
+    color: #2A8579;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(48%) sepia(13%) saturate(1640%) hue-rotate(130deg) brightness(92%) contrast(87%);
+  }
+
+  input[type="date"]:focus {
+      border-color: #2A8579;
+      box-shadow: 0 0 0 0.2rem rgba(42, 133, 121, 0.25);
+  }
+
   .animate-top {
     animation: slideTop 0.5s ease-out;
   }
@@ -143,19 +156,7 @@ table td{
     cursor: pointer;
   }
 
-  /* Animasi untuk menutup modal */
-@keyframes slideFadeOutTop {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-100%); opacity: 0; }
-}
-
-/* Tambahkan kelas untuk menutup modal dengan animasi */
-.modal-content.close-animation {
-  animation: slideFadeOutTop 0.5s ease-out forwards;
-}
-
 /* Halaman user */
-
 
 .img-home img{
   position: relative;

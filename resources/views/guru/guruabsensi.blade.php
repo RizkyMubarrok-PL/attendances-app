@@ -16,7 +16,6 @@
             <div class="search-container col-lg-12 col-12">
                 <i class="fa fa-search"></i>
                 <input type="search" name="keyword" id="search" class="form-control" placeholder="Search ..." autofocus>
-                <!-- <i class="fa fa-times"></i> -->
             </div>
 
             <div class="col-lg-12 mt-5">
@@ -61,38 +60,34 @@
               </div>
                 <div class="table-responsive mt-3">
                     <table class="table table-hover">
-                        <thead>
+                        <thead id="tableHead">
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                <th>Action</th>
+                                <th class="text-center">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tableBody">
                             <tr>
                                 <td>1</td>
-                                <td>Brian Mubarok Farel</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <select class="form-select" name="" id="" disabled>
-                                            <option value="">Hadir</option>
-                                            <option value="">Sakit</option>
-                                            <option value="">Izin</option>
-                                        </select>
-                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#popupModal">
-                                          <i class="fa fa-info-circle"></i> 
-                                          <i class="info-tulisan">info</i>
-                                        </button>
-                                    </div>
+                                <td>Depa</td>
+                                <td class="text-center">
+                                  <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal" data-bs-target="#popupModal">
+                                    <i class="fa fa-info-circle"></i> 
+                                    <i class="info-tulisan" id="statusLabel">Status</i>
+                                  </button>                                  
                                 </td>
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>Depa Bintang Yeremi</td>
-                                <td>
-                                    <a href="" class="btn btn-danger text-light rounded">Delete</a>
-                                </td>
-                            </tr>
+                              <td>2</td>
+                              <td>Haloges1</td>
+                              <td class="text-center">
+                                <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal" data-bs-target="#popupModal">
+                                  <i class="fa fa-info-circle"></i> 
+                                  <i class="info-tulisan" id="statusLabel">Status</i>
+                                </button>                                
+                              </td>
+                          </tr>
                         </tbody>
                     </table>
                 </div>
@@ -105,21 +100,189 @@
   </div>
   <!-- /.content-wrapper -->
 
-<!-- Pop up Keterangan -->
-<div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Keterangan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p style="color: #2A8579;">
-          Keterangan absensi siswa: hadir, izin, sakit, atau alpa.
-        </p>
+  <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Keterangan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="attendanceForm">
+            <div class="form-group mb-3">
+              <label for="statusSelect" class="form-label">Status Kehadiran :</label>
+              <input id="statusSelect" type="text" name="status" class="form-control" value="hadir" disabled>
+            </div>
+            
+            <div class="form-group" id="keteranganContainer" style="display: none;">
+              <label for="keterangan" class="form-label">Keterangan :</label>
+              <textarea id="keterangan" name="komentar" rows="4" class="form-control" placeholder="Tulis keterangan Anda di sini">
+              </textarea>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Ambil elemen filter
+  const filterType = document.getElementById('filterType');
+  const inputPerHari = document.getElementById('input-perhari');
+  const inputPerBulan = document.getElementById('input-perbulan');
+  const inputPerSemester = document.getElementById('input-persemester');
+  const filterDate = document.getElementById('filterDate');
+  const filterMonth = document.getElementById('filterMonth');
+  const filterSemester = document.getElementById('filterSemester');
+
+  // Fungsi untuk menyembunyikan semua input filter
+  function resetFilters() {
+    inputPerHari.classList.add('d-none');
+    inputPerBulan.classList.add('d-none');
+    inputPerSemester.classList.add('d-none');
+  }
+
+  // Set tanggal hari ini
+  function setDefaultValues() {
+    const today = new Date();
+
+    // Tanggal hari ini
+    const todayDate = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
+    filterDate.value = todayDate;
+
+    // Bulan saat ini
+    const currentMonth = today.getMonth() + 1; // Januari dimulai dari 0
+    filterMonth.value = currentMonth;
+
+    // Semester saat ini
+    const currentSemester = today.getMonth() < 6 ? 1 : 2; // Semester 1 (Jan-Jun), Semester 2 (Jul-Des)
+    filterSemester.value = currentSemester;
+  }
+
+  // Pilih filter "Per Hari" secara default
+  function setDefaultFilter() {
+    filterType.value = 'perhari'; // Set pilihan default
+    inputPerHari.classList.remove('d-none'); // Tampilkan input "Per Hari"
+  }
+
+  // Event listener untuk perubahan filter
+  filterType.addEventListener('change', function () {
+    resetFilters(); // Sembunyikan semua input
+
+    // Tampilkan input sesuai dengan pilihan
+    const selectedValue = filterType.value;
+    if (selectedValue === 'perhari') {
+      inputPerHari.classList.remove('d-none');
+    } else if (selectedValue === 'perbulan') {
+      inputPerBulan.classList.remove('d-none');
+    } else if (selectedValue === 'persemester') {
+      inputPerSemester.classList.remove('d-none');
+    }
+  });
+
+  // Tambahkan logika untuk menangani filter (opsional)
+  filterDate?.addEventListener('change', function () {
+    console.log('Filter Per Hari:', this.value);
+    // Implementasi logika filter per hari
+  });
+
+  filterMonth?.addEventListener('change', function () {
+    console.log('Filter Per Bulan:', this.value);
+    // Implementasi logika filter per bulan
+  });
+
+  filterSemester?.addEventListener('change', function () {
+    console.log('Filter Per Semester:', this.value);
+    // Implementasi logika filter per semester
+  });
+
+  // Inisialisasi awal
+  setDefaultValues(); // Set nilai default untuk tanggal
+  setDefaultFilter(); // Pastikan filter default adalah "Per Hari"
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const filterType = document.getElementById('filterType');
+  const tableHead = document.getElementById('tableHead');
+  const tableBody = document.getElementById('tableBody');
+
+  // Data dummy untuk contoh
+  const dummyData = [
+    { name: 'Brian Mubarok Farel', hadir: 20, ijin: 5, sakit: 3, alpha: 2 },
+    { name: 'Liana Kartika', hadir: 18, ijin: 4, sakit: 2, alpha: 1 },
+    { name: 'Andi Saputra', hadir: 22, ijin: 3, sakit: 1, alpha: 0 },
+  ];
+
+  // Fungsi untuk merender tabel berdasarkan filter
+  function renderTable(filterType) {
+    // Kosongkan tabel
+    tableHead.innerHTML = '';
+    tableBody.innerHTML = '';
+
+    if (filterType === 'perhari') {
+      // Header untuk Per Hari
+      tableHead.innerHTML = `
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th class="text-center">Status</th>
+        </tr>
+      `;
+
+      // Data dummy untuk Per Hari
+      dummyData.forEach((data, index) => {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${data.name}</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal" data-bs-target="#popupModal">
+                <i class="fa fa-info-circle"></i> Status
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    } else {
+      // Header untuk Per Bulan / Per Semester
+      tableHead.innerHTML = `
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Hadir</th>
+          <th>Ijin</th>
+          <th>Sakit</th>
+          <th>Alpha</th>
+        </tr>
+      `;
+
+      // Data dummy untuk Per Bulan / Per Semester
+      dummyData.forEach((data, index) => {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${data.name}</td>
+            <td>${data.hadir}</td>
+            <td>${data.ijin}</td>
+            <td>${data.sakit}</td>
+            <td>${data.alpha}</td>
+          </tr>
+        `;
+      });
+    }
+  }
+
+  // Event listener untuk perubahan filter
+  filterType.addEventListener('change', function () {
+    renderTable(this.value);
+  });
+
+  // Render tabel default (Per Hari)
+  renderTable('perhari');
+});
+
+</script>
 
 @include('template/user/userfooter')
