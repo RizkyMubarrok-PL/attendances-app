@@ -48,6 +48,9 @@ Route::group(['prefix' => 'guru'], function () {
         Route::get('/absen', 'absenPage')->name('guruAbsen');
 
         Route::get('/daftar', 'daftarAbsenPage')->name('daftar');
+        Route::post('/absen/class', 'absenPerKelas')->name('getAbsen');
+
+        Route::post('/absen/update', 'updateAbsensi')->name('updateAbsen');
 
         Route::get('/rekap', 'rekapPage')->name('rekap');
     });
