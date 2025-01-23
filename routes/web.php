@@ -68,5 +68,7 @@ Route::group(['prefix' => 'siswa'], function () {
         Route::get('/', 'index');
 
         Route::get('/absensi', 'absensiPage')->name('siswaAbsen');
+        Route::post('/absensiDate', 'absensiDate')->name('absensiDate');        
+        Route::post('/absensiMonths', 'absensiMonths')->name('absensiMonths');
     });
 });
