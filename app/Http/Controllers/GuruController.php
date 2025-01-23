@@ -44,7 +44,7 @@ class GuruController extends Controller
             'class.exists' => 'CLass name is not  found.',
         ]);
 
-        $classAttendances = $attendances->attendancesByClassNameToday($validate['classKeyword']);
+        $classAttendances = $attendances->attendancesByClassNameToday($validate['classKeyword']);        
 
         return redirect()->back()->with(['classAttendances' => $classAttendances]);
     }
