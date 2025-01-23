@@ -44,7 +44,7 @@
                 <h2>Stelle</h2>
               </div>
               <hr>
-              <a href="" class="sub-menu-link">
+              <a href="{{ route('logout') }}" class="sub-menu-link">
                   <i class="fas fa-sign-out-alt" style="color: #2A8579;"></i>
                   <p>LogOut</p>
                   <span class="fas fa-chevron-right"></span>

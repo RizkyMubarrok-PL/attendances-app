@@ -25,7 +25,7 @@ class ClassAndStudents extends Seeder
 
         $teacher = User::create([
             'name' => 'teacher1',
-            'email' => 'teacher1@example.com',
+            'email' => 'teacher1@test',
             'password' => Hash::make('password'),
             'role' => 'guru',
         ]);
@@ -35,7 +35,7 @@ class ClassAndStudents extends Seeder
         for ($i = 1; $i <= 60; $i++) {
             $students [] = [
                 'name' => 'student' . $i,
-                'email' => 'student' . $i . '@example.com',
+                'email' => 'student' . $i . '@test',
                 'password' => Hash::make('password'),
                 'role' => 'siswa',
                 'created_at' => now(),
