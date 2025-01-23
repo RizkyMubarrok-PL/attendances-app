@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\ClassController;
@@ -11,6 +12,11 @@ use App\Http\Controllers\dashboard\AttendancesController;
 
 Route::get('/', function () {
     return view('login/login');
+});
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login', 'login')->name('login');
+    Route::get('/logout', 'logout')->name('logout');
 });
 
 // ini rutenya admin
@@ -41,8 +47,8 @@ Route::group(['prefix' => 'dashboard'], function () {
     });
 });
 
-
-Route::group(['prefix' => 'guru'], function () {
+// rute guru
+Route::group(['prefix' => 'guru', 'middleware' => 'role:guru'], function () {
     Route::controller(GuruController::class)->group(function (){
         Route::get('/', 'index');
         Route::get('/absen', 'absenPage')->name('guruAbsen');
@@ -56,6 +62,7 @@ Route::group(['prefix' => 'guru'], function () {
     });
 });
 
+// rute siswa
 Route::group(['prefix' => 'siswa'], function () {
     Route::controller(SiswaController::class)->group(function () {
         Route::get('/', 'index');
