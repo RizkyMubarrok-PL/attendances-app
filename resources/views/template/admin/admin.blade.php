@@ -151,7 +151,7 @@
         <div class="logout-section">
           <ul class="nav nav-pills nav-sidebar flex-column">
           <li class="nav-item tombol-logout">
-            <a href="#" class="tombol-dashboard nav-link" style="border-radius: 10px;">
+            <a href="{{ route('logout') }}" class="tombol-dashboard nav-link" style="border-radius: 10px;">
               <i class="nav-icon fas fa-sign-out-alt" style="position: relative; right: 1.5px;"></i>
               <p style="position: relative; left: 10px;">Logout</p>
             </a>
