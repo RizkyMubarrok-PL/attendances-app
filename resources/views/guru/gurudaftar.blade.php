@@ -31,9 +31,9 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>No</th>
+                    <th class="no-column">No</th>
                     <th>Name</th>
-                    <th>Action</th>
+                    <th class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $attendances->Student_Name }}</td>
-                      <td>
+                      <td class="text-center">
                         <input type="hidden" name="absensi[{{ $id }}][id]" value="{{ $id }}">
 
                         <div class="modal fade overflow-hidden h-100" id="popupModal_{{ $id }}"
@@ -86,11 +86,19 @@
                           </div>
                         </div>
 
-                        <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal"
+                        {{-- <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal"
                           data-bs-target="#popupModal_{{ $id }}">
                           <i class="fa fa-info-circle"></i>
                           <i class="info-tulisan" id="statusLabel_{{ $id }}">Hadir</i>
-                        </button>
+                        </button> --}}
+                        <button type="button" 
+                              class="btn btn-success show-status-modal" 
+                              data-bs-toggle="modal" 
+                              data-bs-target="#popupModal_{{ $id }}"
+                              id="attendanceButton_{{ $id }}">
+                        <i class="fa fa-info-circle"></i>
+                        <i class="info-tulisan" id="statusLabel_{{ $id }}">Hadir</i>
+                      </button>
                       </td>
                     </tr>
                     @endforeach
@@ -199,6 +207,29 @@
             });
         });
     });
+
+    document.querySelectorAll("[id^='statusSelect_']").forEach(function (selectElement) {
+    const attendanceId = selectElement.id.split('_')[1]; 
+    const attendanceButton = document.getElementById(`attendanceButton_${attendanceId}`);
+    
+    selectElement.addEventListener('change', function () {
+        attendanceButton.classList.remove('btn-success', 'btn-warning', 'btn-danger');
+
+        switch(this.value) {
+            case 'Hadir':
+                attendanceButton.classList.add('btn-success');
+                break;
+            case 'Izin':
+                attendanceButton.classList.add('btn-warning');
+                break;
+            case 'Alpha':
+                attendanceButton.classList.add('btn-danger');
+                break;
+            default:
+                attendanceButton.classList.add('btn-info');
+        }
+    });
+});
 
   </script>
 @include('template/user/userfooter')
