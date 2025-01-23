@@ -20,7 +20,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 // ini rutenya admin
-Route::group(['prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => 'role:admin'], function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index')->name('dashboard');
     });
@@ -63,7 +63,7 @@ Route::group(['prefix' => 'guru', 'middleware' => 'role:guru'], function () {
 });
 
 // rute siswa
-Route::group(['prefix' => 'siswa'], function () {
+Route::group(['prefix' => 'siswa', 'middleware' => 'role:siswa'], function () {
     Route::controller(SiswaController::class)->group(function () {
         Route::get('/', 'index');
 
