@@ -36,7 +36,6 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                @if (session('classAttendances'))
                 <tbody>
                   <form action="{{ route('updateAbsen') }}" method="POST">
                     @csrf
@@ -202,5 +201,4 @@
     });
 
   </script>
-
-  @include('template/user/userfooter')
+@include('template/user/userfooter')
