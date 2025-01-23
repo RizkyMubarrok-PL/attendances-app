@@ -17,7 +17,7 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        $user = User::where('email', 'teacher1@example.com')->first();
+        $user = User::where('email', $credentials['email'])->first();
         $token = $user->createToken('SiHadir')->plainTextToken;
 
         if (Auth::attempt($credentials)) {
