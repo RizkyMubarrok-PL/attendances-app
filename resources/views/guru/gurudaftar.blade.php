@@ -36,6 +36,7 @@
                   </tr>
                 </thead>
                 @if (session('classAttendances'))
+                {{ dd(session('classAttendances')) }}
                 <tbody>
                   <form action="{{ route('updateAbsen') }}" method="POST">
                     @csrf
