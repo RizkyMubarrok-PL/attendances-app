@@ -113,7 +113,7 @@ class AttendanceController extends Controller
             // }
 
             $validate = $request->validate([
-                'class_id' => 'required|string|exists:classes,id',
+                'class_id' => 'required|exists:classes,id',
                 'date' => 'string|date_format:Y-m-d'
             ], [
                 'class_id.exists' => 'class_id is not exists in classes table.'
