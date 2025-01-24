@@ -16,34 +16,7 @@ class ClassAndStudents extends Seeder
      */
     public function run(): void
     {
-        $classes = Classes::insert([
-            ['class_name' => 'CLass A'],
-            ['class_name' => 'Class B']
-        ]);
-
-        $classesId = Classes::pluck('id')->toArray();
-
-        $teacher = User::create([
-            'name' => 'teacher1',
-            'email' => 'teacher1@test',
-            'password' => Hash::make('password'),
-            'role' => 'guru',
-        ]);
-
-        $students = [];
-        
-        for ($i = 1; $i <= 60; $i++) {
-            $students [] = [
-                'name' => 'student' . $i,
-                'email' => 'student' . $i . '@test',
-                'password' => Hash::make('password'),
-                'role' => 'siswa',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];            
-        }
-        
-        User::insert($students);
+        $classesId = Classes::where('class_name', 'LIKE', '%RPL%')->pluck('id')->toArray();
         
         $studentsId = User::where('role', 'siswa')
         ->orderBy('id')
