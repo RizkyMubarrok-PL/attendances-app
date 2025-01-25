@@ -43,24 +43,36 @@
                                         <tr>
                                             <th>Tanggal</th>
                                             <th>Hari</th>
-                                            <th>Nama</th>
+                                            <th>Nama Guru</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>23-03-2024</td>
-                                            <td>Sabtu</td>
-                                            <td>Parahmen Brandon</td>
-                                            <td>
-                                                Alpha
-                                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                    data-bs-target="#popupModal">
-                                                    <i class="fa fa-info-circle"></i>
-                                                    <i class="info-tulisan">info</i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        @if (session('attendances'))
+                                            @foreach (session('attendances') as $attendance)
+                                            <tr>
+                                                <td>{{ \Carbon\Carbon::parse($attendance->Attendance_Created_Date)->format('d-m-Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($attendance->Attendance_Created_Date)->locale('id')->translatedFormat('l'); }}</td>
+                                                <td>{{ $attendance->Teacher_Name == null ? '-' : $attendance->Teacher_Name }}</td>
+                                                <td>
+                                                    
+                                                    <button class="btn {{ $attendance->Attendance_Status == 'Izin' ? 'btn-warning' : ($attendance->Attendance_Status == 'Alpha' ? 'btn-danger' : 'btn-success') }}" disabled>
+                                                        {{ $attendance->Attendance_Status }}
+                                                    </button>
+
+                                                    @if ($attendance->Attendance_Status == 'Izin')
+                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                        data-bs-target="#descModal" data-desc="{{ $attendance->Attendance_description }}">
+                                                        <i class="fa fa-info-circle"></i>
+                                                        <i class="info-tulisan">info</i>
+                                                    </button>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                            
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -73,7 +85,7 @@
 
 </main>
 
-<div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="descModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,8 +93,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p style="color: #2A8579;">
-                    Keterangan absensi siswa: hadir, izin, sakit, atau alpa.
+                <p style="color: #2A8579;" id="desc">                    
                 </p>
             </div>
         </div>
@@ -112,6 +123,21 @@
         form.action = actionRoute;
         form.submit();
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const descMoodal = document.getElementById('descModal');
+        descMoodal.addEventListener('show.bs.modal', function(event) {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            
+            // Extract info from data-* attributes
+            const description = button.getAttribute('data-desc');            
+            
+            // Update the modal's content
+            const modal = this;
+            modal.querySelector('#desc').value = description;
+        });
+    });
 </script>
 
 @include('template/siswa/footer')
