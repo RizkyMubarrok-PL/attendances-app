@@ -40,7 +40,7 @@
           <div class="sub-menu-wrap" id="subMenu">
             <div class="sub-menu shadow-sm">
               <div class="user-info">
-                <img src="img/anime.png" alt="">
+                <img src="{{ asset('img/anime.png') }}" alt="">
                 <h2>Stelle</h2>
               </div>
               <hr>
