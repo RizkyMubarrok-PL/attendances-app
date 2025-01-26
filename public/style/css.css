@@ -140,11 +140,35 @@ body {
     font-size: 12px;
 }
 
-/* @keyframes fadeIn {
-    from {
-        opacity: 0;
+.alert-custom {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 1050; /* Pastikan berada di atas elemen lain */
+    max-width: 90%; /* Untuk memastikan alert responsif di layar kecil */
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
     }
-    to {
-        opacity: 1;
+
+    .login-left {
+        display: none;
     }
-} */
+
+    .login-right {
+        padding: 30px;
+        width: 100%;
+    }
+
+    .login-card {
+        margin: 50px;
+        width: 600px;
+        height: 350px;
+        display: flex;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+}
