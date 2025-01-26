@@ -14,6 +14,10 @@ Route::get('/', function () {
     return view('login/login');
 });
 
+Route::get('/laporan', function () {
+    return view('dashboard.adminlaporan');
+});
+
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login')->name('login');
     Route::get('/logout', 'logout')->name('logout');
