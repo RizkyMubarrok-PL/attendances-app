@@ -15,7 +15,7 @@ class TeacherAndClasses extends Seeder
      */
     public function run(): void
     {
-        $classesId = Classes::where('class_name', 'LIKE', '%FKK%')->pluck('id')->toArray();
+        $classesId = Classes::where('class_name', 'LIKE', '%FKk%')->pluck('id')->toArray();
 
         $teachersId = User::where('role', 'guru')
         ->orderBy('id')
