@@ -421,3 +421,8 @@ table td{
 .popup-content {
   animation: fadeIn 0.3s ease forwards;
 }
+
+.laporan-icon{
+    font-size: 35px;
+    margin-bottom: 20px;
+}
