@@ -32,7 +32,7 @@
                     <p class="jumlah-konten">{{ $totalClasses }}</p>
                   </div>
                 </div>
-                <a href="kelas" class="box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="kelas" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <div class="col-lg-4 col-12">
@@ -44,9 +44,37 @@
                     <p class="jumlah-konten">{{ $totalTeachers }}</p>
                   </div>
                 </div>
-                <a href="user" class="box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
+            <div class="col-lg-12 col-12">
+              <div class="box-konten small-box">
+                <div class="inner">
+                  <h3 style="color: #2A8579; font-weight: bold;" class="font text-center fs-3">Status Absensi Siswa</h3>
+                  <div class="row mt-3">
+                    <div class="col-lg-4 col-12">
+                      <div class="tulisan-konten">
+                        <h3 class="fk font text-success">Total Kehadiran</h3>
+                        <p class="jumlah-konten text-success">{{ $totalClasses }}</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                      <div class="tulisan-konten">
+                        <h3 class="fk font text-warning">Total Izin</h3>
+                        <p class="jumlah-konten text-warning">{{ $totalClasses }}</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                      <div class="tulisan-konten">
+                        <h3 class="fk font text-danger">Total Alpha</h3>
+                        <p class="jumlah-konten text-danger">{{ $totalClasses }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a href="kelas" class="moreinfo-buset box-footer small-box-footer">View more <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>  
           </div>
         </div>
       </div>

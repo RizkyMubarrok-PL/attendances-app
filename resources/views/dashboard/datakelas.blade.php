@@ -52,7 +52,7 @@
                     <td>#</td>
                     <td>{{ $class->class_name }}</td>
                     <td>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal"
                         data-bs-target="#updateModal"  data-id="{{ $class->id }}" data-name="{{ $class->class_name }}">Update</button> |
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
                         data-id="{{ $class->id }}" data-name="{{ $class->class_name }}">
