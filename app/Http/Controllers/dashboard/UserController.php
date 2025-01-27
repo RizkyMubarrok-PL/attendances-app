@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function index(User $users, Classes $classes)
     {
-        $users = $users->with('class')->paginate(15);
+        $users = $users->with(['studentClass', 'teacherClasses'])->paginate(15);
         $classes = $classes->all();
 
         return view('dashboard.datauser', compact('users', 'classes'));

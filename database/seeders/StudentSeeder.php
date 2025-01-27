@@ -19,8 +19,8 @@ class StudentSeeder extends Seeder
         for ($i = 1; $i <= 60; $i++) {
             $students [] = [
                 'name' => 'siswa' . $i,
-                'email' => 'siswa' . $i . '@test',
-                'password' => Hash::make('123'),
+                'email' => 'p' . $i . '@p',
+                'password' => Hash::make('1'),
                 'role' => 'siswa',
                 'created_at' => now(),
                 'updated_at' => now(),
