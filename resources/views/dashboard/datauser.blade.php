@@ -86,7 +86,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>                    
                     <td>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal"
+                      <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#updateModal"
                         data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}"
                         data-role="{{ $user->role }}"
                         data-class="{{ $user->role == 'siswa' ? ($user->class?->class_id ?? '') : ($user->role == 'guru' ? $user->teacherClasses->pluck('class_id') : '') }}">
