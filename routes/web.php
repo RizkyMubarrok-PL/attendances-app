@@ -32,6 +32,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'role:admin'], function (
     // ini rute buat halaman data user
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'index')->name('user');
+        Route::get('/user/search', 'index')->name('userSearch');
         Route::post('/user/new', 'insert')->name('createUser');
         Route::patch('/user/update', 'update')->name('updateUser');
         Route::delete('/user/delete', 'delete')->name('deleteUser');

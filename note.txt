@@ -20,3 +20,10 @@ Guru
 sama dengan mobile
 
 optimize seeder
+
+
+todo
+
+kirim data class id dari btn update modal,
+pisahkan generate function dan add new dropdown,
+dimodal update domloader get class id data pisahkan data pertama dan data sesudahnya,

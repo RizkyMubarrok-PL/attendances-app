@@ -36,6 +36,7 @@ class GuruController extends Controller
 
     public function absenPerKelas(Request $request, Attendances $attendances)
     {
+        dd($request);
         $validate  = $request->validate([
             'classKeyword' => 'required|string|exists:classes,class_name'
         ], [
@@ -52,7 +53,7 @@ class GuruController extends Controller
     public function updateAbsensi(Request $request, Attendances $attendances)
     {
         $absensi = $request->input('absensi');    
-        // dd($absensi);
+        dd($request);
 
         $rules = [
             
