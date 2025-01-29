@@ -18,48 +18,8 @@
             <input type="search" name="keyword" id="search" class="form-control" placeholder="Search ..." autofocus>
             <!-- <i class="fa fa-times"></i> -->
           </div>
-          @if (session('status'))
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <p>{{ session('msg') }}</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          @endif
-          @error('user_id')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <p>{{ $message }}</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          @enderror
-          @error('name')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <p>{{ $message }}</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          @enderror
-          @error('password')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <p>{{ $message }}</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          @enderror
-          @error('email')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <p>{{ $message }}</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          @enderror
-          @error('role')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <p>{{ $message }}</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          @enderror
-          @error('class')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <p>{{ $message }}</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          @enderror
+
+          @include('dashboard.Alert')
 
           <div class="col-12 mt-3">
             <button class="btn btn-ijo" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
@@ -86,12 +46,13 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                      {{ $user->role == 'siswa' ? $user->studentClass->class_id : ($user->role == 'guru' ?
-                      $user->teacherClasses->pluck('class_id') : '') }}
+                      {{ $user->role == 'siswa' ? ($user->studentClass?->class_id ?? '-') :
+                        ($user->role == 'guru' ? $user->teacherClasses->pluck('class_id')->implode(', ') : '-') }}
+
                       <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal"
                         data-bs-target="#updateModal" id="updateBtn" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                         data-email="{{ $user->email }}" data-role="{{ $user->role }}"
-                        data-class="{{ $user->role == 'siswa' ? $user->studentClass->class_id : ($user->role == 'guru' ? $user->teacherClasses->pluck('class_id') : '') }}">
+                        data-class="{{ $user->role == 'siswa' ? ($user->studentClass?->class_id ?? '-') : ($user->role == 'guru' ? $user->teacherClasses->pluck('class_id')->implode(', ') : '-') }}">
                         Update
                       </button>
                       <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
@@ -151,7 +112,7 @@
   <!-- Create Modal -->
   <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="{{ route('createUser') }}" method="POST" class="modal-content">
+      <form action="{{ route('createUser') }}" method="POST" class="modal-content" enctype="multipart/form-data">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Create New User</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -177,7 +138,7 @@
           {{-- role select input --}}
           <div class="form-group">
             <label for="createRole">Role :</label>
-            <select name="role" id="createRole" class="form-select" onchange="OpenSecondDropdownChange('createRole')"
+            <select name="role" id="createRole" class="form-select" onchange="OpenSecondDropdownChange('createRole', 'createSiswaClassDropdown', 'createGuruClassDropdown')"
               required>
               <option value="admin">Admin</option>
               <option value="guru">Guru</option>
@@ -203,7 +164,6 @@
           </div>
           <div class="form-group" id="createSiswaClassDropdown" style="display: none;">
             <label for="editKelas">Kelas :</label>
-            {{-- add btn dropdown --}}
             <div class="custom-dropdown dropdownClass">
               <select name="class" class="form-select">
                 @if ($classes->isNotEmpty())
@@ -251,7 +211,7 @@
           </div>
           <div class="form-group">
             <label for="updateRole">Role:</label>
-            <select name="role" id="updateRole" class="form-select" onchange="OpenSecondDropdownChange('updateRole')"
+            <select name="role" id="updateRole" class="form-select" onchange="OpenSecondDropdownChange('updateRole', 'updateSiswaClassDropdown', 'updateGuruClassDropdown')"
               required>
               <option value="admin">Admin</option>
               <option value="guru">Guru</option>
@@ -299,20 +259,28 @@
   </div>
 
   <script>
-    function OpenSecondDropdownChange(roleSelectId) {
+    function OpenSecondDropdownChange(roleSelectId, siswaDropdown, guruDropdown) {
       const roleSelect = document.getElementById(roleSelectId);
-      classGuru = document.getElementById('createGuruClassDropdown');
-      classSiswa = document.getElementById('createSiswaClassDropdown');
+      classGuru = document.getElementById(guruDropdown);
+      classSiswa = document.getElementById(siswaDropdown);
 
       classSiswa.style.display = 'none';
       classGuru.style.display = 'none';
 
+      const siswaSelect = classSiswa.querySelector('select');
+      const guruSelects = classGuru.querySelectorAll('select');
+            
+      siswaSelect.removeAttribute('name');
+      guruSelects.forEach(select => select.removeAttribute('name'));
+      
       if (roleSelect.value === 'guru') {
         classGuru.style.display = 'block';
+        guruSelects.forEach(select => select.name = 'class[]');
       }
-
+      
       if (roleSelect.value === 'siswa') {
         classSiswa.style.display = 'block';
+        siswaSelect.name = 'class';
       }
     }
 
@@ -325,33 +293,79 @@
       container.appendChild(newDropdown);
     }
 
+  // function createDropdown(value, existingDropdowns, dropdownClass) {
+  //   // make new dropdown container
+  //   const newDropdown = document.createElement('div');
+  //   newDropdown.className = 'custom-dropdown '+ dropdownClass;
+  //   newDropdown.id = `newDropdown${existingDropdowns + 1}`;
+    
+  //   // make new select with name class[]
+  //   const newSelect = document.createElement('select');
+  //   newSelect.name = 'class[]';
+  //   newSelect.className = 'form-select';
+    
+  //   @if ($classes->isNotEmpty())
+  //       @foreach ($classes as $class)
+  //           option = document.createElement('option');
+  //           option.value = '{{ $class->id }}';
+  //           if (option.value === value.toString()) {
+  //               option.selected = true;
+  //           }
+  //           option.textContent = '{{ $class->class_name }}';
+  //           newSelect.appendChild(option);
+  //       @endforeach
+  //   @else
+  //       option = document.createElement('option');
+  //       option.value = '';
+  //       option.textContent = 'Data Kelas Kosong';
+  //       newSelect.appendChild(option);
+  //   @endif
+
+  //   const deleteButton = document.createElement('button');
+  //   deleteButton.type = 'button';
+  //   deleteButton.className = 'btn btn-danger';
+  //   deleteButton.textContent = 'x';
+  //   deleteButton.addEventListener('click', () => {
+  //       newDropdown.remove();
+  //   });
+
+  //   // Append elements
+  //   newDropdown.appendChild(newSelect);
+  //   newDropdown.appendChild(deleteButton);
+
+  //   return newDropdown;
+  // }
+  const classes = {!! $classes->toJson() !!};
   function createDropdown(value, existingDropdowns, dropdownClass) {
     // make new dropdown container
     const newDropdown = document.createElement('div');
-    newDropdown.className = 'custom-dropdown '+ dropdownClass;
+    newDropdown.className = 'custom-dropdown ' + dropdownClass;
     newDropdown.id = `newDropdown${existingDropdowns + 1}`;
     
     // make new select with name class[]
     const newSelect = document.createElement('select');
-    newSelect.name = 'class[]';
+    newSelect.name = 'class[]';  // This is correct
     newSelect.className = 'form-select';
     
-    @if ($classes->isNotEmpty())
-        @foreach ($classes as $class)
-            option = document.createElement('option');
-            option.value = '{{ $class->id }}';
+    // Your classes data should be passed into JavaScript first
+    const classes = {!! $classes->toJson() !!};  // Add this in your blade view
+    
+    if (classes.length > 0) {
+        classes.forEach(classItem => {
+            const option = document.createElement('option');
+            option.value = classItem.id;
             if (option.value === value.toString()) {
                 option.selected = true;
             }
-            option.textContent = '{{ $class->class_name }}';
+            option.textContent = classItem.class_name;
             newSelect.appendChild(option);
-        @endforeach
-    @else
-        option = document.createElement('option');
+        });
+    } else {
+        const option = document.createElement('option');
         option.value = '';
         option.textContent = 'Data Kelas Kosong';
         newSelect.appendChild(option);
-    @endif
+    }
 
     const deleteButton = document.createElement('button');
     deleteButton.type = 'button';
@@ -363,8 +377,7 @@
 
     // Append elements
     newDropdown.appendChild(newSelect);
-    newDropdown.appendChild(deleteButton);
-
+    newDropdown.appendChild(deleteButton);    
     return newDropdown;
   }
 
@@ -402,49 +415,33 @@
       modal.querySelector('#updateName').value = userName;
       modal.querySelector('#updateEmail').value = userEmail;
       modal.querySelector('#updateRole').value = userRole.toLowerCase();
+
+      siswaClass = modal.querySelector('#updateSiswaClassDropdown');
+      guruClass = modal.querySelector('#updateGuruClassDropdown');
+
+      const siswaSelect = siswaClass.querySelector('select');
+      const guruSelects = guruClass.querySelectorAll('select');
+            
+      siswaSelect.removeAttribute('name');
+      guruSelects.forEach(select => select.removeAttribute('name'));
       
       if (userRole === 'siswa') {
-        siswaClass = modal.querySelector('#updateSiswaClassDropdown');
         siswaClass.style.display = 'block';
-
-        classSelect = siswaClass.querySelector('select');
-        classSelect.value = userClass;
-      }
-
-      // if (userRole === 'guru') {
-      //   arrayUserClass = parseClassData(userClass);
-
-      //   guruClass = modal.querySelector('#updateGuruClassDropdown');
-      //   guruClass.style.display = 'block';
-
-      //   classSelect = guruClass.querySelector('select');
-      //   classSelect.value = arrayUserClass[0];
-
-      //   delete arrayUserClass[0]
-
-      //   dropdownClass = 'dropdownClass'
-      //   existingDropdowns = guruClass.querySelectorAll('dropdownClass').length
-
-      //   listClassSelect = [];        
-      //   for(let classId in arrayUserClass) {
-      //     listClassSelect.push(createDropdown(classId, existingDropdowns, dropdownClass));
-      //   }
-
-      //   for (dropdown in listClassSelect) {
-      //     guruClass.appendChild(dropdown);
-      //   }
-
-      // }
+        
+        siswaSelect.value = userClass;
+        siswaSelect.name = 'class';
+      }      
 
       if (userRole === 'guru') {
         arrayUserClass = parseClassData(userClass);
 
         // Show the dropdown for updating classes
-        guruClass = modal.querySelector('#updateGuruClassDropdown');
         guruClass.style.display = 'block';
 
         classSelect = guruClass.querySelector('select');
         classSelect.value = arrayUserClass[0];
+        
+        guruSelects.forEach(select => select.name = 'class[]');
 
         // Remove the first element from arrayUserClass
         arrayUserClass.shift();
@@ -456,8 +453,7 @@
         
         // Use forEach to iterate over arrayUserClass
         arrayUserClass.forEach((classId) => {
-            // Add the created dropdown to the list
-            console.log(classId)
+            // Add the created dropdown to the list            
             listClassSelect.push(createDropdown(classId, existingDropdowns, dropdownClass));
         });
 
@@ -475,13 +471,10 @@
         const modal = this;
         const guruClass = modal.querySelector('#updateGuruClassDropdown');
         
-        if (userRole === 'guru' && guruClass) {
-            // Get all select elements with the dropdownClass
+        if (userRole === 'guru' && guruClass) {            
             const additionalSelects = Array.from(guruClass.querySelectorAll('.dropdownClass'));
-            additionalSelectsLength = additionalSelects.length
-            console.log(additionalSelects);
-            
-            // Remove all additional select elements
+            additionalSelectsLength = additionalSelects.length            
+                        
             additionalSelects.reverse();
             additionalSelects.forEach(select => {
               if (additionalSelectsLength > 1) {
@@ -498,14 +491,11 @@
   document.addEventListener('DOMContentLoaded', function() {
       const deleteModal = document.getElementById('deleteModal');
       deleteModal.addEventListener('show.bs.modal', function(event) {
-          // Button that triggered the modal
           const button = event.relatedTarget;
-          
-          // Extract info from data-* attributes
+                    
           const userId = button.getAttribute('data-id');
           const userName = button.getAttribute('data-name');
-          
-          // Update the modal's content
+                    
           const modal = this;
           modal.querySelector('#deleteUserId').value = userId;
           modal.querySelector('#deleteUserName').innerHTML = userName;

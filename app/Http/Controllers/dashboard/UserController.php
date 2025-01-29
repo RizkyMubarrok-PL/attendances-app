@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Classes;
 use App\Models\ClassStudents;
+use App\Models\TeacherClasses;
 use App\Rules\EnumStatus;
 use App\EnumRole;
 use Illuminate\Http\Request;
@@ -22,15 +23,19 @@ class UserController extends Controller
         return view('dashboard.datauser', compact('users', 'classes'));
     }
 
-    public function insert(Request $request, User $users, ClassStudents $classStudent)
+    public function insert(Request $request, User $users, ClassStudents $classStudent, TeacherClasses $teacherClasses)
     {
-        // validasi input
         $validate = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string',
             'role' => ['required', 'string', Rule::enum(EnumRole::class)],
-            'class' => ['required_if:role,Siswa', 'exists:classes,id'],
+            'class' => [
+                Rule::when($request->role === 'siswa' || $request->role === 'suru', ['required', 'integer', 'exists:classes,id']),
+                Rule::when($request->role === 'guru', ['array']), ['required'],
+            ],'class.*' => [
+                Rule::when($request->role === 'guru', ['integer', 'distinct', 'exists:classes,id']),
+            ],
         ], [
             'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a valid string.',
@@ -41,9 +46,15 @@ class UserController extends Controller
             'password.string' => 'The password must be a valid string.',
             'role.required' => 'The role field is required.',
             'role.string' => 'The role must be a valid string.',
-            'class.required_if' => 'The class field is required when the role is Siswa.',
+            'class.required' => 'The class field is required when the role is Siswa or Suru.',
+            'class.integer' => 'The class must be an integer when the role is Siswa or Suru.',
             'class.exists' => 'The selected class does not exist.',
+            'class.array' => 'The class field must be an array when the role is Guru.',
+            'class.*.integer' => 'Each class must be an integer.',
+            'class.*.distinct' => 'Each class must be unique.',
+            'class.*.exists' => 'One or more selected classes do not exist.',
         ]);
+
         // buat data user baru
         $user = $users->create([
             'name' => $validate['name'],
@@ -52,12 +63,20 @@ class UserController extends Controller
             'role' => $validate['role']
         ]);
 
-        // jika user merupaka siswa maka menetapkan data kelas untuk user
-        if ($validate['role'] == EnumRole::Siswa) {
-            $classStudent->create([
+        if ($validate['role'] == 'siswa') {
+            $classStudent->insert([
                 'student_id' => $user->id,
                 'class_id' => $validate['class']
             ]);
+        }
+        
+        if ($validate['role'] == 'guru') {            
+            foreach ($validate['class'] as $item){
+                $teacherClasses->insert([
+                    'teacher_id' => $user->id,
+                    'class_id' => $item
+                ]);
+            }
         }
 
         // kembali ke halaman user
@@ -67,7 +86,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $users, Classes $classes, ClassStudents $classStudent)
+    public function update(Request $request, User $users, Classes $classes, ClassStudents $classStudent, TeacherClasses $teacherClasses)
     {
         // set password input menjadi string ''
         $request->merge([
@@ -75,13 +94,19 @@ class UserController extends Controller
         ]);
         // validasi input
 
+        // dd($request);
         $validate = $request->validate([
             'user_id' => ['required', 'exists:users,id'],
             'name' => 'required|string',
             'email' => 'required|email',
             'password' => 'string',
             'role' => ['required', 'string', Rule::enum(EnumRole::class)],
-            'class' => ['required_if:role,siswa', 'exists:classes,id'],
+            'class' => [
+                Rule::when($request->role === 'siswa', ['required', 'integer', 'exists:classes,id']),
+                Rule::when($request->role === 'guru', ['required', 'array']),
+            ],'class.*' => [
+                Rule::when($request->role === 'guru', ['integer', 'distinct', 'exists:classes,id']),
+            ],
         ], [
             'user_id.required' => 'The user id is required',
             'name.required' => 'The name field is required.',
@@ -92,9 +117,16 @@ class UserController extends Controller
             'password.string' => 'The password must be a valid string.',
             'role.required' => 'The role field is required.',
             'role.string' => 'The role must be a valid string.',
-            'class.required_if' => 'The class field is required when the role is Siswa.',
+            'class.required' => 'The class field is required when the role is Siswa or Guru.',
+            'class.integer' => 'The class must be an integer when the role is Siswa or Guru.',
             'class.exists' => 'The selected class does not exist.',
-        ]);        
+            'class.array' => 'The class field must be an array when the role is Guru.',
+            'class.*.integer' => 'Each class must be an integer.',
+            'class.*.distinct' => 'Each class must be unique.',
+            'class.*.exists' => 'One or more selected classes do not exist.',
+        ]);
+
+        // dd($validate);
 
         $user_id = $validate['user_id'];
 
@@ -109,17 +141,32 @@ class UserController extends Controller
             'role' => $validate['role']
         ]);
 
-        $studentClass = $classStudent->where('student_id', $user->id);
-        
-        // jika user berganti menjadi siswa
+                
         if ($user->role === 'siswa') {
+            $classStudent->where('student_id', $user->id)->delete();
             $classId = $validate['class'];
-            $data = ['student_id' => $user->id, 'class_id' => $classId];
-            // jika user merupakan siswa dan sudah di tetapkan kelasnya, maka kelasnya akan diubah dan jika belum maka tetapkan kelasnya
-            empty($studentClass) ? $studentClass->update($data) : $classStudent->create($data);
+            $data = ['student_id' => $user->id, 'class_id' => $classId];            
+            
+            $classStudent->insert($data);
         } else {
-            // jika user berubah menjadi selain siswa maka data kelasnya akan dihapus
-            $studentClass?->delete();
+            $classStudent->where('student_id', $user->id)->delete();            
+        }
+        
+        
+        if ($user->role == 'guru') {
+            $teacherClasses->where('teacher_id', $user->id)->delete();
+            $data = [];
+
+            foreach($validate['class'] as $item) {
+                $data[] = [
+                    'teacher_id' => $user->id,
+                    'class_id' =>  $item
+                ];
+            }
+
+            $teacherClasses->insert($data);
+        } else {
+            $teacherClasses->where('teacher_id', $user->id)->delete();
         }
 
 
@@ -151,15 +198,24 @@ class UserController extends Controller
         ]);
     }
 
-    public function UserByAll(Request $request, User $users)
+    public function UserByAll(Request $request, User $users, Classes $classes)
     {
         $validate = $request->validate([
             'search' => 'string'
         ]);
 
-        $searchedUser = $users->where('username', 'like', '%' . $validate['search'] . '%')->get();
+        $search = $validate['search'];
+
+        $classes = $classes->all();
+
+        $users = $users->with(['studentClass', 'teacherClasses'])
+        ->when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%")
+                         ->orWhere('role', 'like', "%{$search}%");
+        })->paginate(10);
 
         // return list of searched user
-        // return view()
+        return view('dashboard.datauser', compact('users', 'classes'));
     }
 }
