@@ -81,7 +81,7 @@
                     </div>                    
                   </div>
                 </div>
-                <a href="kelas" class="moreinfo-buset box-footer small-box-footer">View more <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="laporan" class="moreinfo-buset box-footer small-box-footer">View more <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>  
           </div>

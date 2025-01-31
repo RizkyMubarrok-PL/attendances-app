@@ -19,43 +19,43 @@
             <!-- <i class="fa fa-times"></i> -->
           </div>
           @if (session('status'))
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
             <p>{{ session('msg') }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           @endif
           @error('user_id')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
             <p>{{ $message }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           @enderror
           @error('name')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
             <p>{{ $message }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           @enderror
           @error('password')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
             <p>{{ $message }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           @enderror
           @error('email')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
             <p>{{ $message }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           @enderror
           @error('role')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
             <p>{{ $message }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           @enderror
           @error('class')
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show alert-custom" role="alert">
             <p>{{ $message }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
