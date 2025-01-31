@@ -18,6 +18,14 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $credentials['email'])->first();
+
+        if (empty($user)) {
+            return response()->json([
+                'status' => false,
+                'msg' => 'User email tidak ditemukan.'
+            ], 404);
+        }
+
         $token = $user->createToken('SiHadir')->plainTextToken;
 
         if (Auth::attempt($credentials)) {

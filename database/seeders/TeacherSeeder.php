@@ -16,15 +16,15 @@ class TeacherSeeder extends Seeder
     {
         $teachers = [[
             'name' => 'guru1',
-            'email' => 'guru1@test',
-            'password' => Hash::make('123'),
+            'email' => 'g1@g',
+            'password' => Hash::make('1'),
             'role' => 'guru',
             'created_at' => now(),
             'updated_at' => now(),
         ], [
             'name' => 'guru2',
-            'email' => 'guru2@test',
-            'password' => Hash::make('123'),
+            'email' => 'g2@g',
+            'password' => Hash::make('1'),
             'role' => 'guru',
             'created_at' => now(),
             'updated_at' => now(),
