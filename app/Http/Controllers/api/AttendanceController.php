@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Rules\EnumStatus;
 use App\Models\Attendances;
@@ -196,6 +196,46 @@ class AttendanceController extends Controller
                 'success' => false,
                 'error' => 'There is a error.',
                 'msg' => 'error: ' . $e
+            ], 500);
+        }
+    }
+
+    public function updateClassAttendances (Request $request, Attendances $attendances){
+        try {
+            $validate = $request->validate([
+                'teacher_id' => 'required|exists:users,id',
+                'attendances' => 'required|array',
+                'attendances.*.attendance_id' => 'required|exists:attendances,id',
+                'attendances.*.status' => ['required', Rule::in(['Hadir', 'Alpha', 'Izin'])],
+                'attendances.*.description' => ['nullable', 'string',],
+            ]);
+    
+            $teacher_id = $validate['teacher_id'];
+    
+            foreach ($validate['attendances'] as $attendance) {
+                $data = [
+                    'status' => $attendance['status'],
+                    'teacher_id' => $attendance['status'] == 'Izin' ? $teacher_id : null, 
+                    'description' => $attendance['status'] == 'Izin' ? $attendance['description'] : null,
+                ];
+                $attendances->where('id', $attendance['attendance_id'])->update($data);
+            }
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Successfully update attendances.'
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Validation Error.',
+                'msg' => $e->getMessage()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'There is an error.',
+                'msg' => $e->getMessage()
             ], 500);
         }
     }
