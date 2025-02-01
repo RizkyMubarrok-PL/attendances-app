@@ -436,8 +436,24 @@ table td{
   width: 370px;
 }
 
+.btn-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; 
+  height: 38px; 
+  padding: 0; 
+  border: none; 
+  line-height: 1; 
+  aspect-ratio: 1 / 1; 
+}
+
+.btn-custom i {
+  font-size: 10px; /* Sesuaikan ikon */
+}
+
 .btn-close {
-  filter: invert(1); /* Mengubah warna ke putih */
+  filter: invert(-1); /* Mengubah warna ke putih */
   transition: 500ms;
 }
 
