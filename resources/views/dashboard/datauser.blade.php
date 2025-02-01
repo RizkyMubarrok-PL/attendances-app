@@ -147,21 +147,21 @@
           </div>
           <div class="form-group" id="createGuruClassDropdown" style="display: none;">
             <label for="editKelas">Kelas :</label>
-            {{-- add btn dropdown --}}
-            <div class="custom-dropdown dropdownClass">
-              <select name="class[]" class="form-select">
-                @if ($classes->isNotEmpty())
-                @foreach ($classes as $class)
-                <option value="{{ $class->id }}">{{ $class->class_name }}</option>
-                @endforeach
-                @else
-                <option value="">Data Kelas Kosong</option>
-                @endif
-              </select>
-              <button type="button" class="btn btn-primary addDropdown"
-                onclick="addDropdownField('createGuruClassDropdown', 'dropdownClass')">+</button>
+            <div class="custom-dropdown d-flex align-items-center gap-2 mb-3"> 
+                <select name="class[]" class="form-select">
+                    @if ($classes->isNotEmpty())
+                        @foreach ($classes as $class)
+                            <option value="{{ $class->id }}">{{ $class->class_name }}</option>
+                        @endforeach
+                    @else
+                        <option value="">Data Kelas Kosong</option>
+                    @endif
+                </select>
+                <button type="button" class="btn-custom btn btn-primary addDropdown"
+                    onclick="addDropdownField('createGuruClassDropdown', 'dropdownClass')"><i class="font-custom fa-solid fa-plus"></i>
+                </button>
             </div>
-          </div>
+          </div>        
           <div class="form-group" id="createSiswaClassDropdown" style="display: none;">
             <label for="editKelas">Kelas :</label>
             <div class="custom-dropdown dropdownClass">
@@ -221,7 +221,7 @@
           <div class="form-group" id="updateGuruClassDropdown" style="display: none;">
             <label for="editKelas">Kelas :</label>
             {{-- add btn dropdown --}}
-            <div class="custom-dropdown dropdownClass">
+            <div class="custom-dropdown d-flex align-items-center gap-2 mb-3 dropdownClass">
               <select name="class[]" class="form-select">
                 @if ($classes->isNotEmpty())
                 @foreach ($classes as $class)
@@ -231,8 +231,9 @@
                 <option value="">Data Kelas Kosong</option>
                 @endif
               </select>
-              <button type="button" class="btn btn-primary addDropdown"
-                onclick="addDropdownField('updateGuruClassDropdown', 'dropdownClass')">+</button>
+              <button type="button" class="btn-custom btn btn-primary addDropdown"
+                  onclick="addDropdownField('createGuruClassDropdown', 'dropdownClass')"><i class="font-custom fa-solid fa-plus"></i>
+              </button>
             </div>
           </div>
           <div class="form-group" id="updateSiswaClassDropdown" style="display: none;">
@@ -293,62 +294,18 @@
       container.appendChild(newDropdown);
     }
 
-  // function createDropdown(value, existingDropdowns, dropdownClass) {
-  //   // make new dropdown container
-  //   const newDropdown = document.createElement('div');
-  //   newDropdown.className = 'custom-dropdown '+ dropdownClass;
-  //   newDropdown.id = `newDropdown${existingDropdowns + 1}`;
-    
-  //   // make new select with name class[]
-  //   const newSelect = document.createElement('select');
-  //   newSelect.name = 'class[]';
-  //   newSelect.className = 'form-select';
-    
-  //   @if ($classes->isNotEmpty())
-  //       @foreach ($classes as $class)
-  //           option = document.createElement('option');
-  //           option.value = '{{ $class->id }}';
-  //           if (option.value === value.toString()) {
-  //               option.selected = true;
-  //           }
-  //           option.textContent = '{{ $class->class_name }}';
-  //           newSelect.appendChild(option);
-  //       @endforeach
-  //   @else
-  //       option = document.createElement('option');
-  //       option.value = '';
-  //       option.textContent = 'Data Kelas Kosong';
-  //       newSelect.appendChild(option);
-  //   @endif
-
-  //   const deleteButton = document.createElement('button');
-  //   deleteButton.type = 'button';
-  //   deleteButton.className = 'btn btn-danger';
-  //   deleteButton.textContent = 'x';
-  //   deleteButton.addEventListener('click', () => {
-  //       newDropdown.remove();
-  //   });
-
-  //   // Append elements
-  //   newDropdown.appendChild(newSelect);
-  //   newDropdown.appendChild(deleteButton);
-
-  //   return newDropdown;
-  // }
   const classes = {!! $classes->toJson() !!};
   function createDropdown(value, existingDropdowns, dropdownClass) {
-    // make new dropdown container
+
     const newDropdown = document.createElement('div');
-    newDropdown.className = 'custom-dropdown ' + dropdownClass;
+    newDropdown.className = 'custom-dropdown d-flex align-items-center gap-2 mb-3 mt-3' + dropdownClass;
     newDropdown.id = `newDropdown${existingDropdowns + 1}`;
     
-    // make new select with name class[]
     const newSelect = document.createElement('select');
-    newSelect.name = 'class[]';  // This is correct
+    newSelect.name = 'class[]'; 
     newSelect.className = 'form-select';
     
-    // Your classes data should be passed into JavaScript first
-    const classes = {!! $classes->toJson() !!};  // Add this in your blade view
+    const classes = {!! $classes->toJson() !!};  
     
     if (classes.length > 0) {
         classes.forEach(classItem => {
@@ -369,34 +326,15 @@
 
     const deleteButton = document.createElement('button');
     deleteButton.type = 'button';
-    deleteButton.className = 'btn btn-danger';
-    deleteButton.textContent = 'x';
+    deleteButton.className = 'btn-custom btn btn-danger';
+    deleteButton.innerHTML = '<i class="font-custom fa-solid fa-xmark"></i>';
     deleteButton.addEventListener('click', () => {
         newDropdown.remove();
     });
 
-    // Append elements
     newDropdown.appendChild(newSelect);
     newDropdown.appendChild(deleteButton);    
     return newDropdown;
-  }
-
-  function parseClassData(classData) {
-    if (!classData) return [];
-    
-    // Remove square brackets and split by comma
-    if (typeof classData === 'string') {
-        // Handle string format "[16,1]"
-        return classData.replace(/[\[\]]/g, '').split(',').map(item => item.trim());
-    }
-    
-    // If it's already an array, return as is
-    if (Array.isArray(classData)) {
-        return classData;
-    }
-    
-    // If it's a single value, return as array
-    return [classData.toString()];
   }
         
     // update modal logic

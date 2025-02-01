@@ -47,34 +47,45 @@
                 <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <div class="col-lg-12 col-12">
+
+            {{-- Pemisah --}}
+            
+            <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
-                <div class="inner">
-                  <h3 style="color: #2A8579; font-weight: bold;" class="font text-center fs-3">Status Absensi Siswa</h3>
-                  <div class="row mt-3">
-                    <div class="col-lg-4 col-12">
-                      <div class="tulisan-konten">
-                        <h3 class="fk font text-success">Total Kehadiran</h3>
-                        <p class="jumlah-konten text-success">{{ $totalClasses }}</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-12">
-                      <div class="tulisan-konten">
-                        <h3 class="fk font text-warning">Total Izin</h3>
-                        <p class="jumlah-konten text-warning">{{ $totalClasses }}</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-12">
-                      <div class="tulisan-konten">
-                        <h3 class="fk font text-danger">Total Alpha</h3>
-                        <p class="jumlah-konten text-danger">{{ $totalClasses }}</p>
-                      </div>
-                    </div>
+                <div class="inner d-flex">
+                  <div class="icon-konten"><i class="fas fa-user-check" style="font-size: 5.5rem; color: #2A8579;  margin-left: 1.4rem;"></i></div>
+                  <div class="tulisan-konten">
+                    <h3>Total Hadir</h3>
+                    <p class="jumlah-konten">{{ $totalUsers }}</p>
                   </div>
                 </div>
-                <a href="kelas" class="moreinfo-buset box-footer small-box-footer">View more <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>  
+            </div>
+            <div class="col-lg-4 col-12">
+              <div class="box-konten small-box">
+                <div class="inner d-flex">
+                  <div class="icon-konten"><i class="fas fa-envelope" style="font-size: 5.5rem; color: #2A8579;"></i></div>
+                  <div class="tulisan-konten">
+                    <h3>Total Izin</h3>
+                    <p class="jumlah-konten">{{ $totalClasses }}</p>
+                  </div>
+                </div>
+                <a href="kelas" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-12">
+              <div class="box-konten small-box">
+                <div class="inner d-flex">
+                  <div class="icon-konten"><i class="fas fa-times-circle" style="font-size: 5.5rem; color: #2A8579;"></i></div>
+                  <div class="tulisan-konten">
+                    <h3>Total Alpha</h3>
+                    <p class="jumlah-konten">{{ $totalTeachers }}</p>
+                  </div>
+                </div>
+                <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

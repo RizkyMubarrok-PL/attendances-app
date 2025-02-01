@@ -16,7 +16,6 @@
           <div class="search-container col-lg-12 col-12">
             <i class="fa fa-search"></i>
             <input type="search" name="keyword" id="search" class="form-control" placeholder="Search ..." autofocus>
-            <!-- <i class="fa fa-times"></i> -->
           </div>
 
           @if (session('status'))

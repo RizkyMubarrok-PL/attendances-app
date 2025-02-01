@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('style/home.css') }}">
@@ -142,6 +143,12 @@
                 <a href="{{ route('class') }}" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">DaftarKelas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('class') }}" class="nav-link">
+                  <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
+                  <p style="margin-left: 2.5px; letter-spacing: 2px;">LaporanKehadiran</p>
                 </a>
               </li>
             </div>
