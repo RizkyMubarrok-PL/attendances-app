@@ -56,7 +56,7 @@
                   <div class="icon-konten"><i class="fas fa-user-check" style="font-size: 5.5rem; color: #2A8579;  margin-left: 1.4rem;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Hadir</h3>
-                    <p class="jumlah-konten">{{ $totalUsers }}</p>
+                    <p class="jumlah-konten">{{ $totalHadir }}</p>
                   </div>
                 </div>
                 <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -68,7 +68,7 @@
                   <div class="icon-konten"><i class="fas fa-envelope" style="font-size: 5.5rem; color: #2A8579;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Izin</h3>
-                    <p class="jumlah-konten">{{ $totalClasses }}</p>
+                    <p class="jumlah-konten">{{ $totalIzin }}</p>
                   </div>
                 </div>
                 <a href="kelas" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -80,7 +80,7 @@
                   <div class="icon-konten"><i class="fas fa-times-circle" style="font-size: 5.5rem; color: #2A8579;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Alpha</h3>
-                    <p class="jumlah-konten">{{ $totalTeachers }}</p>
+                    <p class="jumlah-konten">{{ $totalAlpha }}</p>
                   </div>
                 </div>
                 <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
