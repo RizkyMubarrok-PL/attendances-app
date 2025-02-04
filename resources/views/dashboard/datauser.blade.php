@@ -354,6 +354,8 @@
 
       siswaClass = modal.querySelector('#updateSiswaClassDropdown');
       guruClass = modal.querySelector('#updateGuruClassDropdown');
+      siswaClass.style.display = 'none';
+      guruClass.style.display = 'none';
 
       const siswaSelect = siswaClass.querySelector('select');
       const guruSelects = guruClass.querySelectorAll('select');
@@ -415,7 +417,7 @@
         const modal = this;
         const guruClass = modal.querySelector('#updateGuruClassDropdown');
         
-        if (userRole === 'guru' && guruClass) {            
+        if (userRole === 'guru') {            
             const additionalSelects = Array.from(guruClass.querySelectorAll('.additionalDropdown'));
             additionalSelectsLength = additionalSelects.length
 

@@ -11,6 +11,7 @@ use App\Rules\EnumStatus;
 use App\EnumRole;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller

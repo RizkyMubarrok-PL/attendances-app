@@ -17,14 +17,14 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, string $role): Response
     {
         if (!Auth::check()) {
-            return redirect()->back()->with([
+            return redirect('/')->with([
                 'status' => false,
                 'message' => 'Silakan login untuk mengakses halaman ini.'
             ]);
         }
         
         if (Auth::user()->role !== $role) {
-            return redirect()->back()->with([
+            return redirect('/')->with([
                 'status' => false,
                 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.'
             ]);
