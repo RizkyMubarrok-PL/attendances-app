@@ -92,4 +92,11 @@ class Attendances extends Model
             );
         return $studentsAttendance;
     }
+
+    public function countStatusAttendances(string $status) {
+        return $this->studentAttendances()
+        ->where('attendances.status', $status)
+        ->whereDate('attendances.created_at', now())
+        ->count();
+    }
 }
