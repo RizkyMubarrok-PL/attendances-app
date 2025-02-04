@@ -175,19 +175,37 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll("[id^='statusSelect_']").forEach(function (selectElement) {
-            const attendanceId = selectElement.id.split('_')[1]; 
-            const statusLabel = document.getElementById(`statusLabel_${attendanceId}`);
+    document.querySelectorAll("[id^='statusSelect_']").forEach(function (selectElement) {
+        const attendanceId = selectElement.id.split('_')[1]; 
+        const statusLabel = document.getElementById(`statusLabel_${attendanceId}`);
+        const attendanceButton = document.getElementById(`attendanceButton_${attendanceId}`);
 
-            if (statusLabel) {
-                statusLabel.innerText = selectElement.value;
-            }
+        if (statusLabel) {
+            statusLabel.innerText = selectElement.value;
+        }
 
-            // Menampilkan atau menyembunyikan kolom keterangan jika status "Izin"
-            const keteranganContainer = document.getElementById(`keteranganContainer_${attendanceId}`);
-            const keteranganTextarea = document.getElementById(`keterangan_${attendanceId}`);
+        // Set button color based on initial status
+        setButtonColor(attendanceButton, selectElement.value);
 
-            if (selectElement.value === 'Izin') {
+        // Menampilkan atau menyembunyikan kolom keterangan jika status "Izin"
+        const keteranganContainer = document.getElementById(`keteranganContainer_${attendanceId}`);
+        const keteranganTextarea = document.getElementById(`keterangan_${attendanceId}`);
+
+        if (selectElement.value === 'Izin') {
+            keteranganContainer.style.display = 'block';
+            keteranganTextarea.setAttribute('required', 'required');
+        } else {
+            keteranganContainer.style.display = 'none';
+            keteranganTextarea.removeAttribute('required');
+            keteranganTextarea.value = '';
+        }
+
+        // Tambahkan event listener untuk perubahan status secara dinamis
+        selectElement.addEventListener('change', function () {
+            statusLabel.innerText = this.value;
+            setButtonColor(attendanceButton, this.value);
+
+            if (this.value === 'Izin') {
                 keteranganContainer.style.display = 'block';
                 keteranganTextarea.setAttribute('required', 'required');
             } else {
@@ -195,44 +213,30 @@
                 keteranganTextarea.removeAttribute('required');
                 keteranganTextarea.value = '';
             }
-
-            // Tambahkan event listener untuk perubahan status secara dinamis
-            selectElement.addEventListener('change', function () {
-                statusLabel.innerText = this.value;
-                if (this.value === 'Izin') {
-                    keteranganContainer.style.display = 'block';
-                    keteranganTextarea.setAttribute('required', 'required');
-                } else {
-                    keteranganContainer.style.display = 'none';
-                    keteranganTextarea.removeAttribute('required');
-                    keteranganTextarea.value = '';
-                }
-            });
         });
     });
-
-    document.querySelectorAll("[id^='statusSelect_']").forEach(function (selectElement) {
-    const attendanceId = selectElement.id.split('_')[1]; 
-    const attendanceButton = document.getElementById(`attendanceButton_${attendanceId}`);
-    
-    selectElement.addEventListener('change', function () {
-        attendanceButton.classList.remove('btn-success', 'btn-warning', 'btn-danger');
-
-        switch(this.value) {
-            case 'Hadir':
-                attendanceButton.classList.add('btn-success');
-                break;
-            case 'Izin':
-                attendanceButton.classList.add('btn-warning');
-                break;
-            case 'Alpha':
-                attendanceButton.classList.add('btn-danger');
-                break;
-            default:
-                attendanceButton.classList.add('btn-info');
-        }
-    });
 });
+
+function setButtonColor(button, status) {
+    // Remove all color classes first
+    button.classList.remove('btn-success', 'btn-warning', 'btn-danger', 'btn-info');
+
+    // Add appropriate color class based on status
+    switch(status) {
+        case 'Hadir':
+            button.classList.add('btn-success');
+            break;
+        case 'Izin':
+            button.classList.add('btn-warning');
+            break;
+        case 'Alpha':
+            button.classList.add('btn-danger');
+            break;
+        default:
+            button.classList.add('btn-info');
+    }
+}
+
 
   </script>
 @include('template/user/userfooter')
