@@ -46,9 +46,6 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                      {{ $user->role == 'siswa' ? ($user->studentClass?->class_id ?? '-') :
-                        ($user->role == 'guru' ? $user->teacherClasses->pluck('class_id')->implode(', ') : '-') }}
-
                       <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal"
                         data-bs-target="#updateModal" id="updateBtn" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                         data-email="{{ $user->email }}" data-role="{{ $user->role }}"
@@ -232,7 +229,7 @@
                 @endif
               </select>
               <button type="button" class="btn-custom btn btn-primary addDropdown"
-                  onclick="addDropdownField('createGuruClassDropdown', 'dropdownClass')"><i class="font-custom fa-solid fa-plus"></i>
+                  onclick="addDropdownField('updateGuruClassDropdown', 'dropdownClass')"><i class="font-custom fa-solid fa-plus"></i>
               </button>
             </div>
           </div>
@@ -286,6 +283,7 @@
     }
 
     function addDropdownField(classContainer, dropdownClass) {
+      console.log(true);
       const container = document.getElementById(classContainer);
       const existingDropdowns = container.querySelectorAll('.'+dropdownClass).length;
 
@@ -298,7 +296,7 @@
   function createDropdown(value, existingDropdowns, dropdownClass) {
 
     const newDropdown = document.createElement('div');
-    newDropdown.className = 'custom-dropdown d-flex align-items-center gap-2 mb-3 mt-3' + dropdownClass;
+    newDropdown.className = 'custom-dropdown d-flex align-items-center gap-2 mb-3 mt-3 additionalDropdown ' + dropdownClass;
     newDropdown.id = `newDropdown${existingDropdowns + 1}`;
     
     const newSelect = document.createElement('select');
@@ -371,34 +369,42 @@
       }      
 
       if (userRole === 'guru') {
-        arrayUserClass = parseClassData(userClass);
+        console.log(typeof userClass);
+        arrayUserClass = JSON.parse("["+userClass +"]");
+        console.log(arrayUserClass, typeof arrayUserClass);
 
         // Show the dropdown for updating classes
         guruClass.style.display = 'block';
 
-        classSelect = guruClass.querySelector('select');
-        classSelect.value = arrayUserClass[0];
         
+        classSelect = guruClass.querySelector('select');
+        // Remove the first element from arrayUserClass
         guruSelects.forEach(select => select.name = 'class[]');
 
-        // Remove the first element from arrayUserClass
-        arrayUserClass.shift();
+        if (arrayUserClass.length > 1) {
+          console.log(true)
+          classSelect.value = arrayUserClass[0];
 
-        dropdownClass = 'dropdownClass';
-        existingDropdowns = guruClass.querySelectorAll('.' + dropdownClass).length;
+          arrayUserClass.shift();
 
-        listClassSelect = [];        
-        
-        // Use forEach to iterate over arrayUserClass
-        arrayUserClass.forEach((classId) => {
-            // Add the created dropdown to the list            
-            listClassSelect.push(createDropdown(classId, existingDropdowns, dropdownClass));
-        });
+          dropdownClass = 'dropdownClass';
+          existingDropdowns = guruClass.querySelectorAll('.' + dropdownClass).length;
 
-        // Append the dropdown elements to guruClass
-        listClassSelect.forEach((dropdown) => {
-            guruClass.appendChild(dropdown);
-        });
+          listClassSelect = [];        
+          
+          // Use forEach to iterate over arrayUserClass
+          arrayUserClass.forEach((classId) => {
+              // Add the created dropdown to the list            
+              listClassSelect.push(createDropdown(classId, existingDropdowns, dropdownClass));
+          });
+
+          // Append the dropdown elements to guruClass
+          listClassSelect.forEach((dropdown) => {
+              guruClass.appendChild(dropdown);
+          });
+        } else {
+          classSelect.value = arrayUserClass[0];
+        }
       }
 
     });
@@ -410,15 +416,11 @@
         const guruClass = modal.querySelector('#updateGuruClassDropdown');
         
         if (userRole === 'guru' && guruClass) {            
-            const additionalSelects = Array.from(guruClass.querySelectorAll('.dropdownClass'));
-            additionalSelectsLength = additionalSelects.length            
-                        
-            additionalSelects.reverse();
+            const additionalSelects = Array.from(guruClass.querySelectorAll('.additionalDropdown'));
+            additionalSelectsLength = additionalSelects.length
+
             additionalSelects.forEach(select => {
-              if (additionalSelectsLength > 1) {
-                  select.remove();
-                }
-              additionalSelectsLength--;
+              select.remove();                
             });
         }
     });
