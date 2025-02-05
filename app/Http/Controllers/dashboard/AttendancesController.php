@@ -12,9 +12,12 @@ class AttendancesController extends Controller
 {
     public function index(Attendances $attendances, string $status = '') {
         if ($status != '') {
-            $attendances = $attendances->getAttendancesBasedStatus($status)->paginate(20);
+            $attendances = $attendances->getAttendancesBasedStatus($status)
+            ->paginate(20);
         } else {
-            $attendances = $attendances->getAttendances();
+            $attendances = $attendances->studentAttendances()
+            ->whereDate('attendances.created_at', now())
+            ->paginate(20);
         }
 
         return view('dashboard.adminlaporan', ['status' => $status, 'attendances' => $attendances]);
@@ -38,6 +41,7 @@ class AttendancesController extends Controller
             ->paginate(20);
         } else {
             $attendances = $attendances->studentAttendances()
+            ->whereDate('attendances.created_at', now())
             ->where('student.name', 'LIKE',  "%$search%")
             ->orWhere('teacher.name', 'LIKE',  "%$search%")
             ->paginate(20);
