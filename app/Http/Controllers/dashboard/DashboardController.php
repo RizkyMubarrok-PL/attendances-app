@@ -19,6 +19,12 @@ class DashboardController extends Controller
         $totalIzin = $attendances->countStatusAttendances('Izin');
         $totalAlpha = $attendances->countStatusAttendances('Alpha');
 
+        // dd($totalUsers, 
+        // $totalClasses, 
+        // $totalTeachers, 
+        // $totalIzin, 
+        // $totalAlpha);
+
         return view('dashboard.admin', [
             'totalUsers' => $totalUsers, 
             'totalClasses' => $totalClasses, 

@@ -333,10 +333,6 @@ iframe{
     margin-left: 7.5px;
   }
 
-.filter-container{
-    margin-left: auto;
-}
-
 .table thead tr th{
     color: #2A8579;
 }
@@ -395,7 +391,7 @@ select.form-select option {
     text-align: center;
 }
 
-.download-siswa{
+.download-siswa img{
     height: 185px;
 }
 
@@ -422,3 +418,11 @@ select.form-select option {
     background-color: #115a50;
 }
 
+.download-aplikasi img{
+    height: 185px;
+    border-radius: 15px;
+}
+
+.widthnya{
+    width: 10em;
+}

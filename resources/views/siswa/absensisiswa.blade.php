@@ -19,24 +19,22 @@
 
                     <div class="content-home-siswa bg-white shadow-sm rounded mt-5">
                         <div class="pembungkus-home-siswa p-3">
-                            <div class="tombol-absen d-flex">
-                                <form action="" method="POST" id="filterForm"
-                                    class="search-container col-lg-8 col-sm-4">
+                            <div class="tombol-absen d-flex justify-content-between align-items-center">
+                                <form action="" method="POST" id="filterForm" class="search-container">
                                     @csrf
-                                    <input type="date" name="date" id="tanggal" class="form-control border" style=""
+                                    <input type="date" name="date" id="tanggal" class="form-control border"
                                         onchange="inputOnchange('filterForm', '{{ route('absensiDate') }}')">
-                                    <input type="month" name="month" id="bulanan" class="form-control border"
-                                        style="display: none;"
+                                    <input type="month" name="month" id="bulanan" class="form-control border" style="display: none;"
                                         onchange="inputOnchange('filterForm', '{{ route('absensiMonths') }}')">
                                 </form>
-                                <div class="filter-container col-lg-4">
+                                <div class="filter-container">
                                     <select name="filter" id="filter" class="form-select"
                                         onchange="filterChange('tanggal', 'bulanan', 'filterForm', 'filter')">
-                                        <option value="date">Tanggal</option>                                        
+                                        <option value="date">Tanggal</option>
                                         <option value="months">Bulanan</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="table-responsive">
                                 <table class="table table-stripped mt-3">
                                     <thead>
@@ -101,6 +99,41 @@
 </div>
 
 <script>
+    // function filterChange(dateInput, monthInput, filterForm, filterSelect) {
+    //     const date = document.getElementById(dateInput);        
+    //     const month = document.getElementById(monthInput);
+    //     const filter = document.getElementById(filterSelect);
+
+    //     const filterVal = filter.value;
+
+    //     date.style.display = 'none';        
+    //     month.style.display = 'none';
+
+    //     if (filterVal == 'date') {
+    //         date.style.display = 'block';
+    //     } else {
+    //         month.style.display = 'block';
+    //     }
+    // }
+    // function inputOnchange(filterForm, actionRoute) {
+    //     const form = document.getElementById(filterForm);
+
+    //     form.action = actionRoute;
+    //     form.submit();
+    // }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set tanggal otomatis ke hari ini
+        const today = new Date();
+        const todayFormatted = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
+        document.getElementById('tanggal').value = todayFormatted;
+
+        // Set bulan otomatis ke bulan ini
+        const currentYear = today.getFullYear();
+        const currentMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Tambahkan 0 jika satu digit
+        const thisMonthFormatted = `${currentYear}-${currentMonth}`; // Format YYYY-MM
+        document.getElementById('bulanan').value = thisMonthFormatted;
+    });
+
     function filterChange(dateInput, monthInput, filterForm, filterSelect) {
         const date = document.getElementById(dateInput);        
         const month = document.getElementById(monthInput);
@@ -117,9 +150,9 @@
             month.style.display = 'block';
         }
     }
+
     function inputOnchange(filterForm, actionRoute) {
         const form = document.getElementById(filterForm);
-
         form.action = actionRoute;
         form.submit();
     }
