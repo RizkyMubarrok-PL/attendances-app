@@ -19,13 +19,20 @@
           <form action="{{ route('getAbsen') }}" method="POST" class="search-container col-lg-12 col-12">
             @csrf
             <i class="fa fa-search"></i>
-            <input type="search" name="classKeyword" id="searchInput" list="classes" class="form-control"
-              placeholder="Search ..." autofocus autocomplete="on">
-            <datalist id="classes" style="max-height: 50vh; overflow-y: scroll;">
+            {{-- <input type="search" name="classKeyword" id="searchInput" list="classes" class="form-control"
+              placeholder="Search ..." autofocus autocomplete="on"> --}}
+            {{-- <datalist id="classes" style="max-height: 50vh; overflow-y: scroll;">
               @foreach ($allClasses as $class)
-              <option value="{{ $class->class_name }}">
+              <option value="{{ $class->classData->class_name }}">
                 @endforeach
-            </datalist>
+            </datalist> --}}
+
+            <select name="class" id="">
+              <option value="">Pilih Kelas</option>
+              @foreach ($allClasses as $class)
+              <option value="{{ $class->classData->id }}">{{ $class->classData->class_name }}</option>
+              @endforeach
+            </select>
           </form>
 
           <div class="col-lg-12 mt-3">
