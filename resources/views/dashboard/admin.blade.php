@@ -2,6 +2,7 @@
 
   <!-- Content Wrapper -->
   <div class="content-wrapper">
+    @include('dashboard.Alert')
     <div class="content-header">
       <div class="container-fluid">
         <div class="font bungkus-judul-utama"><h1 class="m-0" style="color: #2A8579; font-weight: bold;">Aplikasi Absensi Siswa</h1></div>
@@ -59,7 +60,7 @@
                     <p class="jumlah-konten">{{ $totalHadir }}</p>
                   </div>
                 </div>
-                <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('report', ['status' => 'Hadir']) }}" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <div class="col-lg-4 col-12">
@@ -71,7 +72,7 @@
                     <p class="jumlah-konten">{{ $totalIzin }}</p>
                   </div>
                 </div>
-                <a href="kelas" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('report', ['status' => 'Izin']) }}" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <div class="col-lg-4 col-12">
@@ -83,7 +84,7 @@
                     <p class="jumlah-konten">{{ $totalAlpha }}</p>
                   </div>
                 </div>
-                <a href="user" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('report', ['status' => 'Alpha']) }}" class="moreinfo-buset box-footer small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>

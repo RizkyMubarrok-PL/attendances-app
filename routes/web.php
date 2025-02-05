@@ -48,7 +48,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'role:admin'], function (
 
     // ini rute buat data absensi
     Route::controller(AttendancesController::class)->group(function () {
-        Route::get('/attendances', 'index');
+        Route::get('/report/{status?}', 'index')->name('report');
+        Route::post('/report/{status?}', 'search')->name('reportSearch');
     });
 });
 

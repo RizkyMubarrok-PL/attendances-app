@@ -94,9 +94,13 @@ class Attendances extends Model
     }
 
     public function countStatusAttendances(string $status) {
+        return $this->getAttendancesBasedStatus($status)
+        ->count();
+    }
+
+    public function getAttendancesBasedStatus (string $status) {
         return $this->studentAttendances()
         ->where('attendances.status', $status)
-        ->whereDate('attendances.created_at', now())
-        ->count();
+        ->whereDate('attendances.created_at', now());
     }
 }
