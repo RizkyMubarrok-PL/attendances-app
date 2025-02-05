@@ -59,10 +59,13 @@
 
 .tulisan-konten{
     position: relative;
-
-    margin: 0 auto;
+    margin-left: 20px;
     top: 5px;
     color: #2A8579;
+}
+
+.tulisan-konten h3{
+  font-size: 28px;
 }
 
 .tulisan-konten-guru{
@@ -206,6 +209,7 @@ table td{
   display: flex;
   justify-content: center;  /* Tengahkan secara horizontal */
   align-items: center;       /* Tengahkan secara vertikal */
+  width: 100px;
 }
 
 .tulisan-konten-guru-dua{

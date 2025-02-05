@@ -50,22 +50,6 @@
       font-size: 10px;
   }
 
-  .tombol-dashboard {
-      background-color: #2A8579; /* Warna latar belakang */
-      color: white; /* Warna teks */
-      border-radius: 10px; /* Membuat sudut melengkung */
-      text-decoration: none; /* Hilangkan garis bawah pada teks */
-      transition: 500ms;
-  }
-
-  .tombol-dashboard:hover {
-      background-color: #256F66; /* Warna latar saat hover */
-  }
-
-  .tombol-dashboard i {
-      font-size: 18px; /* Ukuran ikon */
-  }
-
   .logout-section {
 
           margin-top: auto;
@@ -73,19 +57,15 @@
           margin-bottom: 4rem ;
       }
 
-      .btn-logout {
-          background-color: #2A8579;
-          color: white;
-          width: 100%;
-          border-radius: 10px;
-          padding: 0.75rem;
-          transition: all 0.3s;
+      .active{
+        background-color: #2A8579 !important; 
+        
       }
 
-      .btn-logout:hover {
-          background-color: #256F66;
-          color: white;
+      .active:hover{
+        background-color: #256F66 !important;
       }
+
 </style>
 
 <body class="hold-transition sidebar-mini">
@@ -126,7 +106,7 @@
         <div class="menu-section">
           <ul class="halo nav nav-pills nav-sidebar flex-column" role="menu">
             <li class="nav-item">
-              <a href="{{ route('dashboard') }}" class="tombol-dashboard nav-link" style="border-radius: 10px;">
+              <a href="{{ route('dashboard') }}" class="nav-link active" style="border-radius: 10px;">
                 <i class="nav-icon fas fa-home"></i>
                 <p style="position: relative; left: 10px;">Dashboard</p>
               </a>
@@ -160,7 +140,7 @@
         <div class="logout-section">
           <ul class="nav nav-pills nav-sidebar flex-column">
           <li class="nav-item tombol-logout">
-            <a href="{{ route('logout') }}" class="tombol-dashboard nav-link" style="border-radius: 10px;">
+            <a href="{{ route('logout') }}" class="nav-link active" style="border-radius: 10px;">
               <i class="nav-icon fas fa-sign-out-alt" style="position: relative; right: 1.5px;"></i>
               <p style="position: relative; left: 10px;">Logout</p>
             </a>

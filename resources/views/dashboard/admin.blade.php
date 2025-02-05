@@ -15,7 +15,7 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner d-flex">
-                  <div class="icon-konten"><i class="fa fa-user" style="font-size: 5.5rem; color: #2A8579;  margin-left: 1.4rem;"></i></div>
+                  <div class="icon-konten"><i class="fa fa-user" style="font-size: 4.5rem; color: #2A8579;  margin-left: 1.4rem;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total User</h3>
                     <p class="jumlah-konten">{{ $totalUsers }}</p>
@@ -27,7 +27,7 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner d-flex">
-                  <div class="icon-konten"><i class="fas fa-school" style="font-size: 5.5rem; color: #2A8579;"></i></div>
+                  <div class="icon-konten"><i class="fas fa-school" style="font-size: 4.5rem; color: #2A8579;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Kelas</h3>
                     <p class="jumlah-konten">{{ $totalClasses }}</p>
@@ -39,7 +39,7 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner d-flex">
-                  <div class="icon-konten"><i class="fa fa-chalkboard-teacher" style="font-size: 5.5rem; color: #2A8579;"></i></div>
+                  <div class="icon-konten"><i class="fa fa-chalkboard-teacher" style="font-size: 4.5rem; color: #2A8579;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Guru</h3>
                     <p class="jumlah-konten">{{ $totalTeachers }}</p>
@@ -54,7 +54,7 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner d-flex">
-                  <div class="icon-konten"><i class="fas fa-user-check" style="font-size: 5.5rem; color: #2A8579;  margin-left: 1.4rem;"></i></div>
+                  <div class="icon-konten"><i class="fas fa-user-check" style="font-size: 4.5rem; color: #2A8579;  margin-left: 1.4rem;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Hadir</h3>
                     <p class="jumlah-konten">{{ $totalHadir }}</p>
@@ -66,7 +66,7 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner d-flex">
-                  <div class="icon-konten"><i class="fas fa-envelope" style="font-size: 5.5rem; color: #2A8579;"></i></div>
+                  <div class="icon-konten"><i class="fas fa-envelope" style="font-size: 4.5rem; color: #2A8579;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Izin</h3>
                     <p class="jumlah-konten">{{ $totalIzin }}</p>
@@ -78,7 +78,7 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner d-flex">
-                  <div class="icon-konten"><i class="fas fa-times-circle" style="font-size: 5.5rem; color: #2A8579;"></i></div>
+                  <div class="icon-konten"><i class="fas fa-times-circle" style="font-size: 4.5rem; color: #2A8579;"></i></div>
                   <div class="tulisan-konten">
                     <h3>Total Alpha</h3>
                     <p class="jumlah-konten">{{ $totalAlpha }}</p>
