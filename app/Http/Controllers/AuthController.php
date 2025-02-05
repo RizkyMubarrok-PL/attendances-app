@@ -19,7 +19,10 @@ class AuthController extends Controller
 
             switch($user->role) {
                 case 'admin':
-                    return redirect('/dashboard');
+                    return redirect('/dashboard')->with([
+                        'status' => true,
+                        'msg' =>  'test'
+                    ]);
                 case 'guru':
                     return redirect('/guru');
                 case 'siswa':

@@ -10,11 +10,41 @@ use App\Rules\EnumStatus;
 
 class AttendancesController extends Controller
 {
-    public function index(Attendances $attendances, Classes $classes) {
-        $attendances = $attendances->getAttendances();
-        $classes = $classes->all();
+    public function index(Attendances $attendances, string $status = '') {
+        if ($status != '') {
+            $attendances = $attendances->getAttendancesBasedStatus($status)->paginate(20);
+        } else {
+            $attendances = $attendances->getAttendances();
+        }
 
-        // return view('dashboard.absensi.absensi', ['attendances' => $attendances, 'classes' => $classes]);
+        return view('dashboard.adminlaporan', ['status' => $status, 'attendances' => $attendances]);
+    }
+
+    public function search(Request $request, Attendances $attendances, string $status = '') {
+        $validate = $request->validate([
+            'search' => 'string'
+        ]);        
+
+        $search = $validate['search'];
+
+        if ($search == '') {
+            return redirect()->route('report', ['status' => $status]);
+        }        
+
+        if ($status != '') {
+            $attendances = $attendances->getAttendancesBasedStatus($status)
+            ->where('student.name', 'LIKE',  "%$search%")
+            ->orWhere('teacher.name', 'LIKE',  "%$search%")
+            ->paginate(20);
+        } else {
+            $attendances = $attendances->studentAttendances()
+            ->where('student.name', 'LIKE',  "%$search%")
+            ->orWhere('teacher.name', 'LIKE',  "%$search%")
+            ->paginate(20);
+        }
+
+
+        return view('dashboard.adminlaporan', ['status' => $status, 'attendances' => $attendances]);
     }
 
     public function update(int $attendancesId, Attendances $attendances, Request $request) {

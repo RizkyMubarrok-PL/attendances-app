@@ -146,7 +146,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('class') }}" class="nav-link">
+                <a href="{{ route('report', ['status' => '']) }}" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">LaporanKehadiran</p>
                 </a>
