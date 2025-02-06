@@ -1,7 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AuthController;
@@ -56,15 +57,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'role:admin'], function (
 // rute guru
 Route::group(['prefix' => 'guru', 'middleware' => 'role:guru'], function () {
     Route::controller(GuruController::class)->group(function (){
-        Route::get('/', 'index');
-        Route::get('/absen', 'absenPage')->name('guruAbsen');
+        Route::get('/', 'index')->name('guruHome');
+        Route::get('/absensi', 'listAbsensiPage')->name('listAbsenPage');
 
-        Route::get('/daftar', 'daftarAbsenPage')->name('daftar');
-        Route::post('/absen/class', 'absenPerKelas')->name('getAbsen');
-
-        Route::post('/absen/update', 'updateAbsensi')->name('updateAbsen');
-
-        Route::get('/rekap', 'rekapPage')->name('rekap');
+        Route::get('/absensi/class', 'updateAbsensiPage')->name('updateAbsenPage');
+        Route::post('/absensi/class/{className?}', 'dataAbsensiPerKelas')->name('dataAbsenPage');
+        Route::post('/absensi/class/{className?}/update', 'updateAbsensi')->name('updateAbsen');
     });
 });
 

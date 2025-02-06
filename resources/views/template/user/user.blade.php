@@ -126,9 +126,9 @@
         <div class="menu-section">
           <ul class="halo nav nav-pills nav-sidebar flex-column" role="menu">
             <li class="nav-item">
-              <a href="{{ route('dashboard') }}" class="tombol-dashboard nav-link" style="border-radius: 10px;">
+              <a href="{{ route('guruHome') }}" class="tombol-dashboard nav-link" style="border-radius: 10px;">
                 <i class="nav-icon fas fa-home"></i>
-                <p style="position: relative; left: 10px;">Dashboard</p>
+                <p style="position: relative; left: 10px;">Home</p>
               </a>
             </li>
             <div class="konten mt-4">
@@ -136,21 +136,21 @@
                 <h4 style="margin-left: 1rem;">Menu Utama</h4>
               </div>
               <li class="nav-item">
-                <a href="{{ route('guruAbsen') }}" class="nav-link">
+                <a href="{{ route('listAbsenPage') }}" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
-                  <p style="margin-left: 2.5px; letter-spacing: 2px;">Absensi</p>
+                  <p style="margin-left: 2.5px; letter-spacing: 2px;">List Absensi</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('daftar') }}" class="nav-link">
+                <a href="{{ route('updateAbsenPage') }}" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
-                  <p style="margin-left: 2.5px; letter-spacing: 2px;">DaftarAbsensi</p>
+                  <p style="margin-left: 2.5px; letter-spacing: 2px;">Perbarui Absensi</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('rekap') }}" class="nav-link">
+                <a href="" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
-                  <p style="margin-left: 2.5px; letter-spacing: 2px;">Rekap</p>
+                  <p style="margin-left: 2.5px; letter-spacing: 2px;">Rekap Absensi</p>
                 </a>
               </li>
             </div>
