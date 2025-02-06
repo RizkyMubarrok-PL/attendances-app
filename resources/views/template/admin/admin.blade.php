@@ -161,8 +161,8 @@
             Are you sure to logout?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
-            <button type="button" class="btn btn-danger">No</button>
+            <a href="{{ route('logout') }}" class="btn btn-primary">Yes</a>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
           </div>
         </div>
       </div>
