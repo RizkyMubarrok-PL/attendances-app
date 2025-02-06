@@ -128,7 +128,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('rekapGuruPage') }}" class="nav-link">
                   <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">Rekap Absensi</p>
                 </a>

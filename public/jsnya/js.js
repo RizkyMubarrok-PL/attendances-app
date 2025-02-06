@@ -28,8 +28,8 @@ function togglePassword() {
         passwordField.type = "text";  // Ubah tipe input menjadi teks (lihat password)
         toggleIcon.src = "img/eye-open.png";  // Ubah ikon menjadi mata terbuka
     } else {
-        passwordField.type = "password";  // Ubah tipe input menjadi password (sembunyikan)
-        toggleIcon.src = "img/eye-closed.png";  // Ubah ikon menjadi mata tertutup
+        passwordField.type = "password";
+        toggleIcon.src = "img/eye-closed.png";
     }
 }
 
