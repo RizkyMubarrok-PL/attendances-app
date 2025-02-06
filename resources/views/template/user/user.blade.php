@@ -106,7 +106,7 @@
         <div class="menu-section">
           <ul class="halo nav nav-pills nav-sidebar flex-column" role="menu">
             <li class="nav-item">
-              <a href="{{ route('guruHome') }}" class="tombol-dashboard nav-link" style="border-radius: 10px;">
+              <a href="{{ route('guruHome') }}" class=" nav-link active" style="border-radius: 10px;">
                 <i class="nav-icon fas fa-home"></i>
                 <p style="position: relative; left: 10px;">Home</p>
               </a>

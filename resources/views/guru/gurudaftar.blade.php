@@ -27,11 +27,6 @@
             </select>
           </form>
 
-          {{-- <form action="{{ route('updateAbsen') }}" method="post">
-            @csrf            
-            <input type="submit" value="TEts">
-          </form> --}}
-
           <div class="col-lg-12 mt-3">
             @if (isset($classAttendances) && $classAttendances->isNotEmpty())
             <div class="table-responsive mt-3">
