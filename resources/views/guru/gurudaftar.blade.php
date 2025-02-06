@@ -16,20 +16,24 @@
     <div class="container-fluid">
       <div class="pembungkus-konten-utama">
         <div class="row">
-          <form action="{{ route('getAbsen') }}" method="POST" class="search-container col-lg-12 col-12">
+          <form action="" method="POST" class="search-container col-lg-12 col-12" id="classForm">
             @csrf
-            <i class="fa fa-search"></i>
-            <input type="search" name="classKeyword" id="searchInput" list="classes" class="form-control"
-              placeholder="Search ..." autofocus autocomplete="on">
-            <datalist id="classes" style="max-height: 50vh; overflow-y: scroll;">
+            <select name="class" id="classSelect" onchange="updateActionAndSubmit()">
+              <option value="">Pilih Kelas</option>
               @foreach ($allClasses as $class)
-              <option value="{{ $class->class_name }}">
-                @endforeach
-            </datalist>
+              <option value="{{ $class->classData->class_name }}" {{ $class->classData->class_name == request('class') ? 'selected' : ''
+                }}>{{ $class->classData->class_name }}</option>
+              @endforeach
+            </select>
           </form>
 
+          {{-- <form action="{{ route('updateAbsen') }}" method="post">
+            @csrf            
+            <input type="submit" value="TEts">
+          </form> --}}
+
           <div class="col-lg-12 mt-3">
-            @if (session('classAttendances'))
+            @if (isset($classAttendances) && $classAttendances->isNotEmpty())
             <div class="table-responsive mt-3">
               <table class="table table-hover">
                 <thead>
@@ -40,9 +44,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <form action="{{ route('updateAbsen') }}" method="POST">
+                  <form action="{{ route('updateAbsen', ['className' => request('class')]) }}" method="POST">
                     @csrf
-                    @foreach (session('classAttendances') as $attendances)
+                    @foreach ($classAttendances as $attendances)
                     @php
                     $id = $attendances->Attendance_Id;
                     @endphp
@@ -89,19 +93,11 @@
                           </div>
                         </div>
 
-                        {{-- <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal"
-                          data-bs-target="#popupModal_{{ $id }}">
+                        <button type="button" class="btn btn-success show-status-modal" data-bs-toggle="modal"
+                          data-bs-target="#popupModal_{{ $id }}" id="attendanceButton_{{ $id }}">
                           <i class="fa fa-info-circle"></i>
                           <i class="info-tulisan" id="statusLabel_{{ $id }}">Hadir</i>
-                        </button> --}}
-                        <button type="button" 
-                              class="btn btn-success show-status-modal" 
-                              data-bs-toggle="modal" 
-                              data-bs-target="#popupModal_{{ $id }}"
-                              id="attendanceButton_{{ $id }}">
-                        <i class="fa fa-info-circle"></i>
-                        <i class="info-tulisan" id="statusLabel_{{ $id }}">Hadir</i>
-                      </button>
+                        </button>
                       </td>
                     </tr>
                     @endforeach
@@ -115,7 +111,6 @@
               </table>
             </div>
             @else
-            {{-- Data kosong --}}
             @endif
           </div>
         </div>
@@ -215,7 +210,7 @@
             }
         });
     });
-});
+    });
 
 function setButtonColor(button, status) {
     // Remove all color classes first
@@ -237,6 +232,15 @@ function setButtonColor(button, status) {
     }
 }
 
+    function updateActionAndSubmit() {
+        var selectedClass = document.getElementById("classSelect").value;
+        if (selectedClass) {
+            document.getElementById("classForm").action = "{{ route('dataAbsenPage') }}/" + selectedClass;
+        } else {
+            document.getElementById("classForm").action = "{{ route('dataAbsenPage') }}";
+        }
+        document.getElementById("classForm").submit();
+    }
 
   </script>
-@include('template/user/userfooter')
+  @include('template/user/userfooter')
