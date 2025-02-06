@@ -30,6 +30,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            
             return response()->json([
                 'status' => true,
                 'users' => $user,

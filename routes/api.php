@@ -22,7 +22,7 @@ Route::controller(AttendanceController::class)->group(function () {
 });
 
 Route::controller(ClassController::class)->group(function () {
-    Route::get('/getClasses', 'getClasses');
+    Route::get('/getClasses/{teacherId}', 'getClasses');
 });
 
 Route::controller(AuthController::class)->group(function () {
