@@ -19,9 +19,31 @@ class GuruController extends Controller
         return view('guru.guru');
     }
 
-    public function listAbsensiPage(Attendances $attendances, Classes $classes)
+    public function listAbsensiPage(Attendances $attendances, string $className = '',string $filter = '', string $filterValue = '')
     {
-        return view('guru.guruabsensi');
+        $teacher_id = Auth::user()->id;
+        $allClasses = User::with('teacherClasses.classData')->find($teacher_id);
+        $allClasses = $allClasses->teacherClasses;
+
+        
+        // ini kondisi awal tanpa filter akan mengembalikan absensi hari ini
+        if  ($filter == null) {
+            $classAttendances = $attendances->attendancesByClassNameToday($className);
+        }
+        
+        if ($filter == 'tanggal' && $filterValue != null) {
+            $classAttendances = $attendances->attendancesByClassName($className, $filterValue);
+        }
+
+        if ($filter == 'bulan' && $filterValue != null) {
+            $classAttendances = $attendances->countAttendancesByClassName($className, $filterValue);
+        }
+
+        if ($classAttendances->isEmpty()) {
+            return view('guru.guruabsensi', ['allClasses' => $allClasses])->with(['message' => 'Data kosong.']);
+        }
+
+        return view('guru.guruabsensi', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances]);
     }
 
     public function updateAbsensiPage(Attendances $attendances)
