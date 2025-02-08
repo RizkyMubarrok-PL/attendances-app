@@ -68,7 +68,7 @@ class Attendances extends Model
     {
         return $this->studentAttendances()
             ->where('Class_Name', $className)
-            ->where('attendances.created_at', now()->toDateString())
+            ->whereDate('attendances.created_at', now()->toDateString())
             ->get();
     }
 
