@@ -140,7 +140,7 @@
         <div class="logout-section">
           <ul class="nav nav-pills nav-sidebar flex-column">
           <li class="nav-item tombol-logout">
-            <a href="{{ route('logout') }}" class="nav-link active" style="border-radius: 10px;">
+            <a href="{{ route('logout') }}" class="nav-link active" style="border-radius: 10px;" data-bs-toggle="modal" data-bs-target="#logoutmodal">
               <i class="nav-icon fas fa-sign-out-alt" style="position: relative; right: 1.5px;"></i>
               <p style="position: relative; left: 10px;">Logout</p>
             </a>
@@ -152,3 +152,24 @@
 
     </aside>
     <!-- /.sidebar -->
+
+    <div class="modal fade" id="logoutmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <i class="fa fa-exclamation-triangle text-warning"></i>
+              Warning !
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure to logout?
+          </div>
+          <div class="modal-footer">
+            <a href="{{ route('logout') }}" class="btn btn-primary">Yes</a>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>

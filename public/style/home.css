@@ -122,6 +122,10 @@ table td{
   select.form-select option {
     color: #2A8579; /* Ganti sesuai keinginan */
   }
+
+  .form-select{
+    border: none;
+  }
   
   .modal-content {
     background-color: #fff;
@@ -436,9 +440,29 @@ table td{
   top: 20px !important;
   right: 20px !important;
   z-index: 1050;
-  max-width: 90%; 
-  width: 370px;
+  max-width: 100%; 
+  width: 350px;
 }
+
+.btn-close{
+
+}
+
+/* .alert i{
+  font-size: 20px;
+  margin-top: auto;
+} */
+
+/* .alert p{
+  margin: 0;
+  padding: 0;
+}
+
+.button-alert{
+  margin: 0;
+  padding: 0;
+  height: max-content;
+} */
 
 .btn-custom {
   display: flex;

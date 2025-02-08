@@ -2,7 +2,7 @@
 
   <!-- Content Wrapper -->
   <div class="content-wrapper">
-    @include('dashboard.Alert')
+    @include('template.notif.notif')
     <div class="content-header">
       <div class="container-fluid">
         <div class="font bungkus-judul-utama"><h1 class="m-0" style="color: #2A8579; font-weight: bold;">Aplikasi Absensi Siswa</h1></div>
