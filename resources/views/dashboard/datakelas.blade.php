@@ -32,7 +32,10 @@
           @enderror
 
           <div class="col-12 mt-3">
-            <button class="btn btn-ijo" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+            <button class="btn btn-ijo" data-bs-toggle="modal" data-bs-target="#createModal">
+              <i class="fa fa-plus-circle"></i>
+              Create
+            </button>
           </div>
           <div class="col-lg-12">
             <div class="table-responsive mt-3">
@@ -52,9 +55,13 @@
                     <td>{{ $class->class_name }}</td>
                     <td>
                       <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal"
-                        data-bs-target="#updateModal"  data-id="{{ $class->id }}" data-name="{{ $class->class_name }}">Update</button> |
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                        data-bs-target="#updateModal"  data-id="{{ $class->id }}" data-name="{{ $class->class_name }}">
+                        <i class="fa fa-pen-to-square"></i>
+                        Update
+                      </button>
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
                         data-id="{{ $class->id }}" data-name="{{ $class->class_name }}">
+                        <i class="fa fa-trash"></i>
                         Delete
                       </button>
                     </td>
@@ -87,7 +94,10 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-ijo">Create</button>
+          <button type="submit" class="btn btn-ijo">
+            <i class="fa fa-plus-circle"></i>
+            Create
+          </button>
         </div>
       </form>
     </div>
@@ -111,7 +121,10 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-ijo">Ubah</button>
+          <button type="submit" class="btn btn-warning text-white">
+            <i class="fa fa-pen-to-square"></i>
+            Update
+          </button>
         </div>
       </form>
     </div>
@@ -123,7 +136,10 @@
     <div class="modal-dialog">
       <form action="{{ route('deleteClass') }}" method="POST" id="deleteForm" class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Peringatan!</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">
+            <i class="fa fa-exclamation-triangle text-warning"></i>
+            Peringatan!
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
