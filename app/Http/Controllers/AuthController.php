@@ -21,10 +21,13 @@ class AuthController extends Controller
                 case 'admin':
                     return redirect('/dashboard')->with([
                         'status' => true,
-                        'msg' =>  'test'
+                        'msg' =>  'Selamat datang Admin!'
                     ]);
                 case 'guru':
-                    return redirect('/guru');
+                    return redirect('/guru')->with([
+                        'statuss' => true,
+                        'emesge' => 'Selamat datang Guru!'
+                    ]);
                 case 'siswa':
                     return redirect('/siswa');
                 default: 
