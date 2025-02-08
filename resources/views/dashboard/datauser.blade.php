@@ -22,7 +22,10 @@
           @include('dashboard.Alert')
 
           <div class="col-12 mt-3">
-            <button class="btn btn-ijo" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+            <button class="btn btn-ijo" data-bs-toggle="modal" data-bs-target="#createModal">
+              <i class="fa fa-plus-circle"></i>
+              Create
+            </button>
           </div>
           <div class="col-lg-12">
             <div class="table-responsive mt-3">
@@ -50,10 +53,12 @@
                         data-bs-target="#updateModal" id="updateBtn" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                         data-email="{{ $user->email }}" data-role="{{ $user->role }}"
                         data-class="{{ $user->role == 'siswa' ? ($user->studentClass?->class_id ?? '-') : ($user->role == 'guru' ? $user->teacherClasses->pluck('class_id')->implode(', ') : '-') }}">
+                        <i class="fa fa-pen-to-square"></i>
                         Update
                       </button>
                       <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
                         data-id="{{ $user->id }}" data-name="{{ $user->name }}">
+                        <i class="fa fa-trash"></i>
                         Delete
                       </button>
                     </td>
@@ -89,7 +94,10 @@
     <div class="modal-dialog">
       <form action="{{ route('deleteUser') }}" method="POST" id="deleteForm" class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Peringatan!</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">
+            <i class="fa fa-exclamation-triangle text-warning"></i>
+            Peringatan!
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -175,7 +183,10 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-ijo">Create</button>
+          <button type="submit" class="btn btn-ijo">
+            <i class="fa fa-plus-circle"></i>
+            Create
+          </button>
         </div>
       </form>
     </div>
@@ -250,7 +261,10 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-ijo">Update</button>
+          <button type="submit" class="btn btn-warning text-white">
+            <i class="fa fa-pen-to-square"></i>
+            Update
+          </button>
         </div>
       </form>
     </div>

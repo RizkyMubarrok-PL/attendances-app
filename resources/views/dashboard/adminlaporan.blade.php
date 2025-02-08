@@ -43,7 +43,12 @@
                         <td>{{ $attendance->Teacher_Name == null ? '-' : $attendance->Teacher_Name }}</td>
                         <td>{{ $attendance->Class_Name }}</td>
                         <td>{{ $attendance->Attendance_Status }}</td>
-                        <td><button class="btn btn-primary"></button></td>
+                        <td>
+                          <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal" data-bs-target="#popupModal">
+                            <i class="fa fa-info-circle"></i> 
+                            <i class="info-tulisan" id="statusLabel">Status</i>
+                          </button>
+                        </td>
                       </tr>
                     @endforeach                    
                     @else
