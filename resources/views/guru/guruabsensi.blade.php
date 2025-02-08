@@ -38,9 +38,10 @@
                 </select>
               </div>
 
-              <form id="filterForm" class="filter-right" action="{{ !request('filter') || request('filter') == 'tanggal' 
-        ? route('listAbsenPage', ['className' => request('className')] . "/tanggal/") 
-        : route('listAbsenPage', ['className' => request('className')]) . "/bulan/" }}" method="GET">
+              <form id="filterForm" class="filter-right"
+                action="{{ !request('filter') || request('filter') == 'tanggal' ? route('listAbsenPage', ['className' => request('className')]) . '/tanggal/' : route('listAbsenPage', ['className' => request('className')]) . '/bulan/' }}"
+                method="POST">
+                @csrf
                 <div id="input-perhari"
                   style="{{ !request('filter') || request('filter') == 'tanggal' ? 'display: block;' : 'display: none;' }}">
                   <input type="date" class="form-control" id="filterDate"
@@ -76,7 +77,7 @@
               <table class="table table-hover">
                 <thead id="tableHead">
                   <tr>
-                    @if (request('filter') == 'tanggal')
+                    @if (request('filter') == null || request('filter') == 'tanggal')
                     <th>No</th>
                     <th>Name</th>
                     <th class="text-center">Status</th>
@@ -90,24 +91,86 @@
                   </tr>
                 </thead>
                 <tbody id="tableBody">
+                  {{-- {{ dd($classAttendances) }} --}}
                   @foreach ($classAttendances as $attendance)
                   <tr>
+                    @if (request('filter') == null || request('filter') == 'tanggal')
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $attendance->Student_Name }}</td>
                     <td class="text-center">
                       <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal"
-                        data-bs-target="#popupModal">
+                        data-bs-target="#modalKeterangan{{ $attendance->id }}">
                         <i class="fa fa-info-circle"></i>
                         <i class="info-tulisan" id="statusLabel">{{ $attendance->Attendance_Status }}</i>
                       </button>
+
                     </td>
+                    <div class="modal fade" id="modalKeterangan{{ $attendance->id }}" tabindex="-1">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Keterangan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="container">
+                              <div class="row mb-2">
+                                <label class="col-sm-4 fw-bold">Nama Siswa</label>
+                                <label class="col-sm-1">:</label>
+                                <div class="col-sm-7">{{ $attendance->Student_Name }}</div>
+                              </div>
+
+                              <div class="row mb-2">
+                                <label class="col-sm-4 fw-bold">Kelas</label>
+                                <label class="col-sm-1">:</label>
+                                <div class="col-sm-7">{{ $attendance->Class_Name }}</div>
+                              </div>
+
+                              <div class="row mb-2">
+                                <label class="col-sm-4 fw-bold">Tanggal</label>
+                                <label class="col-sm-1">:</label>
+                                <div class="col-sm-7">{{ date('d F Y', strtotime($attendance->Attendance_Created_Date))
+                                  }}</div>
+                              </div>
+
+                              <div class="row mb-2">
+                                <label class="col-sm-4 fw-bold">Status Kehadiran</label>
+                                <label class="col-sm-1">:</label>
+                                <div class="col-sm-7">
+                                  <span
+                                    class="badge 
+                                            {{ $attendance->Attendance_Status == 'Hadir' ? 'bg-success' : 
+                                               ($attendance->Attendance_Status == 'Izin' ? 'bg-warning text-dark' : 'bg-danger') }}">
+                                    {{ $attendance->Attendance_Status }}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <label class="col-sm-4 fw-bold">Keterangan:</label>
+                                <label class="col-sm-1">:</label>
+                                <div class="col-sm-7">{{ $attendance->Attendance_description ?? 'Tidak ada keterangan'
+                                  }}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @else
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $attendance->Student_Name }}</td>
+                    <td>{{ $attendance->Total_Hadir }}</td>
+                    <td>{{ $attendance->Total_Izin }}</td>
+                    <td>{{ $attendance->Total_Alpha }}</td>
+                    @endif
                   </tr>
                   @endforeach
                 </tbody>
               </table>
             </div>
             @else
-            <h2>Pilih kelas terlebih dahulu</h2>
+            <h2>{{ session('message') }}</h2>
             @endif
           </div>
         </div>
@@ -116,7 +179,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  {{-- <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -140,7 +203,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <script>
     // document.addEventListener('DOMContentLoaded', function () {
