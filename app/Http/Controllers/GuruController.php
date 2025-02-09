@@ -39,10 +39,6 @@ class GuruController extends Controller
             $classAttendances = $attendances->countAttendancesByClassName($className, $filterValue);
         }
 
-        if ($classAttendances->isEmpty()) {
-            return view('guru.guruabsensi', ['allClasses' => $allClasses])->with(['message' => 'Data kosong.']);
-        }
-
         return view('guru.guruabsensi', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances]);
     }
 

@@ -1,6 +1,7 @@
 @include('template/user/user')
 
 <!-- Content Wrapper -->
+{{-- @dd(session('message')) --}}
 <div class="content-wrapper">
   <div class="content-header">
     <div class="container-fluid">
@@ -170,7 +171,7 @@
               </table>
             </div>
             @else
-            <h2>{{ session('message') }}</h2>
+            Data kosong.
             @endif
           </div>
         </div>
@@ -179,185 +180,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-  {{-- <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Keterangan</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="attendanceForm">
-            <div class="form-group mb-3">
-              <label for="statusSelect" class="form-label">Status Kehadiran :</label>
-              <input id="statusSelect" type="text" name="status" class="form-control" value="hadir" disabled>
-            </div>
-
-            <div class="form-group" id="keteranganContainer" style="display: none;">
-              <label for="keterangan" class="form-label">Keterangan :</label>
-              <textarea id="keterangan" name="komentar" rows="4" class="form-control"
-                placeholder="Tulis keterangan Anda di sini">
-              </textarea>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> --}}
-
   <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-  //   // Ambil elemen filter
-  //   const filterType = document.getElementById('filterType');
-  //   const inputPerHari = document.getElementById('input-perhari');
-  //   const inputPerBulan = document.getElementById('input-perbulan');
-  //   const inputPerSemester = document.getElementById('input-persemester');
-  //   const filterDate = document.getElementById('filterDate');
-  //   const filterMonth = document.getElementById('filterMonth');
-  //   const filterSemester = document.getElementById('filterSemester');
-
-  //   // Fungsi untuk menyembunyikan semua input filter
-  //   function resetFilters() {
-  //     inputPerHari.classList.add('d-none');
-  //     inputPerBulan.classList.add('d-none');
-  //     inputPerSemester.classList.add('d-none');
-  //   }
-
-  //   // Set tanggal hari ini
-  //   function setDefaultValues() {
-  //     const today = new Date();
-
-  //     // Tanggal hari ini
-  //     const todayDate = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
-  //     filterDate.value = todayDate;
-
-  //     // Bulan saat ini
-  //     const currentMonth = today.getMonth() + 1; // Januari dimulai dari 0
-  //     filterMonth.value = currentMonth;
-
-  //     // Semester saat ini
-  //     const currentSemester = today.getMonth() < 6 ? 1 : 2; // Semester 1 (Jan-Jun), Semester 2 (Jul-Des)
-  //     filterSemester.value = currentSemester;
-  //   }
-
-  //   // Pilih filter "Per Hari" secara default
-  //   function setDefaultFilter() {
-  //     filterType.value = 'perhari'; // Set pilihan default
-  //     inputPerHari.classList.remove('d-none'); // Tampilkan input "Per Hari"
-  //   }
-
-  //   // Event listener untuk perubahan filter
-  //   filterType.addEventListener('change', function () {
-  //     resetFilters(); // Sembunyikan semua input
-
-  //     // Tampilkan input sesuai dengan pilihan
-  //     const selectedValue = filterType.value;
-  //     if (selectedValue === 'perhari') {
-  //       inputPerHari.classList.remove('d-none');
-  //     } else if (selectedValue === 'perbulan') {
-  //       inputPerBulan.classList.remove('d-none');
-  //     } else if (selectedValue === 'persemester') {
-  //       inputPerSemester.classList.remove('d-none');
-  //     }
-  //   });
-
-  //   // Tambahkan logika untuk menangani filter (opsional)
-  //   filterDate?.addEventListener('change', function () {
-  //     console.log('Filter Per Hari:', this.value);
-  //     // Implementasi logika filter per hari
-  //   });
-
-  //   filterMonth?.addEventListener('change', function () {
-  //     console.log('Filter Per Bulan:', this.value);
-  //     // Implementasi logika filter per bulan
-  //   });
-
-  //   filterSemester?.addEventListener('change', function () {
-  //     console.log('Filter Per Semester:', this.value);
-  //     // Implementasi logika filter per semester
-  //   });
-
-  //   // Inisialisasi awal
-  //   setDefaultValues(); // Set nilai default untuk tanggal
-  //   setDefaultFilter(); // Pastikan filter default adalah "Per Hari"
-  // });
-
-  // document.addEventListener('DOMContentLoaded', function () {
-  //   const filterType = document.getElementById('filterType');
-  //   const tableHead = document.getElementById('tableHead');
-  //   const tableBody = document.getElementById('tableBody');
-
-  //   // Data dummy untuk contoh
-  //   const dummyData = @json($classAttendances);
-
-  //   // Fungsi untuk merender tabel berdasarkan filter
-  //   function renderTable(filterType) {
-  //     // Kosongkan tabel
-  //     tableHead.innerHTML = '';
-  //     tableBody.innerHTML = '';
-
-  //     if (filterType === 'perhari') {
-  //       // Header untuk Per Hari
-  //       tableHead.innerHTML = `
-  //         <tr>
-  //           <th>No</th>
-  //           <th>Name</th>
-  //           <th class="text-center">Status</th>
-  //         </tr>
-  //       `;
-
-  //       // Data dummy untuk Per Hari
-  //       dummyData.forEach((data, index) => {
-  //         tableBody.innerHTML += `
-  //           <tr>
-  //             <td>${index + 1}</td>
-  //             <td>${data.Student_Name}</td>
-  //             <td class="text-center">
-  //               <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal" data-bs-target="#popupModal">
-  //                 <i class="fa fa-info-circle"></i>${data.Attendance_Status}
-  //               </button>
-  //             </td>
-  //           </tr>
-  //         `;
-  //       });
-  //     } else {
-  //       // Header untuk Per Bulan / Per Semester
-  //       tableHead.innerHTML = `
-  //         <tr>
-  //           <th>No</th>
-  //           <th>Name</th>
-  //           <th>Hadir</th>
-  //           <th>Ijin</th>
-  //           <th>Sakit</th>
-  //           <th>Alpha</th>
-  //         </tr>
-  //       `;
-
-  //       // Data dummy untuk Per Bulan / Per Semester
-  //       dummyData.forEach((data, index) => {
-  //         tableBody.innerHTML += `
-  //           <tr>
-  //             <td>${index + 1}</td>
-  //             <td>${data.name}</td>
-  //             <td>${data.hadir}</td>
-  //             <td>${data.ijin}</td>
-  //             <td>${data.sakit}</td>
-  //             <td>${data.alpha}</td>
-  //           </tr>
-  //         `;
-  //       });
-  //     }
-  //   }
-
-  //   // Event listener untuk perubahan filter
-  //   filterType.addEventListener('change', function () {
-  //     renderTable(this.value);
-  //   });
-
-  //   // Render tabel default (Per Hari)
-  //   renderTable('perhari');
-  // });
-
   function updateFilterAndFormAction() {
     const filterSelect = document.getElementById('filterType');
     const filterHarian = document.getElementById('input-perhari');
