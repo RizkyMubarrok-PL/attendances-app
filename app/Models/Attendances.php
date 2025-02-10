@@ -95,9 +95,10 @@ class Attendances extends Model
                 DB::raw("SUM(CASE WHEN attendances.status = 'Alpha' THEN 1 ELSE 0 END) as Total_Alpha")
             )
             ->where('classes.class_name', $className)
+            ->whereRaw("DATE_FORMAT(attendances.created_at, '%Y-%m') = ?", [$month])
             ->groupBy('student.id', 'student.name')
             ->get();
-    }           
+    }
 
 
     public function studentAttendances()

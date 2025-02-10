@@ -39,10 +39,6 @@ class GuruController extends Controller
             $classAttendances = $attendances->countAttendancesByClassName($className, $filterValue);
         }
 
-        if ($classAttendances->isEmpty()) {
-            return view('guru.guruabsensi', ['allClasses' => $allClasses])->with(['message' => 'Data kosong.']);
-        }
-
         return view('guru.guruabsensi', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances]);
     }
 
@@ -99,9 +95,26 @@ class GuruController extends Controller
         ]);
     }
 
-    public function rekapPage(Attendances $attendances, Classes $classes)
+    public function rekapPage(Attendances $attendances, string $className = '', string $filter = '', string $filterValue = '')
     {
+        $teacher_id = Auth::user()->id;
+        $allClasses = User::with('teacherClasses.classData')->find($teacher_id);
+        $allClasses = $allClasses->teacherClasses;
 
-        return view('guru.gururekap');
+        $classAttendances = [];
+
+        if ($className != '') {
+            $classAttendances = $attendances->attendancesByClassNameToday($className);
+        }
+
+        if ($filter == 'tanggal') {
+            // dd($className, $filter, $filterValue);
+        }
+        
+        if ($filter == 'bulan') {
+            // dd($className, $filter, $filterValue);
+        }
+
+        return view('guru.gururekap', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances]);
     }
 }

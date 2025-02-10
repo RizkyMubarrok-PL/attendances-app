@@ -63,10 +63,11 @@ Route::group(['prefix' => 'guru', 'middleware' => 'role:guru'], function () {
         Route::post('/absensi/class/{className?}', 'dataAbsensiPerKelas')->name('dataAbsenPage');
         Route::post('/absensi/class/{className?}/update', 'updateAbsensi')->name('updateAbsen');
 
+        Route::get('/absensi/rekap/{className?}/{filter?}/{filterValue?}', 'rekapPage')->name('rekapGuruPage');
+
         Route::get('/absensi/{className?}', 'listAbsensiPage')->name('listAbsenPage');
         Route::post('/absensi/{className}/{filter}/{filterValue}', 'listAbsensiPage')->name('listAbsenFilter');
 
-        Route::get('/absensi/rekap', 'rekapPage')->name('rekapGuruPage');
     });
 });
 
