@@ -51,20 +51,6 @@
                 </div>
                 <div id="input-perbulan"
                   style="{{ request('filter') == 'bulan' ? 'display: block;' : 'display: none; ' }}">
-                  {{-- <select class="form-select" id="filterMonth" onchange="">
-                    <option value="1">Januari</option>
-                    <option value="2">Februari</option>
-                    <option value="3">Maret</option>
-                    <option value="4">April</option>
-                    <option value="5">Mei</option>
-                    <option value="6">Juni</option>
-                    <option value="7">Juli</option>
-                    <option value="8">Agustus</option>
-                    <option value="9">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
-                  </select> --}}
                   <input type="month" class="form-control" id="filterMonth"
                     value="{{ request('filter') == 'bulan' ? request('filterValue') : '' }}"
                     onchange="filterFormActionUpdate(this.value)">
@@ -92,7 +78,6 @@
                   </tr>
                 </thead>
                 <tbody id="tableBody">
-                  {{-- {{ dd($classAttendances) }} --}}
                   @foreach ($classAttendances as $attendance)
                   <tr>
                     @if (request('filter') == null || request('filter') == 'tanggal')
