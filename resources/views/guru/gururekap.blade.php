@@ -65,11 +65,12 @@
         </button>
         @endif
 
+        @if (request('filter') != null)
         <div class="table-responsive mt-3">
           <table class="table table-hover">
             <thead id="tableHead">
               <tr>
-                @if (request('filter') == null || request('filter') == 'tanggal')
+                @if (request('filter') == 'tanggal')
                 <th>No</th>
                 <th>Name</th>
                 <th class="text-center">Status</th>
@@ -105,6 +106,7 @@
             </tbody>
           </table>
         </div>
+        @endif
       </div>
     </div>
   </div>
