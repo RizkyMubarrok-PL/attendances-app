@@ -2,10 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AuthController;
+use App\Exports\RecapAttendances;
 use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\ClassController;
@@ -64,6 +66,9 @@ Route::group(['prefix' => 'guru', 'middleware' => 'role:guru'], function () {
         Route::post('/absensi/class/{className?}/update', 'updateAbsensi')->name('updateAbsen');
 
         Route::get('/absensi/rekap/{className?}/{filter?}/{filterValue?}', 'rekapPage')->name('rekapGuruPage');
+        Route::get('/export/rekap/{className}/{filter}/{filterValue}', function (string $className, string $filter, string $filterValue) {
+            return Excel::download(new RecapAttendances($className, $filter, $filterValue), "Recap {$className} {$filterValue}.xlsx");
+        })->name('exportRekap');
 
         Route::get('/absensi/{className?}', 'listAbsensiPage')->name('listAbsenPage');
         Route::post('/absensi/{className}/{filter}/{filterValue}', 'listAbsensiPage')->name('listAbsenFilter');

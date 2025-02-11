@@ -59,11 +59,11 @@
         @endif
 
         @if (request('className') && request('filter') && request('filterValue') && $classAttendances->isNotEmpty())
-        <button class="btn btn-ijo-submit bottom mt-4">
+        <a href="{{ route('exportRekap', ['className' => request('className'), 'filter' => request('filter'), 'filterValue' => request('filterValue')]) }}" class="btn btn-ijo-submit bottom mt-4">
           <i class="fas fa-file-excel me-2"></i>
           Export
-        </button>
-        @endif
+        </a>
+        @endif      
 
         @if (request('filter') != null)
         <div class="table-responsive mt-3">

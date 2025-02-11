@@ -109,10 +109,12 @@ class GuruController extends Controller
 
         if ($filter == 'tanggal') {
             // dd($className, $filter, $filterValue);
+            $classAttendances = $attendances->attendancesByClassName($className, $filterValue);
         }
         
         if ($filter == 'bulan') {
             // dd($className, $filter, $filterValue);
+            $classAttendances = $attendances->countAttendancesByClassName ($className, $filterValue);
         }
 
         return view('guru.gururekap', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances]);
