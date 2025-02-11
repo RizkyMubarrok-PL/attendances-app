@@ -56,15 +56,18 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'role:admin'], function (
 
 // rute guru
 Route::group(['prefix' => 'guru', 'middleware' => 'role:guru'], function () {
-    Route::controller(GuruController::class)->group(function (){
+    Route::controller(GuruController::class)->group(function () {
         Route::get('/', 'index')->name('guruHome');
-        Route::get('/absensi', 'listAbsensiPage')->name('listAbsenPage');
 
         Route::get('/absensi/class', 'updateAbsensiPage')->name('updateAbsenPage');
         Route::post('/absensi/class/{className?}', 'dataAbsensiPerKelas')->name('dataAbsenPage');
         Route::post('/absensi/class/{className?}/update', 'updateAbsensi')->name('updateAbsen');
 
-        Route::get('/absensi/rekap', 'rekapPage')->name('rekapGuruPage');
+        Route::get('/absensi/rekap/{className?}/{filter?}/{filterValue?}', 'rekapPage')->name('rekapGuruPage');
+
+        Route::get('/absensi/{className?}', 'listAbsensiPage')->name('listAbsenPage');
+        Route::post('/absensi/{className}/{filter}/{filterValue}', 'listAbsensiPage')->name('listAbsenFilter');
+
     });
 });
 
@@ -74,7 +77,7 @@ Route::group(['prefix' => 'siswa', 'middleware' => 'role:siswa'], function () {
         Route::get('/', 'index');
 
         Route::get('/absensi', 'absensiPage')->name('siswaAbsen');
-        Route::post('/absensiDate', 'absensiDate')->name('absensiDate');        
+        Route::post('/absensiDate', 'absensiDate')->name('absensiDate');
         Route::post('/absensiMonths', 'absensiMonths')->name('absensiMonths');
     });
 });

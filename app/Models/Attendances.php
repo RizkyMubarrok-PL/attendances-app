@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Classes;
+use Illuminate\Support\Facades\DB;
 use App\Models\ClassStudents;
+use App\Models\Classes;
 use App\Models\User;
 
 class Attendances extends Model
@@ -68,9 +69,37 @@ class Attendances extends Model
     {
         return $this->studentAttendances()
             ->where('Class_Name', $className)
-            ->where('attendances.created_at', now()->toDateString())
+            ->whereDate('attendances.created_at', now()->toDateString())
             ->get();
     }
+
+    public function attendancesByClassName(string $className, string $date)
+    {
+        return $this->studentAttendances()
+            ->where('Class_Name', $className)
+            ->whereDate('attendances.created_at', $date)
+            ->get();
+    }
+
+    public function countAttendancesByClassName(string $className, string $month)
+    {
+        return $this->join('class_students', 'attendances.student_id', '=', 'class_students.student_id')
+            ->join('classes', 'classes.id', '=', 'class_students.class_id')
+            ->join('users as student', 'student.id', '=', 'attendances.student_id')
+            ->leftJoin('users as teacher', 'teacher.id', '=', 'attendances.teacher_id')
+            ->select(                
+                'student.id as User_Id',
+                'student.name as Student_Name',
+                DB::raw("SUM(CASE WHEN attendances.status = 'Hadir' THEN 1 ELSE 0 END) as Total_Hadir"),
+                DB::raw("SUM(CASE WHEN attendances.status = 'Izin' THEN 1 ELSE 0 END) as Total_Izin"),
+                DB::raw("SUM(CASE WHEN attendances.status = 'Alpha' THEN 1 ELSE 0 END) as Total_Alpha")
+            )
+            ->where('classes.class_name', $className)
+            ->whereRaw("DATE_FORMAT(attendances.created_at, '%Y-%m') = ?", [$month])
+            ->groupBy('student.id', 'student.name')
+            ->get();
+    }
+
 
     public function studentAttendances()
     {
@@ -93,14 +122,16 @@ class Attendances extends Model
         return $studentsAttendance;
     }
 
-    public function countStatusAttendances(string $status) {
+    public function countStatusAttendances(string $status)
+    {
         return $this->getAttendancesBasedStatus($status)
-        ->count();
+            ->count();
     }
 
-    public function getAttendancesBasedStatus (string $status) {
+    public function getAttendancesBasedStatus(string $status)
+    {
         return $this->studentAttendances()
-        ->where('attendances.status', $status)
-        ->whereDate('attendances.created_at', now());
+            ->where('attendances.status', $status)
+            ->whereDate('attendances.created_at', now());
     }
 }
