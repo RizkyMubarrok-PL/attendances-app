@@ -65,7 +65,7 @@ class Attendances extends Model
         return $this->studentAttendances()->paginate(20);
     }
 
-    public function attendancesByClassNameToday(string $className)
+    public function attendancesByClassNameToday (string $className)
     {
         return $this->studentAttendances()
             ->where('Class_Name', $className)
@@ -73,7 +73,7 @@ class Attendances extends Model
             ->get();
     }
 
-    public function attendancesByClassName(string $className, string $date)
+    public function attendancesByClassName (string $className, string $date)
     {
         return $this->studentAttendances()
             ->where('Class_Name', $className)
@@ -81,7 +81,7 @@ class Attendances extends Model
             ->get();
     }
 
-    public function countAttendancesByClassName(string $className, string $month)
+    public function countAttendancesByClassName (string $className, string $month)
     {
         return $this->join('class_students', 'attendances.student_id', '=', 'class_students.student_id')
             ->join('classes', 'classes.id', '=', 'class_students.class_id')
