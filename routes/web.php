@@ -89,7 +89,7 @@ Route::group(['prefix' => 'siswa', 'middleware' => 'role:siswa'], function () {
     Route::controller(SiswaController::class)->group(function () {
         Route::get('/', 'index');
 
-        Route::get('/absensi', 'absensiPage')->name('siswaAbsen');
+        Route::get('/absensi/{filter?}/{filterValue?}', 'absensiData')->name('siswaAbsen');
         Route::post('/absensiDate', 'absensiDate')->name('absensiDate');
         Route::post('/absensiMonths', 'absensiMonths')->name('absensiMonths');
     });
