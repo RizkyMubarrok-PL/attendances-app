@@ -98,10 +98,12 @@ class RecapAttendances implements FromCollection, WithHeadings, WithEvents, With
                 $sheet = $event->sheet;
                 $highestRow = $sheet->getHighestRow();
 
-                if (!empty($this->filterValue)) {
+                if ($this->filter == 'tanggal') {
                     $indonesianDate = Carbon::parse($this->filterValue)->locale('id')->translatedFormat('l, d F Y');
-                } else {
-                    $indonesianDate = Carbon::now()->locale('id')->translatedFormat('l, d F Y');
+                }
+                
+                if ($this->filter == 'bulan') {
+                    $indonesianDate = Carbon::parse($this->filterValue)->locale('id')->translatedFormat('F Y');
                 }
 
                 $sheet->mergeCells('B1:D1');
@@ -110,7 +112,7 @@ class RecapAttendances implements FromCollection, WithHeadings, WithEvents, With
                 $sheet->getStyle('A1:B1')->getFont()->setBold(true);
 
                 $sheet->mergeCells('B2:D2');
-                $sheet->setCellValue('A2', "Tanggal: ");
+                $sheet->setCellValue('A2', $this->filter == 'bulan' ? "Bulan: " : "Tanggal: ");
                 $sheet->setCellValue('B2', $indonesianDate);
                 $sheet->getStyle('A2:B2')->getFont()->setBold(true);
 
@@ -126,23 +128,68 @@ class RecapAttendances implements FromCollection, WithHeadings, WithEvents, With
                     ],
                 ]);
 
-                for ($row = 4; $row <= $highestRow; $row++) {
-                    $statusCell = 'C' . $row;
-                    $status = $sheet->getCell($statusCell)->getValue();
+                if ($this->filter == 'tanggal') {
+                    for ($row = 4; $row <= $highestRow; $row++) {
+                        $statusCell = 'C' . $row;
+                        $status = $sheet->getCell($statusCell)->getValue();
+    
+                        $bgColor = match ($status) {
+                            'Hadir' => 'C6EFCE',  // Green
+                            'Izin' => 'FFEB9C',   // Yellow
+                            'Alpha' => 'FFC7CE',  // Red
+                            default => 'FFFFFF',  // White (no status)
+                        };
+    
+                        $sheet->getStyle($statusCell)->applyFromArray([
+                            'fill' => [
+                                'fillType' => Fill::FILL_SOLID,
+                                'startColor' => ['argb' => $bgColor],
+                            ],
+                        ]);
+                    }
+                } else {
+                    $bgColorHadir = 'C6EFCE';  // Green
+                    $bgColorIzin = 'FFEB9C'; // Yellow;
+                    $bgColorAlpha = 'FFC7CE';  // Red 
+                    
+                    for ($row = 4; $row <= $highestRow; $row++) {
+                        $statusCell = 'C' . $row;
+                        $status = $sheet->getCell($statusCell)->getValue();
+            
+            
+                        $sheet->getStyle($statusCell)->applyFromArray([
+                            'fill' => [
+                                'fillType' => Fill::FILL_SOLID,
+                                'startColor' => ['argb' => $bgColorHadir],
+                            ],
+                        ]);
+                    }
 
-                    $bgColor = match ($status) {
-                        'Hadir' => 'C6EFCE',
-                        'Izin' => 'FFEB9C',
-                        'Alpha' => 'FFC7CE',
-                        default => 'FFFFFF',
-                    };
+                    for ($row = 4; $row <= $highestRow; $row++) {
+                        $statusCell = 'D' . $row;
+                        $status = $sheet->getCell($statusCell)->getValue();
+            
+            
+                        $sheet->getStyle($statusCell)->applyFromArray([
+                            'fill' => [
+                                'fillType' => Fill::FILL_SOLID,
+                                'startColor' => ['argb' => $bgColorIzin],
+                            ],
+                        ]);
+                    }
 
-                    $sheet->getStyle("A$row:E$row")->applyFromArray([
-                        'fill' => [
-                            'fillType' => Fill::FILL_SOLID,
-                            'startColor' => ['argb' => $bgColor],
-                        ],
-                    ]);
+                    for ($row = 4; $row <= $highestRow; $row++) {
+                        $statusCell = 'E' . $row;
+                        $status = $sheet->getCell($statusCell)->getValue();
+            
+            
+                        $sheet->getStyle($statusCell)->applyFromArray([
+                            'fill' => [
+                                'fillType' => Fill::FILL_SOLID,
+                                'startColor' => ['argb' => $bgColorAlpha],
+                            ],
+                        ]);
+                    }
                 }
             },
         ];
