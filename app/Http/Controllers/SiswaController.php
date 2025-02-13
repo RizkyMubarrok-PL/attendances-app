@@ -2,10 +2,11 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Attendances;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Models\Attendances;
 
 class SiswaController extends Controller
 {
@@ -13,56 +14,56 @@ class SiswaController extends Controller
         return view('siswa.siswa');
     }
 
-    public function absensiPage(Attendances $attendances) {
-        $user = Auth::user();
+    public function absensiData (Attendances $attendances, string $filter = '', string $filterValue = '') {
+        $student = Auth::user();
 
-        $date = now()->format('Y-m-d');
+        $studentId = $student->id;        
 
-        $attendances = $attendances->studentAttendances()
-                        ->where('student.id', $user->id)
-                        ->whereDate('attendances.created_at', "$date")
-                        ->get();        
+        if ($filter == null && $filterValue == null) {
+            $filterValue = now()->format('Y-m-d');
 
-        return view('siswa.absensisiswa');
-    }
+            $studentAttendance = $attendances->studentAttendances()
+                        ->where('student.id', $studentId)
+                        ->whereDate('attendances.created_at', $filterValue)
+                        ->first();
+        }
 
-    public function absensiDate(Request $request, Attendances $attendances) {
-        $validated = $request->validate([
-            'date' => 'required|date'
-        ]);
+        if ($filter == 'tanggal') {
+            $studentAttendance = $attendances->studentAttendances()
+                        ->where('student.id', $studentId)
+                        ->whereDate('attendances.created_at', $filterValue)
+                        ->first();
 
-        $date = $validated['date'];
+            dd($filter, $filterValue, $studentAttendance);
+        }
 
-        $user = Auth::user();
+        if ($filter == 'bulan') {
+            $carbonDate = Carbon::createFromFormat('Y-m', $filterValue);
 
-        $attendances = $attendances->studentAttendances()
-                        ->where('student.id', $user->id)
-                        ->whereDate('attendances.created_at', "$date")
-                        ->get();
-
-        return redirect()->back()->with(['attendances' => $attendances]);
-    }
+            $year = $carbonDate->year;
+            $month = $carbonDate->month;        
     
-    public function absensiMonths(Request $request, Attendances $attendances) {
-        $validated = $request->validate([
-            'month' => 'required|date_format:Y-m'
-        ], [
-            'month.date_format' => 'Bulan tidak sesuai format.'
-        ]);
+            $studentAttendance = $attendances->join('class_students', 'attendances.student_id', '=', 'class_students.student_id')
+                            ->join('classes', 'classes.id', '=', 'class_students.class_id')
+                            ->join('users as student', 'student.id', '=', 'attendances.student_id')
+                            ->leftJoin('users as teacher', 'teacher.id', '=', 'attendances.teacher_id')
+                            ->select(                
+                                'student.id as User_Id',
+                                'student.name as Student_Name',
+                                DB::raw("SUM(CASE WHEN attendances.status = 'Hadir' THEN 1 ELSE 0 END) as Total_Hadir"),
+                                DB::raw("SUM(CASE WHEN attendances.status = 'Izin' THEN 1 ELSE 0 END) as Total_Izin"),
+                                DB::raw("SUM(CASE WHEN attendances.status = 'Alpha' THEN 1 ELSE 0 END) as Total_Alpha")
+                            )
+                            ->where('student.id', $studentId)
+                            ->whereMonth('attendances.created_at', $month)
+                            ->whereYear('attendances.created_at', $year)
+                            ->groupBy('student.id', 'student.name')
+                            ->first();
 
-        $carbonDate = Carbon::createFromFormat('Y-m', $validated['month']);
+            dd($filter, $filterValue, $studentAttendance);
+        }
 
-        $year = $carbonDate->year;
-        $month = $carbonDate->month;
-
-        $user = Auth::user();
-
-        $attendances = $attendances->studentAttendances()
-                        ->where('student.id', $user->id)
-                        ->whereMonth('attendances.created_at', "$month")
-                        ->whereYear('attendances.created_at', "$year")
-                        ->get();
-
-        return view('siswa.absensisiswa', compact('attendances'));
+        return view('siswa.absensisiswa', ['attendance' => $studentAttendance]);
+        // return view('siswa.absensisiswa', ['attendance' => $studentAttendance]);
     }
 }

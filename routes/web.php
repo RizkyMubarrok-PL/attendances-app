@@ -1,14 +1,17 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Exports\RecapAttendances;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\ClassController;
+use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\AttendancesController;
 
 Route::get('/', function () {
@@ -64,6 +67,16 @@ Route::group(['prefix' => 'guru', 'middleware' => 'role:guru'], function () {
         Route::post('/absensi/class/{className?}/update', 'updateAbsensi')->name('updateAbsen');
 
         Route::get('/absensi/rekap/{className?}/{filter?}/{filterValue?}', 'rekapPage')->name('rekapGuruPage');
+        Route::get('/export/rekap/{className}/{filter}/{filterValue}', function (string $className, string $filter, string $filterValue) {
+            if ($filter == 'tanggal') {
+                $indonesianDate = Carbon::parse($filterValue)->locale('id')->translatedFormat('l, d F Y');
+            }
+            
+            if ($filter == 'bulan') {
+                $indonesianDate = Carbon::parse($filterValue)->locale('id')->translatedFormat('F Y');
+            }
+            return Excel::download(new RecapAttendances($className, $filter, $filterValue), "Recap {$className} {$indonesianDate}.xlsx");
+        })->name('exportRekap');
 
         Route::get('/absensi/{className?}', 'listAbsensiPage')->name('listAbsenPage');
         Route::post('/absensi/{className}/{filter}/{filterValue}', 'listAbsensiPage')->name('listAbsenFilter');
@@ -76,7 +89,7 @@ Route::group(['prefix' => 'siswa', 'middleware' => 'role:siswa'], function () {
     Route::controller(SiswaController::class)->group(function () {
         Route::get('/', 'index');
 
-        Route::get('/absensi', 'absensiPage')->name('siswaAbsen');
+        Route::get('/absensi/{filter?}/{filterValue?}', 'absensiData')->name('siswaAbsen');
         Route::post('/absensiDate', 'absensiDate')->name('absensiDate');
         Route::post('/absensiMonths', 'absensiMonths')->name('absensiMonths');
     });
