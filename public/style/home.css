@@ -123,7 +123,11 @@ table td{
     color: #2A8579; /* Ganti sesuai keinginan */
   }
 
-  .form-select{
+  /* .form-select{
+    border: none;
+  } */
+
+  .form-select-custom{
     border: none;
   }
   
@@ -214,6 +218,12 @@ table td{
   justify-content: center;  /* Tengahkan secara horizontal */
   align-items: center;       /* Tengahkan secara vertikal */
   width: 100px;
+}
+
+.icon-konten-2 {
+  display: flex;
+  justify-content: center;  /* Tengahkan secara horizontal */
+  align-items: center;       /* Tengahkan secara vertikal */
 }
 
 .tulisan-konten-guru-dua{

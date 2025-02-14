@@ -18,12 +18,12 @@
         <div class="col-lg-6 d-flex align-items-center justify-content-center">
           <div class="unduh-apk">
               <h4>Unduh sekarang!</h4>
-              <a href="#" class="unduh-aplikasi"><img src="" alt="">Download</a>
+              <a href="https://youtu.be/dQw4w9WgXcQ?si=CEKNAdEzqstieLQQ" class="unduh-aplikasi"><img src="" alt="">Download</a>
             </div>
           <div class="download-siswa"><img src="{{ asset('img/foto aset.png') }}" alt=""></div>
         </div>
         <div class="container">
-          <div class="footer-bawah d-flex justify-content-between py-3 border-top">
+          <div class="footer-bawah d-flex justify-content-between mt-3 py-3 border-top">
             <p>&copy; 2024 SMKN 10 Surabaya, Inc. All rights reserved.</p>
             <ul class="list-unstyled d-flex">
               <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>

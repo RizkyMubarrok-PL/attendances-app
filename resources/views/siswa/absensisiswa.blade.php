@@ -36,10 +36,15 @@
                             </div>
 
                             @if ( ($attendance != null || $attendance->isNotEmpty()))
-                            <div class="col-md-4 mb-3 mt-3">
-                                <div class="card shadow-sm">
-                                    <div class="card-header bg-primary text-white">
-                                        {{ \Carbon\Carbon::parse($attendance->Attendance_Created_Date)->locale('id')->translatedFormat('l, d F Y') }}
+                            <div class="col-12 mb-3 mt-3">
+                                <div class="card shadow-sm mb-3 mt-3">
+                                    <div class="card-header bg-ijo d-flex text-white justify-content-between align-items-center">
+                                        <div class="tanggal-halo">
+                                            {{ \Carbon\Carbon::parse($attendance->Attendance_Created_Date)->locale('id')->translatedFormat('l d, F Y') }}
+                                        </div>
+                                        <div class="keterangan-tanggal opacity-50">
+                                            Hari
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Guru: {{ $attendance->Teacher_Name ?? '-' }}</h5>
@@ -57,49 +62,46 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                <div class="card shadow-sm mb-3 mt-3">
+                                    <div class="card-header bg-ijo d-flex text-white justify-content-between align-items-center">
+                                        <div class="tanggal-halo">
+                                            {{ \Carbon\Carbon::parse($attendance->Attendance_Created_Date)->locale('id')->translatedFormat('F Y') }}
+                                        </div>
+                                        <div class="keterangan-tanggal opacity-50">
+                                            Bulan
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Guru: {{ $attendance->Teacher_Name ?? '-' }}</h5>
+                                        <p class="card-text">
+                                            <span class="badge 
+                                                {{ $attendance->Attendance_Status == 'Izin' ? 'bg-warning' : ($attendance->Attendance_Status == 'Alpha' ? 'bg-danger' : 'bg-success') }}">
+                                                {{ $attendance->Attendance_Status }}
+                                                <span class="badge bg-light text-dark">{{ $hadirCount ?? 0 }}</span>
+                                            </span>
+                                            <span class="badge 
+                                                {{ $attendance->Attendance_Status == 'Izin' ? 'bg-warning' : ($attendance->Attendance_Status == 'Alpha' ? 'bg-danger' : 'bg-success') }}">
+                                                {{ $attendance->Attendance_Status }}
+                                                <span class="badge bg-light text-dark">{{ $hadirCount ?? 0 }}</span>
+                                            </span>
+                                            <span class="badge 
+                                                {{ $attendance->Attendance_Status == 'Izin' ? 'bg-warning' : ($attendance->Attendance_Status == 'Alpha' ? 'bg-danger' : 'bg-success') }}">
+                                                {{ $attendance->Attendance_Status }}
+                                                <span class="badge bg-light text-dark">{{ $hadirCount ?? 0 }}</span>
+                                            </span>
+                                        </p>
+                                        @if ($attendance->Attendance_Status == 'Izin')
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#descModal" data-desc="{{ $attendance->Attendance_description }}">
+                                            <i class="fa fa-info-circle"></i> Info
+                                        </button>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             @endif
 
-                            
-                            {{-- <div class="table-responsive">
-                                <table class="table table-stripped mt-3">
-                                    <thead>
-                                        <tr>
-                                            <th>Tanggal</th>
-                                            <th>Hari</th>
-                                            <th>Nama Guru</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>                                        
-                                        @if ($attendances != null || $attendances->isNotEmpty())
-                                            @foreach ($attendances as $attendance)
-                                            <tr>
-                                                <td>{{ \Carbon\Carbon::parse($attendance->Attendance_Created_Date)->format('d-m-Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($attendance->Attendance_Created_Date)->locale('id')->translatedFormat('l'); }}</td>
-                                                <td>{{ $attendance->Teacher_Name == null ? '-' : $attendance->Teacher_Name }}</td>
-                                                <td>
-                                                    
-                                                    <button class="btn {{ $attendance->Attendance_Status == 'Izin' ? 'btn-warning' : ($attendance->Attendance_Status == 'Alpha' ? 'btn-danger' : 'btn-success') }}" disabled>
-                                                        {{ $attendance->Attendance_Status }}
-                                                    </button>
-
-                                                    @if ($attendance->Attendance_Status == 'Izin')
-                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                        data-bs-target="#descModal" data-desc="{{ $attendance->Attendance_description }}">
-                                                        <i class="fa fa-info-circle"></i>
-                                                        <i class="info-tulisan">info</i>
-                                                    </button>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        @else
-                                            
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div> --}}
                         </div>
                     </div>
                 </div>

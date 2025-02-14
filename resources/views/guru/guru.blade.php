@@ -31,7 +31,7 @@
             <div class="col-lg-4 col-12">
               <div class="box-konten small-box">
                 <div class="inner">  
-                  <div class="icon-konten mt-4"><i class="fas fa-school" style="font-size: 4.5rem; color: #2A8579;"></i></div>
+                  <div class="icon-konten-2 mt-4"><i class="fas fa-school" style="font-size: 4.5rem; color: #2A8579;"></i></div>
                     <div class="tulisan-konten-guru-dua text-center">
                       <h2 class="font">Total Kelas</h2>
                       <p class="jumlah-konten">22</p>
