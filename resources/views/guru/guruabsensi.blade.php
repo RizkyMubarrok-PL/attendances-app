@@ -6,7 +6,7 @@
   <div class="content-header">
     <div class="container-fluid">
       <div class="font bungkus-judul-utama">
-        <h1 class="m-0" style="color: #2A8579;">Absensi Siswa</h1>
+        <h1 class="m-0" style="color: #2A8579; font-weight: bold;">Absensi Siswa</h1>
       </div>
     </div>
   </div>
@@ -18,7 +18,7 @@
 
           <form class="search-container col-lg-12 col-12" id="classForm">
             <i class="fa fa-list"></i>
-            <select name="" class="form-select" id="classSelect" onchange="updateActionAndSubmit()">
+            <select name="" class="form-select-custom form-select" id="classSelect" onchange="updateActionAndSubmit()">
               <option value="">Pilih Kelas</option>
               @foreach ($allClasses as $class)
               <option value="{{ $class->classData->class_name }}" {{ $class->classData->class_name ==
@@ -156,7 +156,13 @@
               </table>
             </div>
             @else
-            Data kosong.
+            <div class="text-center py-5">
+              <i class="fas fa-filter fa-4x text-muted mb-3"></i>
+              <div class="mt-3">
+                <p class="text-muted">Data kosong</p>
+                <p class="text-muted">Silahkan pilih Kelas untuk menampilkan data</p>
+              </div>
+            </div>
             @endif
           </div>
         </div>

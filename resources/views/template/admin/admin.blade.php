@@ -84,14 +84,14 @@
 
       <a href="#" class="brand-link">
         <img class="brand-image img-circle elevation-2" src="{{ asset('img/logohaloges1.png') }}" alt="">
-        <span class="font brand-text" style="color: white;">SiHadir</span>
+        <span class="font brand-text" style="color: white;">AbsenceGo</span>
       </a>
 
       <div class="sidebar">
         <!-- User Panel -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{{ asset('img/anime.png') }}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{ asset('img/profile.png') }}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">Administrator</a>
