@@ -4,14 +4,25 @@
     text-decoration: none;
 }
 
+.bg-custom-1{
+    background-color: #f8f9fa;
+}
+
+.bg-ijo{
+    background-color: #2A8579;
+}
+
 body{
     background-color: #f8f9fa;
 }
 
-header{
+header {
     position: sticky;
     top: 0;
-}
+    left: 0;
+    right: 0;
+    z-index: 1030;
+  }
 
 .navbar-brand{
     position: relative;
