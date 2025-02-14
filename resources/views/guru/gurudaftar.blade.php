@@ -28,7 +28,7 @@
             </select>
           </form>
 
-          <div class="col-lg-12 mt-3">
+          <div class="col-lg-12 mt-5">
             @if (isset($classAttendances) && $classAttendances->isNotEmpty())
             <div class="table-responsive mt-3">
               <table class="table table-hover">
@@ -97,16 +97,21 @@
                       </td>
                     </tr>
                     @endforeach
-                    <tr>
-                      <td><input type="submit" value="Simpan" class="btn btn-info"></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
                   </form>
                 </tbody>
               </table>
             </div>
+            <div class="tombol-submit mt-3">
+              <td><input type="submit" value="Simpan" class="btn btn-info"></td>
+            </div>
             @else
+            <div class="text-center py-5">
+              <i class="fas fa-filter fa-4x text-muted mb-3"></i>
+              <div class="mt-3">
+                <p class="text-muted">Data kosong</p>
+                <p class="text-muted">Silahkan pilih Kelas untuk menampilkan data</p>
+              </div>
+            </div>
             @endif
           </div>
         </div>
