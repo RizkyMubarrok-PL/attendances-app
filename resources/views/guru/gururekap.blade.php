@@ -12,10 +12,10 @@
   <div class="content">
     <div class="container-fluid">
       <div class="pembungkus-konten-utama">
-        <div class="row mt-4">
+        <div class="row">
           <form class="search-container col-lg-12 col-12" id="classForm" action="" method="GET">
             <i class="fa fa-list"></i>
-            <select name="" class="form-select" id="classSelect" onchange="updateActionAndSubmit()">
+            <select name="" class="form-select-custom form-select" id="classSelect" onchange="updateActionAndSubmit()">
               <option value="">Pilih Kelas</option>
               @foreach ($allClasses as $class)
               <option value="{{ $class->classData->class_name }}" {{ $class->classData->class_name ==
@@ -27,7 +27,6 @@
           </form>
 
           @if (request('className') != null && $classAttendances->isNotEmpty())
-          <div class="col-lg-12 mt-4">
             <label for="rekapSelector" class="form-label text-ijo">
               Pilih Jenis Rekap Absensi
             </label>
@@ -36,9 +35,7 @@
               <option value="tanggal" {{ request('filter')=='tanggal' ? 'selected' : '' }}>Per Tanggal</option>
               <option value="bulan" {{ request('filter')=='bulan' ? 'selected' : '' }}>Per Bulan</option>
             </select>
-          </div>
           @endif
-        </div>
 
         <!-- Dynamic Dropdown (Hidden by Default) -->
         @if (request('className') != null && $classAttendances->isNotEmpty())
@@ -63,50 +60,61 @@
           <i class="fas fa-file-excel me-2"></i>
           Export
         </a>
-        @endif      
-
-        @if (request('filter') != null)
-        <div class="table-responsive mt-3">
-          <table class="table table-hover">
-            <thead id="tableHead">
-              <tr>
-                @if (request('filter') == 'tanggal')
-                <th>No</th>
-                <th>Name</th>
-                <th class="text-center">Status</th>
-                @else
-                <th>No</th>
-                <th>Name</th>
-                <th>Hadir</th>
-                <th>Ijin</th>
-                <th>Alpha</th>
-                @endif
-              </tr>
-            </thead>
-            <tbody id="tableBody">
-              @foreach ($classAttendances as $attendance)
-              <tr>
-                @if (request('filter') == null || request('filter') == 'tanggal')
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $attendance->Student_Name }}</td>
-                <td class="text-center">
-                  <span class="p-2 rounded text-white bg-info">
-                    {{ $attendance->Attendance_Status }}
-                  </span>
-                </td>
-                @else
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $attendance->Student_Name }}</td>
-                <td>{{ $attendance->Total_Hadir }}</td>
-                <td>{{ $attendance->Total_Izin }}</td>
-                <td>{{ $attendance->Total_Alpha }}</td>
-                @endif
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
+        @endif  
+            
+        <div class="col-lg-12 mt-5">
+          @if (request('filter') != null)
+          <div class="table-responsive mt-3">
+            <table class="table table-hover">
+              <thead id="tableHead">
+                <tr>
+                  @if (request('filter') == 'tanggal')
+                  <th>No</th>
+                  <th>Name</th>
+                  <th class="text-center">Status</th>
+                  @else
+                  <th>No</th>
+                  <th>Name</th>
+                  <th>Hadir</th>
+                  <th>Ijin</th>
+                  <th>Alpha</th>
+                  @endif
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                @foreach ($classAttendances as $attendance)
+                <tr>
+                  @if (request('filter') == null || request('filter') == 'tanggal')
+                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ $attendance->Student_Name }}</td>
+                  <td class="text-center">
+                    <span class="p-2 rounded text-white bg-info">
+                      {{ $attendance->Attendance_Status }}
+                    </span>
+                  </td>
+                  @else
+                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ $attendance->Student_Name }}</td>
+                  <td>{{ $attendance->Total_Hadir }}</td>
+                  <td>{{ $attendance->Total_Izin }}</td>
+                  <td>{{ $attendance->Total_Alpha }}</td>
+                  @endif
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          @else
+          <div class="text-center py-5">
+            <i class="fas fa-filter fa-4x text-muted mb-3"></i>
+            <div class="mt-3">
+              <p class="text-muted">Data kosong</p>
+              <p class="text-muted">Silahkan pilih Kelas untuk menampilkan data</p>
+            </div>
+          </div>
+          @endif
+          </div>
         </div>
-        @endif
       </div>
     </div>
   </div>

@@ -26,7 +26,7 @@
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>No</th>
+                      <th class="no-column">No</th>
                       <th>Name</th>
                       <th>Teacher Name</th>
                       <th>Kelas</th>
