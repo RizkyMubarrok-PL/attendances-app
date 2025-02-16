@@ -22,6 +22,21 @@
       margin-top: 5px;
   }
 
+  .nav-link-a{
+    color: #2A8579 !important;
+    transition: 0.3s ease-in-out !important;
+  }
+
+  .nav-link-a:hover{
+    color: #256F66 !important;
+  }
+
+  .nav-link i{
+    width: 22px;
+    font-size: 18px;
+    text-align: center;
+  }
+
   .main-sidebar{
       background-color: white;
   }
@@ -36,7 +51,12 @@
       flex-direction: column;
   }
 
-  .halo{
+  .info a{
+      color: #2A8579 !important;
+      opacity: 80%;
+  }
+
+  .menu-sidebar{
     max-height: 100vh;
   }
 
@@ -100,7 +120,7 @@
         </div>
 
         <div class="menu-section">
-          <ul class="halo nav nav-pills nav-sidebar flex-column" role="menu">
+          <ul class="menu-sidebar nav nav-pills nav-sidebar flex-column" role="menu">
             <li class="nav-item">
               <a href="{{ route('dashboard') }}" class="nav-link active" style="border-radius: 10px;">
                 <i class="nav-icon fas fa-home"></i>
@@ -108,24 +128,24 @@
               </a>
             </li>
             <div class="konten mt-4">
-              <div class="brand-text" style="opacity: 50%; font-family: 'Comfortaa', sans-serif;">
+              <div class="brand-text text-ijo" style="font-family: 'Comfortaa', sans-serif;">
                 <h4 style="margin-left: 1rem;">Menu Utama</h4>
               </div>
               <li class="nav-item">
-                <a href="{{ route('user') }}" class="nav-link">
-                  <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
+                <a href="{{ route('user') }}" class="nav-link nav-link-a" style="margin-left: 4px;">
+                  <i class="nav-icon fas fa-user"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">DaftarUser</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('class') }}" class="nav-link">
-                  <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
+                <a href="{{ route('class') }}" class="nav-link nav-link-a" style="margin-left: 4px;">
+                  <i class="nav-icon fas fa-school"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">DaftarKelas</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('report', ['status' => '']) }}" class="nav-link">
-                  <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
+                <a href="{{ route('report', ['status' => '']) }}" class="nav-link nav-link-a" style="margin-left: 4px;">
+                  <i class="nav-icon fas fa-file-alt"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">LaporanKehadiran</p>
                 </a>
               </li>

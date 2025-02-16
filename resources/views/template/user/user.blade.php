@@ -24,6 +24,21 @@
     margin-top: 5px;
   }
 
+  .nav-link-a{
+    color: #2A8579 !important;
+    transition: 0.3s ease-in-out !important;
+  }
+
+  .nav-link-a:hover{
+    color: #256F66 !important;
+  }
+
+  .nav-link i{
+    width: 22px;
+    font-size: 18px;
+    text-align: center;
+  }
+
   .main-sidebar{
       background-color: white;
   }
@@ -36,6 +51,11 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
+  }
+
+  .info a{
+      color: #2A8579 !important;
+      opacity: 80%;
   }
 
   .halo{
@@ -112,24 +132,24 @@
               </a>
             </li>
             <div class="konten mt-4">
-              <div class="brand-text" style="opacity: 50%; font-family: 'Comfortaa', sans-serif;">
+              <div class="brand-text text-ijo" style="font-family: 'Comfortaa', sans-serif;">
                 <h4 style="margin-left: 1rem;">Menu Utama</h4>
               </div>
               <li class="nav-item">
-                <a href="{{ route('listAbsenPage') }}" class="nav-link">
-                  <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
+                <a href="{{ route('listAbsenPage') }}" class="nav-link nav-link-a" style="margin-left: 4px;">
+                  <i class="nav-icon fas fa-calendar-check"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">List Absensi</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('updateAbsenPage') }}" class="nav-link">
-                  <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
+                <a href="{{ route('updateAbsenPage') }}" class="nav-link nav-link-a" style="margin-left: 4px;">
+                  <i class="nav-icon fas fa-clipboard-list"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">Perbarui Absensi</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('rekapGuruPage') }}" class="nav-link">
-                  <i style="margin-left: 4px;" class="nav-icon fas fa-home"></i>
+                <a href="{{ route('rekapGuruPage') }}" class="nav-link nav-link-a" style="margin-left: 4px;">
+                  <i class="nav-icon fas fa-file-alt"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">Rekap Absensi</p>
                 </a>
               </li>
