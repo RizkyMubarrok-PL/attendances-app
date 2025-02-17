@@ -65,6 +65,7 @@ class GuruController extends Controller
     public function updateAbsensi(Request $request, Attendances $attendances)
     {
         // dd($request);
+        $teacher_id = Auth::user()->id;
         $absensi = $request->input('absensi');
 
         $rules = [
@@ -82,8 +83,9 @@ class GuruController extends Controller
             ]);
         }
 
-        collect($absensi)->each(function ($data) use ($attendances) {
+        collect($absensi)->each(function ($data) use ($attendances, $teacher_id) {
             $attendances->where('id', $data['id'])->update([
+                'teacher_id' => $teacher_id,
                 'status' => $data['status'],
                 'description' => $data['keterangan'] ?? null,
             ]);
