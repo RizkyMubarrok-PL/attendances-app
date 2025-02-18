@@ -54,13 +54,13 @@ class SiswaController extends Controller
 
         // Monthly summary when filtering by date
 
-        dd([
-            'attendance' => $studentAttendance,
-            'sumAttendance' => $sumStudentAttendances,
-            'hadirAttendance' => $hadirStudentAttendances,
-            'izinAttendance' => $izinStudentAttendances,
-            'alphaAttendance' => $alphaStudentAttendances
-        ]);
+        // dd([
+        //     'attendance' => $studentAttendance,
+        //     'sumAttendance' => $sumStudentAttendances,
+        //     'hadirAttendance' => $hadirStudentAttendances,
+        //     'izinAttendance' => $izinStudentAttendances,
+        //     'alphaAttendance' => $alphaStudentAttendances
+        // ]);
 
         return view('siswa.absensisiswa', [
             'attendance' => $studentAttendance,

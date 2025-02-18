@@ -31,28 +31,22 @@
                                 {{-- harian --}}
                                 <div class="card shadow-sm mb-3 mt-3">
                                     <div
-                                        class="card-header d-flex text-white justify-content-between align-items-center {{ $attendance->Attendance_Status == 'Izin' ? 'bg-warning' : ($attendance->Attendance_Status == 'Alpha' ? 'bg-danger' : 'bg-success') }}">
+                                        class="card-header d-flex justify-content-between align-items-center {{ $attendance->Attendance_Status == 'Izin' ? 'bg-warning text-dark' : ($attendance->Attendance_Status == 'Alpha' ? 'bg-danger  text-white' : 'bg-success  text-white') }}">
                                         <div class="tanggal-halo">
                                             {{
                                             \Carbon\Carbon::parse($attendance->Attendance_Updated_Date)->locale('id')->translatedFormat('l,
                                             d F Y') }}
                                         </div>
 
-                                        <h5>
+                                        <span class="fw-bold">
                                             {{ $attendance->Attendance_Status }}
-                                        </h5>
+                                        </span>
                                     </div>
                                     <div class="card-body">
-                                        @if ($attendance->Attendance_Status == 'Izin')
                                         <button type="button" class="btn btn-info text-white" data-bs-toggle="modal"
-                                            data-bs-target="#descModal"
-                                            data-date="{{ \Carbon\Carbon::parse($attendance->Attendance_Updated_Date)->locale('id')->translatedFormat('ld, F Y') }}"
-                                            data-guru="{{ $attendance->Teacher_Name }}"
-                                            data-status="{{ $attendance->Attendance_Status }}"
-                                            data-desc="{{ $attendance->Attendance_description }}">
+                                            data-bs-target="#descModal">
                                             <i class="fa fa-info-circle"></i> Selengkapnya
                                         </button>
-                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +64,7 @@
                                         class="card-header bg-ijo d-flex text-white justify-content-between align-items-center">
                                         <div class="tanggal-halo">
                                             {{
-                                            \Carbon\Carbon::parse($attendance->Attendance_Updated_Date)->locale('id')->translatedFormat('F
+                                            \Carbon\Carbon::parse(request('filterValue'))->locale('id')->translatedFormat('F
                                             Y') }}
                                         </div>
                                         <div class="keterangan-tanggal opacity-50">
@@ -79,24 +73,29 @@
                                     </div>
                                     <div class="card-body">
                                         <p class="card-text">
-                                            <span class="badge bg-success">
+                                            <button class="btn btn-success text-white" data-bs-toggle="modal"
+                                                data-bs-target="#descModalHadir">
                                                 Hadir
-                                                <span class="badge bg-light text-dark">{{ $hadirCount ?? 0 }}</span>
-                                            </span>
-                                            <span class="badge bg-warning text-dark">
+                                                <span class="badge bg-light text-dark">{{ $sumAttendance->Total_Hadir ??
+                                                    0 }}</span>
+                                            </button>
+                                            <button class="btn btn-warning text-dark" data-bs-toggle="modal"
+                                                data-bs-target="#descModalIzin">
                                                 Izin
-                                                <span class="badge bg-light text-dark">{{ $hadirCount ?? 0 }}</span>
-                                            </span>
-                                            <span class="badge bg-danger">
+                                                <span class="badge bg-light text-dark">{{ $sumAttendance->Total_Izin ??
+                                                    0 }}</span>
+                                            </button>
+                                            <button class="btn btn-danger text-white" data-bs-toggle="modal"
+                                                data-bs-target="#descModalAlpha">
                                                 Alpha
-                                                <span class="badge bg-light text-dark">{{ $hadirCount ?? 0 }}</span>
-                                            </span>
-                                        </p>                                        
+                                                <span class="badge bg-light text-dark">{{ $sumAttendance->Total_Alpha ??
+                                                    0 }}</span>
+                                            </button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             @endif
-
                         </div>
                     </div>
                 </div>
@@ -112,8 +111,11 @@
             <div
                 class="modal-header {{ $attendance->Attendance_Status == 'Hadir' ? 'bg-success' : 
                                      ($attendance->Attendance_Status == 'Izin' ? 'bg-warning text-dark' : 'bg-danger') }}">
-                <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title {{ $attendance->Attendance_Status != 'Izin' ? 'text-white' : 'text-dark' }}"
+                    id="exampleModalLabel">Detail</h5>
+                <button type="button"
+                    class="btn-close {{ $attendance->Attendance_Status != 'Izin' ? 'btn-close-white' : '' }}"
+                    data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -159,20 +161,151 @@
     </div>
 </div>
 
+<div class="modal fade" id="descModalHadir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-height: 90vh;">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title {{ $attendance->Attendance_Status != 'Izin' ? 'text-white' : 'text-dark' }}"
+                    id="exampleModalLabel">Detail</h5>
+                <button type="button"
+                    class="btn-close {{ $attendance->Attendance_Status != 'Izin' ? 'btn-close-white' : '' }}"
+                    data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body overflow-auto">
+                @if ($hadirAttendance->isNotEmpty())
+                <table class="table rounded">
+                    <thead class="sticky-top table-success">
+                        <tr>
+                            <th>#</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        @foreach ($hadirAttendance as $attendance)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{
+                                \Carbon\Carbon::parse($attendance->Attendance_Updated_Date)->locale('id')->translatedFormat('l,
+                                d F Y') }}</td>
+                            <td>{{ $attendance->Attendance_Status }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                Data Kosong
+                @endif
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- @dd($hadirAttendance) --}}
+
+<div class="modal fade" id="descModalIzin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-height: 90vh;">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title {{ $attendance->Attendance_Status != 'Izin' ? 'text-white' : 'text-dark' }}"
+                    id="exampleModalLabel">Detail</h5>
+                <button type="button"
+                    class="btn-close {{ $attendance->Attendance_Status != 'Izin' ? 'btn-close-white' : '' }}"
+                    data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body oveflow-auto">
+                @if ($izinAttendance->isNotEmpty())
+                <table class="table rounded">
+                    <thead class="sticky-top table-warning">
+                        <tr>
+                            <th>#</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        @foreach ($izinAttendance as $attendance)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{
+                                \Carbon\Carbon::parse($attendance->Attendance_Updated_Date)->locale('id')->translatedFormat('l,
+                                d F Y') }}</td>
+                            <td>{{ $attendance->Attendance_Status }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                Data Kosong
+                @endif
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="descModalAlpha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-height: 90vh;">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-dark" id="exampleModalLabel">Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body overflow-auto">
+                @if ($alphaAttendance->isNotEmpty())
+                <table class="table rounded">
+                    <thead class="sticky-top table-danger">
+                        <tr>
+                            <th>#</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        @foreach ($alphaAttendance as $attendance)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{
+                                \Carbon\Carbon::parse($attendance->Attendance_Updated_Date)->locale('id')->translatedFormat('l,
+                                d F Y') }}</td>
+                            <td>{{ $attendance->Attendance_Status }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                Data Kosong
+                @endif
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Set tanggal otomatis ke hari ini
-        const today = new Date();
-        const todayFormatted = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
-        document.getElementById('tanggal').value = todayFormatted;
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Set tanggal otomatis ke hari ini
+    //     const today = new Date();
+    //     const todayFormatted = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
+    //     document.getElementById('tanggal').value = todayFormatted;
 
-        // Set bulan otomatis ke bulan ini
-        const currentYear = today.getFullYear();
-        const currentMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Tambahkan 0 jika satu digit
-        const thisMonthFormatted = `${currentYear}-${currentMonth}`; // Format YYYY-MM
-        document.getElementById('bulanan').value = thisMonthFormatted;
-    });
+    //     // Set bulan otomatis ke bulan ini
+    //     const currentYear = today.getFullYear();
+    //     const currentMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Tambahkan 0 jika satu digit
+    //     const thisMonthFormatted = `${currentYear}-${currentMonth}`; // Format YYYY-MM
+    //     document.getElementById('bulanan').value = thisMonthFormatted;
+    // });
 
     // function filterChange(dateInput, monthInput, filterForm, filterSelect) {
     //     const date = document.getElementById(dateInput);        
