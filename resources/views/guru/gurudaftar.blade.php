@@ -66,7 +66,7 @@
                                 <div class="form-group mb-3">
                                   <label for="statusSelect" class="form-label">Status Kehadiran :</label>
                                   <select class="form-select"
-                                    onchange="selectActivities(this.id, 'statusLabel_{{ $id }}', 'btnClose_{{ $id }}', 'keteranganContainer_{{ $id }}', 'keterangan_{{ $id }}')"
+                                    onchange="selectActivities(this.id, 'statusLabel_{{ $id }}', 'btnClose_{{ $id }}', 'saveButton_{{ $id }}', 'keteranganContainer_{{ $id }}', 'keterangan_{{ $id }}')"
                                     name="absensi[{{ $id }}][status]" id="statusSelect_{{ $id }}">
                                     <option value="Hadir" {{ $attendances->Attendance_Status == 'Hadir' ? 'selected' :
                                       ''}}>Hadir</option>
@@ -82,8 +82,14 @@
                                   <textarea name="absensi[{{ $id }}][keterangan]" rows="4" cols="50"
                                     class="form-control" placeholder="Tulis keterangan Anda di sini"
                                     id="keterangan_{{ $id }}"
-                                    oninput="undisabledCloseButton(this.id, 'btnClose_{{ $id }}')">{{ $attendances->Attendance_description }}</textarea>
+                                    oninput="undisabledCloseButton(this.id, 'btnClose_{{ $id }}', 'saveButton_{{ $id }}')">{{ $attendances->Attendance_description }}</textarea>
                                 </div>
+                              </div>
+
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="saveButton_{{ $id }}" data-bs-dismiss="modal">
+                                  Simpan
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -97,12 +103,12 @@
                       </td>
                     </tr>
                     @endforeach
+                    <div class="tombol-submit mt-3">
+                      <td><input type="submit" value="Simpan" class="btn btn-info"></td>
+                    </div>
                   </form>
                 </tbody>
               </table>
-            </div>
-            <div class="tombol-submit mt-3">
-              <td><input type="submit" value="Simpan" class="btn btn-info"></td>
             </div>
             @else
             <div class="text-center py-5">
@@ -123,14 +129,17 @@
 
 
   <script>
-    function selectDisabledCloseModal(select, closeBtn) {
+    function selectDisabledCloseModal(select, closeBtn, saveBtn) {
       const selectStatus = document.getElementById(select);
+      const saveButton = document.getElementById(saveBtn);
       const closeButton = document.getElementById(closeBtn);
 
       if (selectStatus.value == 'Izin') {
         closeButton.setAttribute('disabled', true)
+        saveButton.setAttribute('disabled', true)
       } else {
         closeButton.removeAttribute('disabled');
+        saveButton.removeAttribute('disabled');
       }
     }
 
@@ -154,20 +163,23 @@
       }
     }
     
-    function selectActivities (select, label, closeBtn, textAreaContainer, textArea) {
+    function selectActivities (select, label, closeBtn, saveBtn, textAreaContainer, textArea) {
       changeStatusLable(select, label);
-      selectDisabledCloseModal(select, closeBtn);
+      selectDisabledCloseModal(select, closeBtn, saveBtn);
       selectOpenTextArea(select, textAreaContainer, textArea);
     }
 
-    function undisabledCloseButton (textArea, closeBtn) {
+    function undisabledCloseButton (textArea, closeBtn, saveBtn) {
       const text = document.getElementById(textArea);
       const closeButton = document.getElementById(closeBtn);
+      const saveButton = document.getElementById(saveBtn);
 
       if (text.value == '') {
         closeButton.setAttribute('disabled', true)
+        saveButton.setAttribute('disabled', true)
       } else {
         closeButton.removeAttribute('disabled');
+        saveButton.removeAttribute('disabled');
       }
     }
 

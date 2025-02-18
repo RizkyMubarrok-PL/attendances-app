@@ -28,7 +28,7 @@ class StudentAttendances extends Seeder
             $studentAttendances[] = [
                 'student_id' => $student,
                 'teacher_id' => null,
-                'status' => 'Hadir',
+                'status' => null,
                 'description' => '',
                 'created_at' => $today,
                 'updated_at' => $today
