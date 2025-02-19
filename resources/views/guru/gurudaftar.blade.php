@@ -21,11 +21,11 @@
             <i class="fa fa-list"></i>
             <select name="class" class="form-select-custom form-select" id="classSelect" onchange="updateActionAndSubmit()">
               <option value="">Pilih Kelas</option>
-              @foreach ($allClasses as $class)
-              <option value="{{ $class->classData->class_name }}" {{ $class->classData->class_name == request('class') ? 'selected' : ''
-                }}>{{ $class->classData->class_name }} 
-                &nbsp; / &nbsp; Halo
-              </option>
+              @foreach ($classData as $class)
+              <option value="{{ $class['class']->class_name }}" {{ $class['class']->class_name ==
+                request('className') ?
+                'selected' : ''
+                }}>{{ $class['class']->class_name }} | {{ $class['status'] ? 'Sudah diabsen' : 'Belum diabsen' }}</option>
               @endforeach
             </select>
           </form>
@@ -131,25 +131,7 @@
 
 
   <script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const select = document.getElementById('classSelect');
-      const label = document.getElementById('selectedClassLabel');
-      
-      if (select.value) {
-        label.textContent = 'Kelas ' + select.value;
-      }
-      
-      select.addEventListener('change', function() {
-        if (this.value) {
-          label.textContent = 'Kelas ' + this.value;
-        } else {
-          label.textContent = '';
-        }
-      });
-    });
-
-    function selectDisabledCloseModal(select, closeBtn) {
+    function selectDisabledCloseModal(select, closeBtn, saveBtn) {
       const selectStatus = document.getElementById(select);
       const saveButton = document.getElementById(saveBtn);
       const closeButton = document.getElementById(closeBtn);

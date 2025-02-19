@@ -40,7 +40,7 @@ class GenerateDailyAttendance extends Command
                 $studentAttendances[] = [
                     'student_id' => $studentId,
                     'teacher_id' => null,
-                    'status' => 'Hadir',
+                    'status' => null,
                     'description' => null,
                     'created_at' => now(),
                     'updated_at' => now()
