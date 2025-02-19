@@ -99,7 +99,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            <div class="container">
+                            <div class="container text-ijo">
                               <div class="row mb-2">
                                 <label class="col-sm-4 fw-bold">Nama Siswa</label>
                                 <label class="col-sm-1">:</label>

@@ -6,6 +6,10 @@
     margin-top: 5px;
 }
 
+.td-khusus{
+  border: none;
+}
+
 .content-wrapper{
   margin-top: 59px;
 }
@@ -502,4 +506,23 @@ table td{
 
 .btn-close:hover {
   filter: invert(0.7); /* Sedikit efek hover */
+}
+
+.select-container {
+  position: relative;
+  width: 100%;
+}
+
+.class-label {
+  position: absolute;
+  right: 40px; /* Adjust based on your needs */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  pointer-events: none;
+  font-size: 14px;
+}
+
+.form-select-custom {
+  padding-right: 120px !important; /* Make room for the label */
 }
