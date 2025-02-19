@@ -39,14 +39,16 @@
                                         </div>
 
                                         <span class="fw-bold">
-                                            {{ $attendance->Attendance_Status }}
+                                            {{ $attendance->Attendance_Status ? $attendance->Attendance_Status : 'Belum diabsen.' }}
                                         </span>
                                     </div>
                                     <div class="card-body">
+                                    @if($attendance->Attendance_Status)
                                         <button type="button" class="btn btn-info text-white" data-bs-toggle="modal"
                                             data-bs-target="#descModal">
                                             <i class="fa fa-info-circle"></i> Selengkapnya
                                         </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
