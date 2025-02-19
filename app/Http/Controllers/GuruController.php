@@ -24,7 +24,16 @@ class GuruController extends Controller
     {
         $teacher_id = Auth::user()->id;
         $allClasses = User::with('teacherClasses.classData')->find($teacher_id);
-        $allClasses = $allClasses->teacherClasses;        
+        $allClasses = $allClasses->teacherClasses;
+
+        $classData = [];
+
+        foreach ($allClasses as $class ) {
+            $classData[] = [
+                'class' => $class->classData,
+                'status' => $this->checkAbsensiKelas($class->class_id)
+            ];
+        }
         
         // ini kondisi awal tanpa filter akan mengembalikan absensi hari ini
         if  ($filter == null) {
@@ -39,7 +48,7 @@ class GuruController extends Controller
             $classAttendances = $attendances->countAttendancesByClassName($className, $filterValue);
         }
 
-        return view('guru.guruabsensi', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances]);
+        return view('guru.guruabsensi', ['allClasses' => $allClasses, 'classData' => $classData, 'classAttendances' => $classAttendances]);
     }
 
     public function checkAbsensiKelas (int $classid)  {
