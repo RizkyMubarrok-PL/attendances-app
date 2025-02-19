@@ -23,7 +23,9 @@
               <option value="">Pilih Kelas</option>
               @foreach ($allClasses as $class)
               <option value="{{ $class->classData->class_name }}" {{ $class->classData->class_name == request('class') ? 'selected' : ''
-                }}>{{ $class->classData->class_name }}</option>
+                }}>{{ $class->classData->class_name }} 
+                &nbsp; / &nbsp; Halo
+              </option>
               @endforeach
             </select>
           </form>
@@ -31,7 +33,7 @@
           <div class="col-lg-12 mt-5">
             @if (isset($classAttendances) && $classAttendances->isNotEmpty())
             <div class="table-responsive mt-3">
-              <table class="table table-hover">
+              <table class="table">
                 <thead>
                   <tr>
                     <th class="no-column">No</th>
@@ -103,8 +105,8 @@
                       </td>
                     </tr>
                     @endforeach
-                    <div class="tombol-submit mt-3">
-                      <td><input type="submit" value="Simpan" class="btn btn-info"></td>
+                    <div class="tombol-submit mt-3 mb-5">
+                      <td class="td-khusus"><input type="submit" value="Simpan" class="btn btn-info"></td>
                     </div>
                   </form>
                 </tbody>
@@ -129,7 +131,25 @@
 
 
   <script>
-    function selectDisabledCloseModal(select, closeBtn, saveBtn) {
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const select = document.getElementById('classSelect');
+      const label = document.getElementById('selectedClassLabel');
+      
+      if (select.value) {
+        label.textContent = 'Kelas ' + select.value;
+      }
+      
+      select.addEventListener('change', function() {
+        if (this.value) {
+          label.textContent = 'Kelas ' + this.value;
+        } else {
+          label.textContent = '';
+        }
+      });
+    });
+
+    function selectDisabledCloseModal(select, closeBtn) {
       const selectStatus = document.getElementById(select);
       const saveButton = document.getElementById(saveBtn);
       const closeButton = document.getElementById(closeBtn);
