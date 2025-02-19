@@ -27,7 +27,7 @@
           </form>
 
           @if (request('className') != null && $classAttendances->isNotEmpty())
-            <label for="rekapSelector" class="form-label text-ijo">
+            <label for="rekapSelector" class="form-label text-ijo mt-3">
               Pilih Jenis Rekap Absensi
             </label>
             <select class="form-select mt-2" id="rekapSelector" onchange="updateInputFilter()">
@@ -42,25 +42,18 @@
         <form class="row mt-4" id="filterForm" method="GET" action="">
           <div class="col-lg-12" id="inputTanggal"
             style="{{ request('filter') == 'tanggal' ? 'display: block;' : 'display: none;' }}">
-            <label for="">Pilih tanggal</label>
+            <label class="form-label text-ijo" for="">Pilih tanggal</label>
             <input class="form-control" type="date" name="" id="" value="{{ request('filterValue') }}"
               onchange="updateFilterForm(this.value)">
           </div>
           <div class="col-lg-12" id="inputBulan"
             style="{{ request('filter') == 'bulan' ? 'display: block;' : 'display: none;' }}">
-            <label for="">Pilih bulan</label>
+            <label class="form-label text-ijo" for="">Pilih bulan</label>
             <input class="form-control" type="month" name="" id="" value="{{ request('filterValue') }}"
               onchange="updateFilterForm(this.value)">
           </div>
         </form>
-        @endif
-
-        @if (request('className') && request('filter') && request('filterValue') && $classAttendances->isNotEmpty())
-        <a href="{{ route('exportRekap', ['className' => request('className'), 'filter' => request('filter'), 'filterValue' => request('filterValue')]) }}" class="btn btn-ijo-submit bottom mt-4">
-          <i class="fas fa-file-excel me-2"></i>
-          Export
-        </a>
-        @endif  
+        @endif 
             
         <div class="col-lg-12 mt-5">
           @if (request('filter') != null)
@@ -88,9 +81,21 @@
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $attendance->Student_Name }}</td>
                   <td class="text-center">
-                    <span class="p-2 rounded text-white bg-info">
+                    {{-- <span class="p-2 rounded text-white bg-info">
                       {{ $attendance->Attendance_Status }}
-                    </span>
+                    </span> --}}
+                    <span class="p-2 rounded text-white 
+                        @if($attendance->Attendance_Status == 'Hadir')
+                          bg-success
+                        @elseif($attendance->Attendance_Status == 'Izin')
+                          bg-warning
+                        @elseif($attendance->Attendance_Status == 'Alpha')
+                          bg-danger
+                        @else
+                          bg-info
+                        @endif">
+                        {{ $attendance->Attendance_Status }}
+                      </span>
                   </td>
                   @else
                   <td>{{ $loop->iteration }}</td>
@@ -105,7 +110,7 @@
             </table>
           </div>
           @else
-          <div class="text-center py-5">
+          <div class="text-center py-5 mb-5">
             <i class="fas fa-filter fa-4x text-muted mb-3"></i>
             <div class="mt-3">
               <p class="text-muted">Data kosong</p>
@@ -116,6 +121,12 @@
           </div>
         </div>
       </div>
+      @if (request('className') && request('filter') && request('filterValue') && $classAttendances->isNotEmpty())
+      <a href="{{ route('exportRekap', ['className' => request('className'), 'filter' => request('filter'), 'filterValue' => request('filterValue')]) }}" class="btn btn-ijo-submit bottom mt-4 mb-5">
+        <i class="fas fa-file-excel me-2"></i>                          
+        Export
+      </a>
+      @endif 
     </div>
   </div>
 </div>

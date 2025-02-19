@@ -33,7 +33,7 @@
           <div class="col-lg-12 mt-5">
             @if (isset($classAttendances) && $classAttendances->isNotEmpty())
             <div class="table-responsive mt-3">
-              <table class="table table-hover">
+              <table class="table">
                 <thead>
                   <tr>
                     <th class="no-column">No</th>
@@ -105,8 +105,8 @@
                       </td>
                     </tr>
                     @endforeach
-                    <div class="tombol-submit mt-3">
-                      <td><input type="submit" value="Simpan" class="btn btn-info"></td>
+                    <div class="tombol-submit mt-3 mb-5">
+                      <td class="td-khusus"><input type="submit" value="Simpan" class="btn btn-info"></td>
                     </div>
                   </form>
                 </tbody>
