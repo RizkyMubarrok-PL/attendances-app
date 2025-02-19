@@ -21,9 +21,11 @@
             <i class="fa fa-list"></i>
             <select name="class" class="form-select-custom form-select" id="classSelect" onchange="updateActionAndSubmit()">
               <option value="">Pilih Kelas</option>
-              @foreach ($allClasses as $class)
-              <option value="{{ $class->classData->class_name }}" {{ $class->classData->class_name == request('class') ? 'selected' : ''
-                }}>{{ $class->classData->class_name }}</option>
+              @foreach ($classData as $class)
+              <option value="{{ $class['class']->class_name }}" {{ $class['class']->class_name ==
+                request('className') ?
+                'selected' : ''
+                }}>{{ $class['class']->class_name }} | {{ $class['status'] ? 'Sudah diabsen' : 'Belum diabsen' }}</option>
               @endforeach
             </select>
           </form>

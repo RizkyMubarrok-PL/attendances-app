@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Classes;
 use App\Models\User;
+use App\Models\Classes;
 use App\Models\Attendances;
+use Illuminate\Http\Request;
+use App\Models\ClassStudents;
+use Illuminate\Support\Carbon;
 use App\Models\TeacherClasses;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class GuruController extends Controller
 {
@@ -23,8 +24,7 @@ class GuruController extends Controller
     {
         $teacher_id = Auth::user()->id;
         $allClasses = User::with('teacherClasses.classData')->find($teacher_id);
-        $allClasses = $allClasses->teacherClasses;
-
+        $allClasses = $allClasses->teacherClasses;        
         
         // ini kondisi awal tanpa filter akan mengembalikan absensi hari ini
         if  ($filter == null) {
@@ -42,13 +42,34 @@ class GuruController extends Controller
         return view('guru.guruabsensi', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances]);
     }
 
+    public function checkAbsensiKelas (int $classid)  {
+        // mencari id siswa berdasarkan kelas id
+        $studentIds = ClassStudents::where('class_id', $classid)->pluck('student_id');
+
+
+        $allAttendance = Attendances::whereIn('student_id', $studentIds)->whereDate('created_at', Carbon::today())->get();
+
+        $allNull = $allAttendance->every(fn($attendance) => $attendance->status === null);
+
+        return $allNull ? false : true;
+    }
+
     public function updateAbsensiPage(Attendances $attendances)
     {
         $teacher_id = Auth::user()->id;
         $allClasses = User::with('teacherClasses.classData')->find($teacher_id);
         $allClasses = $allClasses->teacherClasses;
 
-        return view('guru.gurudaftar', ['allClasses' => $allClasses]);
+        $classData = [];
+
+        foreach ($allClasses as $class ) {
+            $classData[] = [
+                'class' => $class->classData,
+                'status' => $this->checkAbsensiKelas($class->class_id)
+            ];
+        }
+
+        return view('guru.gurudaftar', ['allClasses' => $allClasses, 'classData' => $classData]);
     }
 
     public function dataAbsensiPerKelas(Attendances $attendances, string $className = '')
@@ -59,7 +80,16 @@ class GuruController extends Controller
         $allClasses = User::with('teacherClasses.classData')->find($teacher_id);
         $allClasses = $allClasses->teacherClasses;
 
-        return view('guru.gurudaftar', ['allClasses' => $allClasses, 'classAttendances' => $classAttendances, 'className' => $className]);
+        $classData = [];
+
+        foreach ($allClasses as $class ) {
+            $classData[] = [
+                'class' => $class->classData,
+                'status' => $this->checkAbsensiKelas($class->class_id)
+            ];
+        }
+
+        return view('guru.gurudaftar', ['allClasses' => $allClasses, 'classData' => $classData, 'classAttendances' => $classAttendances, 'className' => $className]);
     }
 
     public function updateAbsensi(Request $request, Attendances $attendances)
