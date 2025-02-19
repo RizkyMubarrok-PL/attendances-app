@@ -42,9 +42,13 @@
                 <tbody>
                   {{-- {{ dd($users) }} --}}
                   @if ($users->isNotEmpty())
+                    @php
+                      $iteration = request('page') ? (request('page') - 1) * 20 : null;
+                    @endphp
                   @foreach ($users as $user)
                   <tr>
-                    <td>#</td>
+                    <td>{{ request('page') ? ++$iteration : $loop->iteration  }}</td>
+                    {{-- <td>#</td> --}}
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>

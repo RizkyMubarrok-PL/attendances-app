@@ -10,7 +10,7 @@ class ClassController extends Controller
 {
     public function index(Classes $classes)
     {
-        $classes = $classes->paginate(20);
+        $classes = $classes->orderBy('class_name', 'asc')->paginate(20);
 
         return view('dashboard.datakelas', ['classes' => $classes]);
     }
@@ -83,15 +83,12 @@ class ClassController extends Controller
         ]);
     }
 
-    public function classByName(Classes $classes, Request $request)
+    public function classByName(Classes $classes, string $keyword)
     {
-        $validate = $request->validate([
-            'class_name' => 'string'
-        ]);
 
-        $searched_class = $classes->searchClasses($validate['class_name'])->paginate(15);
+        $searched_class = $classes->searchClasses($keyword)->paginate(20);
+        // dd($searched_class);
 
-
-        // return view();
+        return view('dashboard.datakelas', ['classes' => $searched_class]);
     }
 }

@@ -48,10 +48,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'role:admin'], function (
         Route::post('/class/new', 'insert')->name('createClass');
         Route::patch('/class/update', 'update')->name('updateClass');
         Route::delete('/class/delete', 'delete')->name('deleteClass');
+        Route::get('/class/{keyword?}', 'classByName')->name('searchClass');
     });
 
     // ini rute buat data absensi
     Route::controller(AttendancesController::class)->group(function () {
+        Route::get('/absensi/{className?}/{date?}', 'updateAbsenPage')->name('adminUpdateAbsenPage');
+
         Route::get('/report/{status?}', 'index')->name('report');
         Route::post('/report/{status?}', 'search')->name('reportSearch');
     });

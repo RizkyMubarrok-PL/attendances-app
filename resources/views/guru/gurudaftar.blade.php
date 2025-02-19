@@ -128,8 +128,6 @@
   </div>
 </div>
   <!-- /.content-wrapper -->
-
-
   <script>
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -246,25 +244,25 @@
     });
     });
 
-function setButtonColor(button, status) {
-    // Remove all color classes first
-    button.classList.remove('btn-success', 'btn-warning', 'btn-danger', 'btn-info');
+    function setButtonColor(button, status) {
+      // Remove all color classes first
+      button.classList.remove('btn-success', 'btn-warning', 'btn-danger', 'btn-info');
 
-    // Add appropriate color class based on status
-    switch(status) {
-        case 'Hadir':
-            button.classList.add('btn-success');
-            break;
-        case 'Izin':
-            button.classList.add('btn-warning');
-            break;
-        case 'Alpha':
-            button.classList.add('btn-danger');
-            break;
-        default:
-            button.classList.add('btn-info');
+      // Add appropriate color class based on status
+      switch(status) {
+          case 'Hadir':
+              button.classList.add('btn-success');
+              break;
+          case 'Izin':
+              button.classList.add('btn-warning');
+              break;
+          case 'Alpha':
+              button.classList.add('btn-danger');
+              break;
+          default:
+              button.classList.add('btn-info');
+      }
     }
-}
 
     function updateActionAndSubmit() {
         var selectedClass = document.getElementById("classSelect").value;

@@ -30,7 +30,7 @@
     <div class="login-card">
         <div class="login-left">
             <img src="img/smkn10.png" alt="Logo">
-            <h3 class="judul-login-besar">SiHadir</h3>
+            <h3 class="judul-login-besar">Absence Go</h3>
             <p class="judul-login-kecil">Website Absensi</p>
             <p class="judul-login-kecil-dua">SMKN 10</p>
         </div>

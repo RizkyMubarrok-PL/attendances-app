@@ -117,4 +117,10 @@ class AttendancesController extends Controller
         // return user data based by class id
         // return view()
     }
+
+    public function updateAbsenPage (Classes $classes) {
+        $allClasses = $classes->all();
+
+        return view('dashboard.updateAbsensi', ['allClasses' => $allClasses]);
+    }
 } 

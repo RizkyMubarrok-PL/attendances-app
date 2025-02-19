@@ -13,10 +13,11 @@
     <div class="container-fluid">
       <div class="pembungkus-konten-utama">
         <div class="row">
-          <div class="search-container col-lg-12 col-12">
+          <form method="GET" action="" id="searchForm" class="search-container col-lg-12 col-12">
             <i class="fa fa-search"></i>
-            <input type="search" name="keyword" id="search" class="form-control" placeholder="Search ..." autofocus>
-          </div>
+            <input type="search" id="search" class="form-control" value="{{ request('keyword') }}"
+              placeholder="Search ..." autofocus onkeypress="handleSearch(event)">
+          </form>
 
           @if (session('status'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -38,6 +39,7 @@
             </button>
           </div>
           <div class="col-lg-12">
+            @if ($classes->isNotEmpty())
             <div class="table-responsive mt-3">
               <table class="table table-hover">
                 <thead>
@@ -48,14 +50,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if ($classes->isNotEmpty())
+                  @php
+                  $iteration = request('page') ? (request('page') - 1) * 20 : null;
+                  @endphp
                   @foreach ($classes as $class)
                   <tr>
-                    <td>#</td>
+                    <td>{{ request('page') ? ++$iteration : $loop->iteration }}</td>
                     <td>{{ $class->class_name }}</td>
                     <td>
                       <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal"
-                        data-bs-target="#updateModal"  data-id="{{ $class->id }}" data-name="{{ $class->class_name }}">
+                        data-bs-target="#updateModal" data-id="{{ $class->id }}" data-name="{{ $class->class_name }}">
                         <i class="fa fa-pen-to-square"></i>
                         Update
                       </button>
@@ -67,16 +71,28 @@
                     </td>
                   </tr>
                   @endforeach
-                  @endif
                 </tbody>
               </table>
             </div>
+            @else
+            <div class="text-center py-5">
+              <i class="fas fa-filter fa-4x text-muted mb-3"></i>
+              <div class="mt-3">
+                <p class="text-muted">Pencarian tidak menemukan hasil.</p>
+                <p class="text-muted">Tidak ada kelas dengan nama "{{ request('keyword') }}".</p>
+              </div>
+            </div>
+            @endif
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- /.content-wrapper -->
+
+  <div>
+    {{ $classes->links('pagination::bootstrap-5') }}
+  </div>
 
   <!-- Create Modal -->
   <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -115,10 +131,10 @@
           @csrf
           @method('PATCH')
           <input type="hidden" name="class_id" id="updateClassId">
-            <div class="form-group">
-              <label for="updateClassName">Name :</label>
-              <input type="text" class="form-control" name="kelas" id="updateClassName" placeholder="Enter name">
-            </div>
+          <div class="form-group">
+            <label for="updateClassName">Name :</label>
+            <input type="text" class="form-control" name="kelas" id="updateClassName" placeholder="Enter name">
+          </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-warning text-white">
@@ -190,6 +206,15 @@
             modal.querySelector('#deleteClassName').innerHTML = className;
         });
     });
+
+    function handleSearch(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            let searchInput = document.getElementById('search').value;
+            document.getElementById('searchForm').action = "{{ route('searchClass') }}/" + encodeURIComponent(searchInput);
+            document.getElementById('searchForm').submit();
+        }
+    }
   </script>
 
   @include('template/admin/adminfooter')

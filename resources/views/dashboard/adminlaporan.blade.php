@@ -42,7 +42,7 @@
                         <td>{{ $attendance->Student_Name }}</td>
                         <td>{{ $attendance->Teacher_Name == null ? '-' : $attendance->Teacher_Name }}</td>
                         <td>{{ $attendance->Class_Name }}</td>
-                        <td>{{ $attendance->Attendance_Status }}</td>
+                        <td>{{ $attendance->Attendance_Status ? $attendance->Attendance_Status : 'Belum diabsen.' }}</td>
                         <td>
                           <button type="button" class="btn btn-info show-status-modal" data-bs-toggle="modal" data-bs-target="#popupModal">
                             <i class="fa fa-info-circle"></i> 
