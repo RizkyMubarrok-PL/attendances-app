@@ -30,13 +30,13 @@
     <div class="login-card">
         <div class="login-left">
             <img src="img/smkn10.png" alt="Logo">
-            <h3 class="judul-login-besar">SiHadir</h3>
+            <h3 class="judul-login-besar">Absence Go</h3>
             <p class="judul-login-kecil">Website Absensi</p>
             <p class="judul-login-kecil-dua">SMKN 10</p>
         </div>
         <div class="login-right">
             <h2>Login</h2>
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('login') }}" method="POST" onsubmit="disableSubmitButton(); this.submit();">
                 @csrf
                 <div class="input-container">
                     <input type="email" id="email" name="email" required autofocus>
@@ -51,13 +51,18 @@
                             style="cursor: pointer; width: 24px;">
                     </span>
                 </div>
-                <button type="submit" class="login-button">Login</button>
+                <button type="submit" class="login-button" id="login-btn">Login</button>
             </form>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script>
+        function disableSubmitButton() {
+            document.getElementById('login-btn').disabled = true;
+        }
     </script>
     <script src="jsnya/js.js"></script>
 </body>

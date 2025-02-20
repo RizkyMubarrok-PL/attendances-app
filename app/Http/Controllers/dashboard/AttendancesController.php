@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\dashboard;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Attendances;
+use Carbon\Carbon;
 use App\Models\Classes;
 use App\Rules\EnumStatus;
+use App\Models\Attendances;
+use Illuminate\Http\Request;
+use App\Models\ClassStudents;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class AttendancesController extends Controller
 {
@@ -116,5 +119,75 @@ class AttendancesController extends Controller
 
         // return user data based by class id
         // return view()
+    }
+
+    public function updateAbsenPage (Attendances $attendances, Classes $classes, string $className = '', string $date = '') {
+        $classAttendances = $attendances->attendancesByClassNameToday($className);
+
+        if ($date != '') {
+            $classAttendances = $attendances->attendancesByClassName($className, $date,);
+            // dd($classAttendances);
+        }
+
+
+        $allClasses = $classes->all();
+
+        $classData = [];
+
+        foreach ($allClasses as $class) {
+            $classData[] = [
+                'class' => $class,
+                'status' => $this->checkAbsensiKelas($class->id)
+            ];
+        }
+
+        return view('dashboard.updateAbsensi', ['classAttendances' => $classAttendances, 'classData' => $classData]);
+    }
+
+    public function updateAbsensi(Request $request, Attendances $attendances)
+    {
+        // dd($request);
+        $teacher_id = auth()->user()->id;
+        $absensi = $request->input('absensi');
+
+        $rules = [
+            'absensi.*.id' => 'required|integer|exists:absensi,id',
+            'absensi.*.status' => 'required|in:Hadir,Alpha,Sakit,Izin',
+            'absensi.*.keterangan' => 'nullable|string|max:255',
+        ];
+
+        $validator = Validator::make($absensi, $rules);
+
+        if ($validator->fails()) {
+            return redirect()->route('updateAbsenPage')->with([
+                'status' => false,
+                'message' => "Gagal update, invalid absensi"
+            ]);
+        }
+
+        collect($absensi)->each(function ($data) use ($attendances, $teacher_id) {
+            $attendances->where('id', $data['id'])->update([
+                'teacher_id' => $teacher_id,
+                'status' => $data['status'],
+                'description' => $data['keterangan'] ?? null,
+            ]);
+        });
+
+        return redirect()->route('adminUpdateAbsenPage')->with([
+            'status' => true,
+            'message' => "Berhasil update absensi."
+        ]);
+    }
+
+    public function checkAbsensiKelas (int $classid)  {
+        // mencari id siswa berdasarkan kelas id
+        $studentIds = ClassStudents::where('class_id', $classid)->pluck('student_id');
+
+
+        $allAttendance = Attendances::whereIn('student_id', $studentIds)->whereDate('created_at', Carbon::today())->get();
+
+        $allNull = $allAttendance->every(fn($attendance) => $attendance->status === null);
+
+        return $allNull ? false : true;
     }
 } 

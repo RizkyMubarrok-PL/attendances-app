@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,81 +15,81 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('style/home.css') }}">
   <style>
-  @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap');
 
-  .font{
+    .font {
       font-family: "Comfortaa", sans-serif;
       margin: 0;
       margin-top: 5px;
-  }
+    }
 
-  .nav-link-a{
-    color: #2A8579 !important;
-    transition: 0.3s ease-in-out !important;
-  }
+    .nav-link-a {
+      color: #2A8579 !important;
+      transition: 0.3s ease-in-out !important;
+    }
 
-  .nav-link-a:hover{
-    color: #256F66 !important;
-  }
+    .nav-link-a:hover {
+      color: #256F66 !important;
+    }
 
-  .nav-link i{
-    width: 22px;
-    font-size: 18px;
-    text-align: center;
-  }
+    .nav-link i {
+      width: 22px;
+      font-size: 18px;
+      text-align: center;
+    }
 
-  .main-sidebar{
+    .main-sidebar {
       background-color: white;
-  }
+    }
 
-  .sidebar {
+    .sidebar {
       background-color: white;
       height: 100vh;
       left: 0;
       top: 0;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
-  }
+    }
 
-  .info a{
+    .info a {
       color: #2A8579 !important;
       opacity: 80%;
-  }
+    }
 
-  .menu-sidebar{
-    max-height: 100vh;
-  }
+    .menu-sidebar {
+      max-height: 100vh;
+    }
 
-  .brand-link{
+    .brand-link {
       background-color: #2A8579;
-  }
+    }
 
-  .guru{
+    .guru {
       font-size: 10px;
-  }
-  
-  .logout-section {
+    }
 
-          margin-top: auto;
-          margin-bottom: 4rem ;
-      }
+    .logout-section {
 
-      .active{
-        background-color: #2A8579 !important; 
-        
-      }
+      margin-top: auto;
+      margin-bottom: 4rem;
+    }
 
-      .active:hover{
-        background-color: #256F66 !important;
-      }
+    .active {
+      background-color: #2A8579 !important;
 
+    }
+
+    .active:hover {
+      background-color: #256F66 !important;
+    }
   </style>
 </head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
 
-  <!-- Navbar -->
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top z-3" style="padding: 9.22px;">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
@@ -113,9 +114,12 @@
           <div class="image">
             <img src="{{ asset('img/profile.png') }}" class="img-circle elevation-2" alt="User Image">
           </div>
+          @php
+          use Illuminate\Support\Str;
+          @endphp          
           <div class="info">
-            <a href="#" class="d-block">Administrator</a>
-            <a href="#" class="guru">Admin</a>
+            <a href="#" class="d-block">{{ Str::title(auth()->user()->name) }}</a>
+            <a href="#" class="guru">{{ Str::title(auth()->user()->role) }}</a>
           </div>
         </div>
 
@@ -138,6 +142,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ route('adminUpdateAbsenPage') }}" class="nav-link nav-link-a" style="margin-left: 4px;">
+                  <i class="nav-icon fas fa-clipboard-list"></i>
+                  <p style="margin-left: 2.5px; letter-spacing: 2px;">UpdateAbsensi</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ route('class') }}" class="nav-link nav-link-a" style="margin-left: 4px;">
                   <i class="nav-icon fas fa-school"></i>
                   <p style="margin-left: 2.5px; letter-spacing: 2px;">DaftarKelas</p>
@@ -155,13 +165,14 @@
 
         <div class="logout-section">
           <ul class="nav nav-pills nav-sidebar flex-column">
-          <li class="nav-item tombol-logout">
-            <hr>
-            <a href="{{ route('logout') }}" class="nav-link active" style="border-radius: 10px;" data-bs-toggle="modal" data-bs-target="#logoutmodal">
-              <i class="nav-icon fas fa-sign-out-alt" style="position: relative; right: 1.5px;"></i>
-              <p style="position: relative; left: 10px;">Logout</p>
-            </a>
-          </li>
+            <li class="nav-item tombol-logout">
+              <hr>
+              <a href="{{ route('logout') }}" class="nav-link active" style="border-radius: 10px;"
+                data-bs-toggle="modal" data-bs-target="#logoutmodal">
+                <i class="nav-icon fas fa-sign-out-alt" style="position: relative; right: 1.5px;"></i>
+                <p style="position: relative; left: 10px;">Logout</p>
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -190,4 +201,3 @@
         </div>
       </div>
     </div>
-    
