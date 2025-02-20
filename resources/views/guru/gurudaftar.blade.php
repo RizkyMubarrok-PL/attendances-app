@@ -25,7 +25,7 @@
               <option value="{{ $class['class']->class_name }}" {{ $class['class']->class_name ==
                 request('className') ?
                 'selected' : ''
-                }}>{{ $class['class']->class_name }} | {{ $class['status'] ? 'Sudah diabsen' : 'Belum diabsen' }}</option>
+                }}>{{ $class['class']->class_name }}&nbsp; | &nbsp;{{ $class['status'] ? '✔️ Sudah Absen' : '❌ Belum Absen' }}</option>
               @endforeach
             </select>
           </form>
@@ -112,12 +112,20 @@
                 </tbody>
               </table>
             </div>
-            @else
+            @elseif (!request('className'))
             <div class="text-center py-5">
               <i class="fas fa-filter fa-4x text-muted mb-3"></i>
               <div class="mt-3">
                 <p class="text-muted">Data kosong</p>
                 <p class="text-muted">Silahkan pilih Kelas untuk menampilkan data</p>
+              </div>
+            </div>
+            @else
+            <div class="text-center py-5">
+              <i class="fas fa-filter fa-4x text-muted mb-3"></i>
+              <div class="mt-3">
+                <p class="text-muted">Data kosong</p>
+                <p class="text-muted">Tidak ditemukan absensi untuk kelas yang dipilih.</p>
               </div>
             </div>
             @endif
